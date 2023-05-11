@@ -224,6 +224,17 @@ public class SECRETARY extends javax.swing.JFrame {
         WEANING_TOTAL = new javax.swing.JTextField();
         WEANING_EARTAG = new javax.swing.JLabel();
         PERFORMANCE = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        PERFORMANCE_WEANING_TABLE = new javax.swing.JTable();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        PERFORMANCE_FARROWING_TABLE = new javax.swing.JTable();
+        PERFORMANCE_SEARCHFIELD = new javax.swing.JTextField();
+        jButton12 = new javax.swing.JButton();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        PERFORMANCE_BREEDING_TABLE = new javax.swing.JTable();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -834,18 +845,77 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(WEANING, "PAGE_4");
 
-        PERFORMANCE.setBackground(new java.awt.Color(255, 102, 102));
+        PERFORMANCE.setBackground(new java.awt.Color(204, 204, 204));
+        PERFORMANCE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout PERFORMANCELayout = new javax.swing.GroupLayout(PERFORMANCE);
-        PERFORMANCE.setLayout(PERFORMANCELayout);
-        PERFORMANCELayout.setHorizontalGroup(
-            PERFORMANCELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1125, Short.MAX_VALUE)
-        );
-        PERFORMANCELayout.setVerticalGroup(
-            PERFORMANCELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 726, Short.MAX_VALUE)
-        );
+        PERFORMANCE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane8.setViewportView(PERFORMANCE_WEANING_TABLE);
+
+        PERFORMANCE.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 450, 540, 300));
+
+        PERFORMANCE_FARROWING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane9.setViewportView(PERFORMANCE_FARROWING_TABLE);
+
+        PERFORMANCE.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 860, 250));
+        PERFORMANCE.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 260, 50));
+
+        jButton12.setText("SEARCH");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        PERFORMANCE.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, -1, 50));
+
+        PERFORMANCE_BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane10.setViewportView(PERFORMANCE_BREEDING_TABLE);
+
+        PERFORMANCE.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 510, 300));
+
+        jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("FARROWING");
+        PERFORMANCE.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 540, 40));
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("BREEDING");
+        PERFORMANCE.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 510, 40));
+
+        jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("WEANING");
+        PERFORMANCE.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 410, 540, 40));
 
         PAGES.add(PERFORMANCE, "PAGE_5");
 
@@ -855,12 +925,12 @@ public class SECRETARY extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1380, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1365, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jSplitPane2)
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1059,6 +1129,13 @@ public class SECRETARY extends javax.swing.JFrame {
         WEANING_TOTAL.setText(Integer.toString(total));
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+    }//GEN-LAST:event_jButton12ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1135,6 +1212,10 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
     private javax.swing.JPanel PERFORMANCE;
+    private javax.swing.JTable PERFORMANCE_BREEDING_TABLE;
+    private javax.swing.JTable PERFORMANCE_FARROWING_TABLE;
+    private javax.swing.JTextField PERFORMANCE_SEARCHFIELD;
+    private javax.swing.JTable PERFORMANCE_WEANING_TABLE;
     private javax.swing.JPanel REGISTER_OF_SOW;
     private javax.swing.JTextField REGSOW_BNUMBER;
     private javax.swing.JComboBox<String> REGSOW_BUILDING;
@@ -1155,6 +1236,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1191,6 +1273,9 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1205,12 +1290,15 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane2;
     // End of variables declaration//GEN-END:variables
 
@@ -1786,10 +1874,139 @@ private void FARROWING_SEARCH_EARTAG() {
                 JOptionPane.showMessageDialog(null, "No record found");
             }
             WEANING_MAIN_TABLE.setModel(model);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    
+//    PERFORMANCE 
+    
+    private void PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS(){
+        
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+
+            
+            String query = "SELECT boar_used, breeding_date, expected_farrowing, comments, farrowed FROM breeding WHERE eartag = ?";
+            pst = conn.prepareStatement(query);
+            pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
+            rs = pst.executeQuery();
+            
+//            model.addColumn("EARTAG");
+            model.addColumn("boar_used");
+            model.addColumn("breeding_date");
+            model.addColumn("expected_farrowing");
+            model.addColumn("comments");
+            model.addColumn("status");
+
+
+            
+            while (rs.next()) {
+//                int eartag = rs.getInt("eartag");
+                Date breeding_date = rs.getDate("breeding_date");
+                String boar_used = rs.getString("boar_used");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+                String comments = rs.getString("comments");
+                int isFarrowed = rs.getInt("farrowed");
+                String status = isFarrowed == 1 ? "farrowed" : "not farrowed";
+
+            model.addRow(new Object[]{boar_used, breeding_date, expected_farrowing, comments, status});
+        }
+
+             if(PERFORMANCE_BREEDING_TABLE != null){
+                PERFORMANCE_BREEDING_TABLE.setModel(model);
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    private void PERFORMCE_FARROWING_RETRIEVE_DETAILS(){
+
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+
+
+            String query = "SELECT farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks FROM farrowing_records WHERE eartag = ?";
+            pst = conn.prepareStatement(query);
+            pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
+            rs = pst.executeQuery();
+
+//            model.addColumn("eartag");
+            model.addColumn("farrowing_actualdate");
+            model.addColumn("farrowing_duedate");
+            model.addColumn("female_piglets");
+            model.addColumn("male_piglets");
+            model.addColumn("total_piglets");
+            model.addColumn("abw");
+            model.addColumn("mortality");
+            model.addColumn("remarks");
+
+
+
+            while (rs.next()) {
+//                int eartag = rs.getInt("eartag");
+                Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
+                Date farrowing_duedate = rs.getDate("farrowing_duedate");
+                int female_piglets = rs.getInt("female_piglets");
+                int male_piglets = rs.getInt("male_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double abw = rs.getDouble("abw");
+                int mortality = rs.getInt("mortality");
+                String remarks = rs.getString("remarks");
+    
+
+
+
+                model.addRow(new Object[]{farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks});
+            }
+
+             if(PERFORMANCE_FARROWING_TABLE != null){
+                PERFORMANCE_FARROWING_TABLE.setModel(model);
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    private void PERFORMANCE_WEANING_RETRIEVE_DETAILS(){
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String query = "SELECT weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records  WHERE eartag = ?";
+            pst = conn.prepareStatement(query);
+            pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
+            rs = pst.executeQuery();
+            
+            
+            if (rs.next()) {
+//                int eartag = rs.getInt("eartag");
+                Date weaning_actualdate = rs.getDate("weaning_actualdate");
+                int male_piglets = rs.getInt("male_piglets");
+                int female_piglets = rs.getInt("female_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double aw = rs.getDouble("aw");
+                
+//                model.addColumn("eartag");
+                model.addColumn("weaning_actualdate");
+                model.addColumn("male_piglets");
+                model.addColumn("female_piglets");
+                model.addColumn("total_piglets");
+                model.addColumn("aw");
+                
+                model.addRow(new Object[]{weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+            } else {
+                JOptionPane.showMessageDialog(null, "No record found");
+            }
+            
+            PERFORMANCE_WEANING_TABLE.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
     
     
    
@@ -1886,43 +2103,43 @@ private void FARROWING_SEARCH_EARTAG() {
 
             JTabbedPane tabbedPane = new JTabbedPane();
 
-            // Create the farrowing notifications tab
+  
             JPanel farrowingPanel = new JPanel(new BorderLayout());
             DefaultListModel<String> farrowingListModel = new DefaultListModel<>();
             JList<String> farrowingList = new JList<>(farrowingListModel);
             farrowingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            // Add the farrowing notifications to the list
+
             for (Map.Entry<String, String> entry : farrowingNotifications.entrySet()) {
                 farrowingListModel.addElement(entry.getKey() + " - " + entry.getValue());
             }
 
-            // Add the farrowing list to the panel
+
             farrowingPanel.add(new JScrollPane(farrowingList), BorderLayout.CENTER);
 
-            // Create the remarks notifications tab
+
             JPanel remarksPanel = new JPanel(new BorderLayout());
             DefaultListModel<String> remarksListModel = new DefaultListModel<>();
             JList<String> remarksList = new JList<>(remarksListModel);
             remarksList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            // Add the remarks notifications to the list
+ 
             for (Map.Entry<String, String> entry : remarksNotifications.entrySet()) {
                 remarksListModel.addElement(entry.getKey() + " - " + entry.getValue());
             }
 
-            // Add the remarks list to the panel
+
             remarksPanel.add(new JScrollPane(remarksList), BorderLayout.CENTER);
 
-            // Add the tabs to the tabbed pane
+  
             tabbedPane.addTab("Farrowing (" + farrowingNotifications.size() + ")", farrowingPanel);
-            tabbedPane.addTab("Remarks (" + remarksNotifications.size() + ")", remarksPanel);
+            tabbedPane.addTab("Culling (" + remarksNotifications.size() + ")", remarksPanel);
 
 
-            // Add the tabbed pane to the dialog
+
             notificationDialog.add(tabbedPane, BorderLayout.CENTER);
 
-            // Display the dialog
+ 
             notificationDialog.setVisible(true);
         }
 
