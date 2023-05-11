@@ -135,7 +135,6 @@ public class SECRETARY extends javax.swing.JFrame {
                     pst = conn.prepareStatement(warningSowsDetailsQuery);
                     pst.setInt(1, eartag);
                     rs = pst.executeQuery();
-                    model.addColumn("Eartag");
                     model.addColumn("Female Piglets");
                     model.addColumn("Male Piglets");
                     model.addColumn("Total Piglets");
@@ -144,7 +143,7 @@ public class SECRETARY extends javax.swing.JFrame {
                     model.addColumn("Farrowing Due Date");
                     model.addColumn("Farrowing Actual Date");
                     while (rs.next()) {
-                        int eartagResult = rs.getInt("eartag");
+
                         int femalePiglets = rs.getInt("female_piglets");
                         int malePiglets = rs.getInt("male_piglets");
                         int totalPiglets = rs.getInt("total_piglets");
@@ -152,16 +151,22 @@ public class SECRETARY extends javax.swing.JFrame {
                         String remarks = rs.getString("remarks");
                         Date farrowingDueDate = rs.getDate("farrowing_duedate");
                         Date farrowingActualDate = rs.getDate("farrowing_actualdate");
-                        model.addRow(new Object[]{eartagResult, femalePiglets, malePiglets, totalPiglets, mortality, remarks, farrowingDueDate, farrowingActualDate});
+                        model.addRow(new Object[]{femalePiglets, malePiglets, totalPiglets, mortality, remarks, farrowingDueDate, farrowingActualDate});
                     }
                     if (WARNING_SOW_DETAILS != null) {
                         WARNING_SOW_DETAILS.setModel(model);
+                        WARNING_CULL_BUTTON.setVisible(true);
+                        WARNING_FORCULLED_LABEL.setText(String.valueOf(eartag));
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex);
                 }
             }
         });
+        
+//        CULLED 
+
+        CULLED_FETCH_EARTAG();
 
         
         cardLayout = (CardLayout)(PAGES.getLayout());
@@ -190,6 +195,7 @@ public class SECRETARY extends javax.swing.JFrame {
         NOTIFICATION_BUTTON = new javax.swing.JButton();
         NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -303,8 +309,16 @@ public class SECRETARY extends javax.swing.JFrame {
         jScrollPane11 = new javax.swing.JScrollPane();
         WARNING_SOW_LIST_WARNING_SOW = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        WARNING_CULL_BUTTON = new javax.swing.JButton();
         jScrollPane12 = new javax.swing.JScrollPane();
         WARNING_SOW_DETAILS = new javax.swing.JTable();
+        WARNING_FORCULLED_LABEL = new javax.swing.JLabel();
+        CULLED_SOW = new javax.swing.JPanel();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        CULLED_MAIN_TABLE = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        CULLED_TOTAL_CULLED = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -381,6 +395,14 @@ public class SECRETARY extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 150, 40));
+
+        jButton14.setText("CULLED SOW");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 150, 40));
 
         jSplitPane2.setLeftComponent(jPanel1);
 
@@ -977,13 +999,21 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         jScrollPane11.setViewportView(WARNING_SOW_LIST_WARNING_SOW);
 
-        WARNING_SOW.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 84, 130, 620));
+        WARNING_SOW.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 130, 620));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("WARNING SOW");
-        WARNING_SOW.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 40));
+        WARNING_SOW.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 120, 40));
+
+        WARNING_CULL_BUTTON.setText("CULL");
+        WARNING_CULL_BUTTON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WARNING_CULL_BUTTONActionPerformed(evt);
+            }
+        });
+        WARNING_SOW.add(WARNING_CULL_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 170, 50));
 
         WARNING_SOW_DETAILS.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -999,8 +1029,48 @@ public class SECRETARY extends javax.swing.JFrame {
         jScrollPane12.setViewportView(WARNING_SOW_DETAILS);
 
         WARNING_SOW.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 840, 620));
+        WARNING_SOW.add(WARNING_FORCULLED_LABEL, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 50, 80, 20));
 
         PAGES.add(WARNING_SOW, "PAGE_6");
+
+        CULLED_SOW.setBackground(new java.awt.Color(51, 0, 51));
+        CULLED_SOW.setForeground(new java.awt.Color(51, 0, 51));
+        CULLED_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        CULLED_MAIN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane13.setViewportView(CULLED_MAIN_TABLE);
+
+        CULLED_SOW.add(jScrollPane13, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 100, 300, 600));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("LIST OF WARNING SOW");
+        CULLED_SOW.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 300, 40));
+
+        CULLED_TOTAL_CULLED.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        CULLED_TOTAL_CULLED.setForeground(new java.awt.Color(255, 255, 0));
+        CULLED_TOTAL_CULLED.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CULLED_TOTAL_CULLED.setText("10000");
+        CULLED_SOW.add(CULLED_TOTAL_CULLED, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 200, 70));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("TOTAL CULLED SOW");
+        CULLED_SOW.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 200, 40));
+
+        PAGES.add(CULLED_SOW, "PAGE_7");
 
         jSplitPane2.setRightComponent(PAGES);
 
@@ -1211,6 +1281,36 @@ public class SECRETARY extends javax.swing.JFrame {
         
     }//GEN-LAST:event_WARNING_SOW_LIST_WARNING_SOWMouseClicked
 
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        cardLayout.show(PAGES, "PAGE_7");
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void WARNING_CULL_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WARNING_CULL_BUTTONActionPerformed
+        
+        String culledValue = WARNING_FORCULLED_LABEL.getText();
+        int culledInt = Integer.parseInt(culledValue);
+        try {
+            String breedingUpdateQuery = "UPDATE breeding SET culled = ? WHERE eartag = ?";
+            PreparedStatement breedingUpdateStmt = conn.prepareStatement(breedingUpdateQuery);
+            breedingUpdateStmt.setBoolean(1, true);
+            breedingUpdateStmt.setInt(2, culledInt); 
+            breedingUpdateStmt.executeUpdate();
+
+
+
+            String farrowingUpdateQuery = "UPDATE farrowing_records SET culled = ? WHERE eartag = ?";
+            PreparedStatement farrowingUpdateStmt = conn.prepareStatement(farrowingUpdateQuery);
+            farrowingUpdateStmt.setBoolean(1, true);
+            farrowingUpdateStmt.setInt(2, culledInt); 
+            farrowingUpdateStmt.executeUpdate();
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_WARNING_CULL_BUTTONActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1256,6 +1356,9 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel BREEDING_EARTAG;
     private javax.swing.JLabel BREEDING_EXPECTED_FARROWING;
     private javax.swing.JTable BREEDING_TABLE;
+    private javax.swing.JTable CULLED_MAIN_TABLE;
+    private javax.swing.JPanel CULLED_SOW;
+    private javax.swing.JLabel CULLED_TOTAL_CULLED;
     private javax.swing.JLabel CURRENT_REGSOW_EARTAG;
     private javax.swing.JComboBox<String> DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JPanel EARTAG_CONTAINER;
@@ -1296,6 +1399,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JTextField REGSOW_PEN;
     private javax.swing.JTable REGSOW_TABLE;
     private javax.swing.JButton START_BREEDING_BUTTON;
+    private javax.swing.JButton WARNING_CULL_BUTTON;
+    private javax.swing.JLabel WARNING_FORCULLED_LABEL;
     private javax.swing.JPanel WARNING_SOW;
     private javax.swing.JTable WARNING_SOW_DETAILS;
     private javax.swing.JTable WARNING_SOW_LIST_WARNING_SOW;
@@ -1313,6 +1418,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1355,6 +1461,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -1365,6 +1473,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2248,6 +2357,7 @@ private void FARROWING_SEARCH_EARTAG() {
         }
 
      private void WARNING_FETCH_EARTAG(){
+         
         try{
             DefaultTableModel model = new DefaultTableModel();
             
@@ -2261,7 +2371,7 @@ private void FARROWING_SEARCH_EARTAG() {
             pst = conn.prepareStatement(warningSowsQuery);
             rs = pst.executeQuery();
             
-            model.addColumn("Warning Eartag");
+            model.addColumn("Eartag");
 
 
             
@@ -2273,6 +2383,40 @@ private void FARROWING_SEARCH_EARTAG() {
 
              if(WARNING_SOW_LIST_WARNING_SOW != null){
                 WARNING_SOW_LIST_WARNING_SOW.setModel(model);
+            }
+             WARNING_CULL_BUTTON.setVisible(false);
+            
+        }  catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+    }
+     
+    private void CULLED_FETCH_EARTAG(){
+         
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            
+            String cullQuery = "SELECT DISTINCT eartag FROM farrowing_records WHERE culled = true";
+
+
+            pst = conn.prepareStatement(cullQuery);
+            rs = pst.executeQuery();
+            
+            int counterForCull = 0;
+            
+            model.addColumn("Eartag");
+
+            while (rs.next()) {
+                counterForCull++;
+                int eartag = rs.getInt("eartag");
+
+            model.addRow(new Object[]{eartag});
+        }
+            
+            CULLED_TOTAL_CULLED.setText(String.valueOf(counterForCull));
+
+             if(CULLED_MAIN_TABLE != null){
+                CULLED_MAIN_TABLE.setModel(model);
             }
             
         }  catch (Exception ex) {
