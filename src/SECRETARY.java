@@ -10,6 +10,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,6 +77,18 @@ public class SECRETARY extends javax.swing.JFrame {
 //        BREEDING 
         BREEDING_RETRIEVE_BREEDING_DETAILS();
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
+        
+        LIST_OF_SOW_BY_BATCH.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
+                int row = table.getSelectedRow();
+                int eartag = Integer.parseInt(table.getValueAt(row, 1).toString());
+
+                BREEDING_EARTAG.setText(Integer.toString(eartag));
+
+            }
+        });
        
 //        VISIBILITY
 //        BREEDING_EARTAG.setVisible(false);
@@ -85,12 +98,70 @@ public class SECRETARY extends javax.swing.JFrame {
 //        FARROWING_SEARCH_EARTAG();
           FARROWING_DETAILS_CONTAINER.setVisible(false);
           
+        FARROWING_ONGOING_BREEDING.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
+                int row = table.getSelectedRow();
+                
+                int eartag = Integer.parseInt(table.getValueAt(row, 0).toString());
+                String farrowingDue = table.getValueAt(row, 2).toString();
+
+                FARROWING_EARTAG.setText(Integer.toString(eartag));
+                FARROWING_DUE.setText(farrowingDue);
+                FARROWING_RETRIEVE_DETAILS();
+                
+
+            }
+        });
+          
 //          WEANING
         WEANING_RETRIEVE_DETAILS();
-
-//    DISABLED BUTTON 
-        BREEDING_SELECT_SOW_BUTTON.setEnabled(false);
-        FARROWING_SELECT_BUTTON.setEnabled(false);
+        
+        
+//        WARNING 
+        WARNING_FETCH_EARTAG();
+        
+        
+        WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
+                int row = table.getSelectedRow();
+                int eartag = Integer.parseInt(table.getValueAt(row, 0).toString());
+                try {
+                    DefaultTableModel model = new DefaultTableModel();
+                    String warningSowsDetailsQuery = "SELECT * FROM farrowing_records WHERE eartag = ?";
+                    pst = conn.prepareStatement(warningSowsDetailsQuery);
+                    pst.setInt(1, eartag);
+                    rs = pst.executeQuery();
+                    model.addColumn("Eartag");
+                    model.addColumn("Female Piglets");
+                    model.addColumn("Male Piglets");
+                    model.addColumn("Total Piglets");
+                    model.addColumn("Mortality");
+                    model.addColumn("Remarks");
+                    model.addColumn("Farrowing Due Date");
+                    model.addColumn("Farrowing Actual Date");
+                    while (rs.next()) {
+                        int eartagResult = rs.getInt("eartag");
+                        int femalePiglets = rs.getInt("female_piglets");
+                        int malePiglets = rs.getInt("male_piglets");
+                        int totalPiglets = rs.getInt("total_piglets");
+                        int mortality = rs.getInt("mortality");
+                        String remarks = rs.getString("remarks");
+                        Date farrowingDueDate = rs.getDate("farrowing_duedate");
+                        Date farrowingActualDate = rs.getDate("farrowing_actualdate");
+                        model.addRow(new Object[]{eartagResult, femalePiglets, malePiglets, totalPiglets, mortality, remarks, farrowingDueDate, farrowingActualDate});
+                    }
+                    if (WARNING_SOW_DETAILS != null) {
+                        WARNING_SOW_DETAILS.setModel(model);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }
+        });
 
         
         cardLayout = (CardLayout)(PAGES.getLayout());
@@ -118,14 +189,9 @@ public class SECRETARY extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         NOTIFICATION_BUTTON = new javax.swing.JButton();
         NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
+        jButton13 = new javax.swing.JButton();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        CULLED_SOW = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         REGISTER_OF_SOW = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -133,18 +199,18 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         REGSOW_BUILDING = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        REGSOW_ROOM = new javax.swing.JComboBox<>();
         REGSOW_BNUMBER = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         REGSOW_BUTTON = new javax.swing.JButton();
-        EARTAG_TITLE = new javax.swing.JLabel();
         ADD_EARTAG = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         EARTAG_CONTAINER = new javax.swing.JPanel();
         LATEST_REGSOW_EARTAG = new javax.swing.JLabel();
         CURRENT_REGSOW_EARTAG = new javax.swing.JLabel();
+        REGSOW_ASSIGNED_EMPLOYEE = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        REGSOW_PEN = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         REGSOW_TABLE = new javax.swing.JTable();
         BREEDING = new javax.swing.JPanel();
@@ -163,7 +229,6 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         START_BREEDING_BUTTON = new javax.swing.JButton();
         BREEDING_DATE = new com.toedter.calendar.JDateChooser();
-        BREEDING_SELECT_SOW_BUTTON = new javax.swing.JButton();
         EXPECTED_FARROWING_LABEL = new javax.swing.JPanel();
         BREEDING_EXPECTED_FARROWING = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -175,7 +240,6 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_SEARCH_FIELD = new javax.swing.JTextField();
         FARROWING_BUTTON = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
-        FARROWING_SELECT_BUTTON = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         FARROWING_DUE = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -235,6 +299,12 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
+        WARNING_SOW = new javax.swing.JPanel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        WARNING_SOW_LIST_WARNING_SOW = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        WARNING_SOW_DETAILS = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -304,6 +374,14 @@ public class SECRETARY extends javax.swing.JFrame {
         NUMBER_OF_NOTIFICATION.setText("0");
         jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 610, 30, 30));
 
+        jButton13.setText("WARNING SOW");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 150, 40));
+
         jSplitPane2.setLeftComponent(jPanel1);
 
         PAGES.setLayout(new java.awt.CardLayout());
@@ -311,34 +389,10 @@ public class SECRETARY extends javax.swing.JFrame {
         MAIN_PANEL.setBackground(new java.awt.Color(153, 255, 153));
         MAIN_PANEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setText("WARNING SOW");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, 40));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("999");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 90, -1));
-
-        MAIN_PANEL.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, 130, 120));
-
-        CULLED_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setText("CULLED SOW");
-        CULLED_SOW.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, 40));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("1002");
-        CULLED_SOW.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 52, 90, 52));
-
-        MAIN_PANEL.add(CULLED_SOW, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 130, 120));
-
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("RDJ FARM");
-        MAIN_PANEL.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 350, 60));
+        MAIN_PANEL.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 350, 60));
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
@@ -347,29 +401,26 @@ public class SECRETARY extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 204, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(REGSOW_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 150, 30));
+        jPanel2.add(REGSOW_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 230, 40));
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DATE");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 50, -1));
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("BUILDING");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 210, 70, -1));
 
         REGSOW_BUILDING.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
-        jPanel2.add(REGSOW_BUILDING, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 80, 20));
+        jPanel2.add(REGSOW_BUILDING, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 110, 30));
 
-        jLabel3.setText("PEN NUMBER");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("PEN");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 80, -1));
+        jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 240, 40));
 
-        jLabel5.setText("ROOM");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
-
-        REGSOW_ROOM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35" }));
-        jPanel2.add(REGSOW_ROOM, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 70, 20));
-        jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 160, 30));
-
-        jLabel2.setText("BATCH NUMBER");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, -1));
+        jLabel2.setText("ASSIGNED EMPLOYEE");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
 
         REGSOW_BUTTON.setText("REGISTER SOW");
         REGSOW_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -377,10 +428,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 REGSOW_BUTTONActionPerformed(evt);
             }
         });
-        jPanel2.add(REGSOW_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 130, 30));
-
-        EARTAG_TITLE.setText("EARTAG");
-        jPanel2.add(EARTAG_TITLE, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 50, 30));
+        jPanel2.add(REGSOW_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 570, 130, 30));
 
         ADD_EARTAG.setText("ADD EARTAG");
         ADD_EARTAG.addActionListener(new java.awt.event.ActionListener() {
@@ -388,11 +436,11 @@ public class SECRETARY extends javax.swing.JFrame {
                 ADD_EARTAGActionPerformed(evt);
             }
         });
-        jPanel2.add(ADD_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
+        jPanel2.add(ADD_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, -1, 30));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("SUGGESTED EARTAG");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 150, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 150, 30));
 
         EARTAG_CONTAINER.setBackground(new java.awt.Color(153, 153, 153));
         EARTAG_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -402,15 +450,20 @@ public class SECRETARY extends javax.swing.JFrame {
         LATEST_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         EARTAG_CONTAINER.add(LATEST_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 60, 40));
 
-        jPanel2.add(EARTAG_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 150, 40));
+        jPanel2.add(EARTAG_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 180, 40));
 
         CURRENT_REGSOW_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         CURRENT_REGSOW_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
         CURRENT_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CURRENT_REGSOW_EARTAG.setText("5000");
-        jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, 60, 30));
+        jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 60, 40));
+        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 240, 40));
 
-        REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 250, 690));
+        jLabel6.setText("BATCH NUMBER");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, -1, -1));
+        jPanel2.add(REGSOW_PEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 120, 30));
+
+        REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 350, 690));
 
         REGSOW_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -440,7 +493,7 @@ public class SECRETARY extends javax.swing.JFrame {
             REGSOW_TABLE.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        REGISTER_OF_SOW.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 800, 690));
+        REGISTER_OF_SOW.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 650, 690));
 
         PAGES.add(REGISTER_OF_SOW, "PAGE_1");
 
@@ -516,14 +569,6 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         BREEDING.add(BREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 250, 40));
 
-        BREEDING_SELECT_SOW_BUTTON.setText("SELECT");
-        BREEDING_SELECT_SOW_BUTTON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BREEDING_SELECT_SOW_BUTTONActionPerformed(evt);
-            }
-        });
-        BREEDING.add(BREEDING_SELECT_SOW_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
-
         EXPECTED_FARROWING_LABEL.setBackground(new java.awt.Color(153, 153, 153));
         EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -579,14 +624,6 @@ public class SECRETARY extends javax.swing.JFrame {
 
         jLabel19.setText("SEARCH EARTAG IF FARROWED");
         FARROWING.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 270, 30));
-
-        FARROWING_SELECT_BUTTON.setText("SELECT");
-        FARROWING_SELECT_BUTTON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FARROWING_SELECT_BUTTONActionPerformed(evt);
-            }
-        });
-        FARROWING.add(FARROWING_SELECT_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -919,6 +956,52 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(PERFORMANCE, "PAGE_5");
 
+        WARNING_SOW.setBackground(new java.awt.Color(0, 153, 153));
+        WARNING_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WARNING_SOW_LIST_WARNING_SOW.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                WARNING_SOW_LIST_WARNING_SOWMouseClicked(evt);
+            }
+        });
+        jScrollPane11.setViewportView(WARNING_SOW_LIST_WARNING_SOW);
+
+        WARNING_SOW.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 84, 130, 620));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("WARNING SOW");
+        WARNING_SOW.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 40));
+
+        WARNING_SOW_DETAILS.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane12.setViewportView(WARNING_SOW_DETAILS);
+
+        WARNING_SOW.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 840, 620));
+
+        PAGES.add(WARNING_SOW, "PAGE_6");
+
         jSplitPane2.setRightComponent(PAGES);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -930,7 +1013,7 @@ public class SECRETARY extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
+                .addComponent(jSplitPane2)
                 .addContainerGap())
         );
 
@@ -982,7 +1065,6 @@ public class SECRETARY extends javax.swing.JFrame {
         REGSOW_BNUMBER.setText("");
         LATEST_REGSOW_EARTAG.setText("");
         REGSOW_BUILDING.setSelectedIndex(0);
-        REGSOW_ROOM.setSelectedIndex(0);
         
         FETCH_CURRENT_EARTAG();
     }//GEN-LAST:event_REGSOW_BUTTONActionPerformed
@@ -992,14 +1074,6 @@ public class SECRETARY extends javax.swing.JFrame {
         String addEartag = CURRENT_REGSOW_EARTAG.getText();
         LATEST_REGSOW_EARTAG.setText(addEartag);
     }//GEN-LAST:event_ADD_EARTAGActionPerformed
-
-    private void BREEDING_SELECT_SOW_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BREEDING_SELECT_SOW_BUTTONActionPerformed
-        DefaultTableModel model = (DefaultTableModel) LIST_OF_SOW_BY_BATCH.getModel();
-        int selectedRowIndex = LIST_OF_SOW_BY_BATCH.getSelectedRow();
-
-        BREEDING_EARTAG.setText(model.getValueAt(selectedRowIndex, 1).toString());
-//        CASHIER_PRICE.setText(model.getValueAt(selectedRowIndex, 1).toString());
-    }//GEN-LAST:event_BREEDING_SELECT_SOW_BUTTONActionPerformed
 
     private void START_BREEDING_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_START_BREEDING_BUTTONActionPerformed
        
@@ -1041,15 +1115,15 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private void FARROWING_SUBMIT_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FARROWING_SUBMIT_BUTTONActionPerformed
 
-        FARROWING_SUBMIT();
-        FARROWING_RETRIEVE_DETAILS();
-        BREEDING_RETRIEVE_BREEDING_DETAILS();
-        
-        FARROWING_SEARCH_FIELD.setText("");
-        FARROWING_DETAILS_CONTAINER.setVisible(true);
-        
-        boolean setNotif = false;
-        FETCH_NOTIFICATION(setNotif);
+//        FARROWING_SUBMIT();
+//        FARROWING_RETRIEVE_DETAILS();
+//        BREEDING_RETRIEVE_BREEDING_DETAILS();
+//        
+//        FARROWING_SEARCH_FIELD.setText("");
+//        FARROWING_DETAILS_CONTAINER.setVisible(true);
+//        
+//        boolean setNotif = false;
+//        FETCH_NOTIFICATION(setNotif);
 
     }//GEN-LAST:event_FARROWING_SUBMIT_BUTTONActionPerformed
 
@@ -1061,15 +1135,6 @@ public class SECRETARY extends javax.swing.JFrame {
         System.out.println(FARROWING_SEARCH_FIELD.getText());
 //        FARROWING_SELECT_BUTTON.setEnabled(true);
     }//GEN-LAST:event_FARROWING_BUTTONActionPerformed
-
-    private void FARROWING_SELECT_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FARROWING_SELECT_BUTTONActionPerformed
-        DefaultTableModel model = (DefaultTableModel) FARROWING_ONGOING_BREEDING.getModel();
-        int selectedRowIndex = FARROWING_ONGOING_BREEDING.getSelectedRow();
-        
-        FARROWING_EARTAG.setText(model.getValueAt(selectedRowIndex, 0).toString());
-        FARROWING_DUE.setText(model.getValueAt(selectedRowIndex, 2).toString());
-        FARROWING_RETRIEVE_DETAILS();
-    }//GEN-LAST:event_FARROWING_SELECT_BUTTONActionPerformed
 
     private void FARROWING_MALEPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_FARROWING_MALEPropertyChange
 
@@ -1136,6 +1201,16 @@ public class SECRETARY extends javax.swing.JFrame {
         PERFORMANCE_WEANING_RETRIEVE_DETAILS();
     }//GEN-LAST:event_jButton12ActionPerformed
 
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+
+        cardLayout.show(PAGES, "PAGE_6");
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void WARNING_SOW_LIST_WARNING_SOWMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_WARNING_SOW_LIST_WARNING_SOWMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_WARNING_SOW_LIST_WARNING_SOWMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1180,13 +1255,10 @@ public class SECRETARY extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser BREEDING_DATE;
     private javax.swing.JLabel BREEDING_EARTAG;
     private javax.swing.JLabel BREEDING_EXPECTED_FARROWING;
-    private javax.swing.JButton BREEDING_SELECT_SOW_BUTTON;
     private javax.swing.JTable BREEDING_TABLE;
-    private javax.swing.JPanel CULLED_SOW;
     private javax.swing.JLabel CURRENT_REGSOW_EARTAG;
     private javax.swing.JComboBox<String> DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JPanel EARTAG_CONTAINER;
-    private javax.swing.JLabel EARTAG_TITLE;
     private javax.swing.JPanel EXPECTED_FARROWING_LABEL;
     private javax.swing.JPanel FARROWING;
     private javax.swing.JTextField FARROWING_ABW;
@@ -1202,7 +1274,6 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JTable FARROWING_ONGOING_BREEDING;
     private javax.swing.JTextField FARROWING_REMARKS;
     private javax.swing.JTextField FARROWING_SEARCH_FIELD;
-    private javax.swing.JButton FARROWING_SELECT_BUTTON;
     private javax.swing.JButton FARROWING_SUBMIT_BUTTON;
     private javax.swing.JLabel FARROWING_TOTAL_PIGLETS;
     private javax.swing.JLabel LATEST_REGSOW_EARTAG;
@@ -1217,13 +1288,17 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JTextField PERFORMANCE_SEARCHFIELD;
     private javax.swing.JTable PERFORMANCE_WEANING_TABLE;
     private javax.swing.JPanel REGISTER_OF_SOW;
+    private javax.swing.JTextField REGSOW_ASSIGNED_EMPLOYEE;
     private javax.swing.JTextField REGSOW_BNUMBER;
     private javax.swing.JComboBox<String> REGSOW_BUILDING;
     private javax.swing.JButton REGSOW_BUTTON;
     private com.toedter.calendar.JDateChooser REGSOW_DATE;
-    private javax.swing.JComboBox<String> REGSOW_ROOM;
+    private javax.swing.JTextField REGSOW_PEN;
     private javax.swing.JTable REGSOW_TABLE;
     private javax.swing.JButton START_BREEDING_BUTTON;
+    private javax.swing.JPanel WARNING_SOW;
+    private javax.swing.JTable WARNING_SOW_DETAILS;
+    private javax.swing.JTable WARNING_SOW_LIST_WARNING_SOW;
     private javax.swing.JPanel WEANING;
     private javax.swing.JTextField WEANING_AW;
     private com.toedter.calendar.JDateChooser WEANING_CALENDAR;
@@ -1237,6 +1312,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1279,18 +1355,16 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1312,14 +1386,16 @@ public class SECRETARY extends javax.swing.JFrame {
 //                
 //            System.out.println(dateString);
             
-            String sql = "INSERT INTO register_sow (eartag, date, bnumber, penbuilding, penroom) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO register_sow (eartag, date, bnumber, penbuilding, penroom, assigned_employee) VALUES (?, ?, ?, ?, ?, ?)";
             
             pst = conn.prepareStatement(sql);
             pst.setString(1, LATEST_REGSOW_EARTAG.getText());
             pst.setString(2, dateString);
             pst.setString(3, REGSOW_BNUMBER.getText());
             pst.setString(4, (String) REGSOW_BUILDING.getSelectedItem());
-            pst.setString(5, (String) REGSOW_ROOM.getSelectedItem());
+            pst.setString(5, REGSOW_PEN.getText());
+            pst.setString(5, REGSOW_ASSIGNED_EMPLOYEE.getText());
+
             pst.execute();
              
 //            JOptionPane.showMessageDialog(null, ADMIN_REGISTRATION_TYPE.getSelectedItem() + " Registered Succesfully");
@@ -1363,27 +1439,30 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 
             
-            String query = "SELECT id, eartag, date, bnumber, penbuilding, penroom FROM register_sow";
+            String query = "SELECT eartag, date, bnumber, penbuilding, penroom, assigned_employee FROM register_sow";
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
             
-            model.addColumn("ID");
-            model.addColumn("EARTAG");
-            model.addColumn("DATE");
-            model.addColumn("BNUMBER");
-            model.addColumn("PBUILDING");
-            model.addColumn("PROOM");
+//            model.addColumn("ID");
+            model.addColumn("Eartag");
+            model.addColumn("Date");
+            model.addColumn("Batch");
+            model.addColumn("Building");
+            model.addColumn("Pen");
+            model.addColumn("Employee");
 
             
             while (rs.next()) {
-            int id = rs.getInt("id");
+//            int id = rs.getInt("id");
             int eartag = rs.getInt("eartag");
             Date date = rs.getDate("date");
             String bnumber = rs.getString("bnumber");
             String penbuilding = rs.getString("penbuilding");
             String penroom = rs.getString("penroom");
+            String assignedEmployee = rs.getString("assigned_employee");
 
-            model.addRow(new Object[]{id, eartag, date, bnumber, penbuilding, penroom});
+
+            model.addRow(new Object[]{eartag, date, bnumber, penbuilding, penroom, assignedEmployee});
         }
 
              if(REGSOW_TABLE != null){
@@ -1411,11 +1490,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 DROPDOWN_FOR_BATCH_NUMBER.addItem(categoryName);
              }
 
-            // Attach an ActionListener to the combobox
+
             DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent e) {
                 BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-                BREEDING_SELECT_SOW_BUTTON.setEnabled(true);
               }
             });
 
@@ -1429,7 +1507,7 @@ public class SECRETARY extends javax.swing.JFrame {
         try{
             DefaultTableModel model = new DefaultTableModel();
 
-            // Get the selected item from the dropdown
+
             String selectedBatchNumber = (String)DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
 
             String query = "SELECT id, eartag, date, bnumber, penbuilding, penroom FROM register_sow WHERE bnumber = ?";
@@ -1439,20 +1517,16 @@ public class SECRETARY extends javax.swing.JFrame {
 
             model.addColumn("ID");
             model.addColumn("EARTAG");
-//            model.addColumn("DATE");
+
             model.addColumn("BNUMBER");
-//            model.addColumn("PBUILDING");
-//            model.addColumn("PROOM");
+
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int eartag = rs.getInt("eartag");
-//                Date date = rs.getDate("date");
-                String bnumber = rs.getString("bnumber");
-//                String penbuilding = rs.getString("penbuilding");
-//                String penroom = rs.getString("penroom");
 
-//                model.addRow(new Object[]{id, eartag, date, bnumber, penbuilding, penroom});
+                String bnumber = rs.getString("bnumber");
+
                 model.addRow(new Object[]{id, eartag, bnumber});
 
             }
@@ -1468,57 +1542,76 @@ public class SECRETARY extends javax.swing.JFrame {
     
 //    BREEDING 
                    
-     private void BREEDING_START_BREEDING(){
-        
-        try{
-            boolean isBreeding = false;
-            Date selectedDate = BREEDING_DATE.getDate();
-            String dateString = new java.sql.Date(selectedDate.getTime()).toString();
-            
-            
-            String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed) VALUES (?, ?, ?, ?, ?, ?)";
-            
-            String selectSql = "SELECT farrowed FROM breeding WHERE eartag = ?";
-            pst = conn.prepareStatement(selectSql);
-            pst.setString(1, BREEDING_EARTAG.getText());
-            rs = pst.executeQuery();
-            if (rs.next() && rs.getBoolean("farrowed")) {
-                JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " has already been marked as farrowed.");
+        private void BREEDING_START_BREEDING(){
+            try{
+                boolean isBreeding = false;
+                Date selectedDate = BREEDING_DATE.getDate();
+                String dateString = new java.sql.Date(selectedDate.getTime()).toString();
+
+
+                String checkSql = "SELECT eartag FROM breeding WHERE eartag = ?";
+                pst = conn.prepareStatement(checkSql);
+                pst.setString(1, BREEDING_EARTAG.getText());
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table.");
+                    BREEDING_EARTAG.setText("");
+                    BREEDING_BOAR_USED.setText("");
+                    BREEDING_DATE.setDate(null); 
+                    BREEDING_EXPECTED_FARROWING.setText("");
+                    BREEDING_COMMENTS.setText("");
+                    return;
+                }
+
+                String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String farrowingUpdate = "SELECT farrowed FROM breeding WHERE eartag = ?";
+                String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
+
+                pst = conn.prepareStatement(farrowingUpdate);
+                pst.setString(1, BREEDING_EARTAG.getText());
+                rs = pst.executeQuery();
+
+                if (rs.next() && rs.getBoolean("farrowed")) {
+                    JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " has already been marked as farrowed.");
+                    BREEDING_EARTAG.setText("");
+                    BREEDING_BOAR_USED.setText("");
+                    BREEDING_DATE.setDate(null); 
+                    BREEDING_EXPECTED_FARROWING.setText("");
+                    BREEDING_COMMENTS.setText("");
+
+                    return;
+                }
+
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, BREEDING_EARTAG.getText());
+                pst.setString(2, BREEDING_BOAR_USED.getText());
+                pst.setString(3, dateString);
+                pst.setString(4, BREEDING_EXPECTED_FARROWING.getText());
+                pst.setString(5, BREEDING_COMMENTS.getText());
+                pst.setBoolean(6, isBreeding);
+                pst.setInt(7, 0);
+
+                pst.execute();
+
+                pst = conn.prepareStatement(parity);
+                pst.setString(1, BREEDING_EARTAG.getText());
+                int rowsAffected = pst.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " started breeding.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to update parity for " + BREEDING_EARTAG.getText() + ".");
+                }
+
                 BREEDING_EARTAG.setText("");
                 BREEDING_BOAR_USED.setText("");
                 BREEDING_DATE.setDate(null); 
                 BREEDING_EXPECTED_FARROWING.setText("");
                 BREEDING_COMMENTS.setText("");
-                
-                return;
+            } catch (Exception e){
+                JOptionPane.showMessageDialog(null,e);
             }
-
-            
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, BREEDING_EARTAG.getText());
-            pst.setString(2, BREEDING_BOAR_USED.getText());
-            pst.setString(3, dateString);
-            pst.setString(4, BREEDING_EXPECTED_FARROWING.getText());
-            pst.setString(5, BREEDING_COMMENTS.getText());
-            pst.setBoolean(6, isBreeding);
-            
-            pst.execute();
-             
-            JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " Started Breeding");
-            
-
-            BREEDING_EARTAG.setText("");
-            BREEDING_BOAR_USED.setText("");
-            BREEDING_DATE.setDate(null); 
-            BREEDING_EXPECTED_FARROWING.setText("");
-            BREEDING_COMMENTS.setText("");
-            
-
-            
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null,e);
         }
-    }
 
     private void BREEDING_RETRIEVE_BREEDING_DETAILS(){
         
@@ -1591,10 +1684,7 @@ private void FARROWING_SEARCH_EARTAG() {
             if (farrowed) {
                 JOptionPane.showMessageDialog(null, "This sow has already farrowed");
                 FARROWING_RETRIEVE_DETAILS();
-                FARROWING_SELECT_BUTTON.setEnabled(false);
                 FARROWING_DETAILS_CONTAINER.setVisible(true);
-            } else {
-                FARROWING_SELECT_BUTTON.setEnabled(true);
             }
             
         } else {
@@ -1722,8 +1812,26 @@ private void FARROWING_SEARCH_EARTAG() {
         }
     }
 
-    private void FARROWING_REBREEDING(){
-        try{
+    private void FARROWING_REBREEDING() {
+        try {
+            String selectSql = "SELECT parity, farrowed FROM breeding WHERE eartag = ?";
+            pst = conn.prepareStatement(selectSql);
+            pst.setString(1, FARROWING_SEARCH_FIELD.getText());
+            rs = pst.executeQuery();
+
+            int currentParity = 0;
+            boolean hasFarrowed = true;
+            if (rs.next()) {
+                currentParity = rs.getInt("parity");
+                hasFarrowed = rs.getBoolean("farrowed");
+            }
+
+            if (!hasFarrowed) {
+                JOptionPane.showMessageDialog(null, FARROWING_SEARCH_FIELD.getText() + " has already farrowed and cannot be rebred.");
+                return;
+            }
+
+            int newParity = currentParity + 1;
 
             Date currentDate = new Date(); // current date
             Calendar cal = Calendar.getInstance();
@@ -1732,26 +1840,26 @@ private void FARROWING_SEARCH_EARTAG() {
             Date expectedFarrowingDate = cal.getTime();
             String expectedFarrowing = new java.sql.Date(expectedFarrowingDate.getTime()).toString();
             String dateString = new java.sql.Date(currentDate.getTime()).toString(); 
-                
-            String updateSql = "UPDATE breeding SET farrowed = false, expected_farrowing = ?, breeding_date = ? WHERE eartag = ?";
+
+            String updateSql = "UPDATE breeding SET farrowed = false, expected_farrowing = ?, breeding_date = ?, parity = ? WHERE eartag = ?";
             pst = conn.prepareStatement(updateSql);
             pst.setString(1, expectedFarrowing);
             pst.setString(2, dateString);
-            pst.setString(3, FARROWING_SEARCH_FIELD.getText());
+            pst.setInt(3, newParity);
+            pst.setString(4, FARROWING_SEARCH_FIELD.getText());
+
             pst.executeUpdate();
-             
+
             JOptionPane.showMessageDialog(null, FARROWING_SEARCH_FIELD.getText() + " EARTAG IS NOW REBREEDING");
-//            FARROWING_SEARCH_FIELD.setText("");
-            
+
             BREEDING_RETRIEVE_BREEDING_DETAILS();
             FARROWING_RETRIEVE_DETAILS();
-//            FARROWING_SEARCH_EARTAG();
-            
-        }catch (Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null,e);
         }
     }
-    
+
     
     
     //    WEANING 
@@ -1870,8 +1978,6 @@ private void FARROWING_SEARCH_EARTAG() {
                 model.addColumn("aw");
                 
                 model.addRow(new Object[]{eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
-            } else {
-                JOptionPane.showMessageDialog(null, "No record found");
             }
             WEANING_MAIN_TABLE.setModel(model);
 
@@ -1997,8 +2103,6 @@ private void FARROWING_SEARCH_EARTAG() {
                 model.addColumn("aw");
                 
                 model.addRow(new Object[]{weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
-            } else {
-                JOptionPane.showMessageDialog(null, "No record found");
             }
             
             PERFORMANCE_WEANING_TABLE.setModel(model);
@@ -2143,10 +2247,38 @@ private void FARROWING_SEARCH_EARTAG() {
             notificationDialog.setVisible(true);
         }
 
+     private void WARNING_FETCH_EARTAG(){
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            
+            String warningSowsQuery = "SELECT DISTINCT eartag " +
+                "FROM farrowing_records " +
+                "WHERE (female_piglets + male_piglets) < 7 " +
+                "OR mortality > 0 " +
+                "OR remarks IS NOT NULL " +
+                "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)";
+
+            pst = conn.prepareStatement(warningSowsQuery);
+            rs = pst.executeQuery();
+            
+            model.addColumn("Warning Eartag");
 
 
+            
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
 
+            model.addRow(new Object[]{eartag});
+        }
 
+             if(WARNING_SOW_LIST_WARNING_SOW != null){
+                WARNING_SOW_LIST_WARNING_SOW.setModel(model);
+            }
+            
+        }  catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+    }
       
 
 }
