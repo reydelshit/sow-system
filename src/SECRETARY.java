@@ -1290,6 +1290,17 @@ public class SECRETARY extends javax.swing.JFrame {
         String culledValue = WARNING_FORCULLED_LABEL.getText();
         int culledInt = Integer.parseInt(culledValue);
         try {
+            
+            String checkCulledQuery = "SELECT culled FROM farrowing_records WHERE eartag = ?";
+            pst = conn.prepareStatement(checkCulledQuery);
+            pst.setInt(1, culledInt);
+            rs = pst.executeQuery();
+
+            if (rs.next() && rs.getBoolean("culled")) {
+                JOptionPane.showMessageDialog(null, "Sow with eartag number " + culledValue +  " is already culled.");
+                return;
+            }
+            
             String breedingUpdateQuery = "UPDATE breeding SET culled = ? WHERE eartag = ?";
             PreparedStatement breedingUpdateStmt = conn.prepareStatement(breedingUpdateQuery);
             breedingUpdateStmt.setBoolean(1, true);
@@ -1303,6 +1314,9 @@ public class SECRETARY extends javax.swing.JFrame {
             farrowingUpdateStmt.setBoolean(1, true);
             farrowingUpdateStmt.setInt(2, culledInt); 
             farrowingUpdateStmt.executeUpdate();
+            
+            
+            JOptionPane.showMessageDialog(null, "Culling status for sow with eartag number " + culledValue +  " has been updated to culled.");
 
 
         } catch (SQLException ex) {
@@ -1658,18 +1672,29 @@ public class SECRETARY extends javax.swing.JFrame {
                 String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
 
-                String checkSql = "SELECT eartag FROM breeding WHERE eartag = ?";
+                String checkSql = "SELECT eartag, culled FROM breeding WHERE eartag = ?";
                 pst = conn.prepareStatement(checkSql);
                 pst.setString(1, BREEDING_EARTAG.getText());
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table.");
-                    BREEDING_EARTAG.setText("");
-                    BREEDING_BOAR_USED.setText("");
-                    BREEDING_DATE.setDate(null); 
-                    BREEDING_EXPECTED_FARROWING.setText("");
-                    BREEDING_COMMENTS.setText("");
-                    return;
+                    boolean isCulled = rs.getBoolean("culled");
+                    if (isCulled) {
+                        JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table and is marked as culled.");
+                        BREEDING_EARTAG.setText("");
+                        BREEDING_BOAR_USED.setText("");
+                        BREEDING_DATE.setDate(null); 
+                        BREEDING_EXPECTED_FARROWING.setText("");
+                        BREEDING_COMMENTS.setText("");
+                        return;
+                    } else {
+                        JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table.");
+                        BREEDING_EARTAG.setText("");
+                        BREEDING_BOAR_USED.setText("");
+                        BREEDING_DATE.setDate(null); 
+                        BREEDING_EXPECTED_FARROWING.setText("");
+                        BREEDING_COMMENTS.setText("");
+                        return;
+                    }
                 }
 
                 String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -1923,16 +1948,23 @@ private void FARROWING_SEARCH_EARTAG() {
 
     private void FARROWING_REBREEDING() {
         try {
-            String selectSql = "SELECT parity, farrowed FROM breeding WHERE eartag = ?";
+            String selectSql = "SELECT parity, culled, farrowed FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(selectSql);
             pst.setString(1, FARROWING_SEARCH_FIELD.getText());
             rs = pst.executeQuery();
 
             int currentParity = 0;
             boolean hasFarrowed = true;
+            boolean isCulled = false;
             if (rs.next()) {
                 currentParity = rs.getInt("parity");
                 hasFarrowed = rs.getBoolean("farrowed");
+                isCulled = rs.getBoolean("culled");
+            }
+
+            if (isCulled) {
+                JOptionPane.showMessageDialog(null, FARROWING_SEARCH_FIELD.getText() + " has already been culled and cannot be rebred.");
+                return;
             }
 
             if (!hasFarrowed) {
