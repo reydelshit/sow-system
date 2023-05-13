@@ -242,6 +242,7 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         BREEDING_EARTAG = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         FARROWING = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         FARROWING_ONGOING_BREEDING = new javax.swing.JTable();
@@ -441,6 +442,8 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PEN");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 80, -1));
+
+        REGSOW_BNUMBER.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 240, 40));
 
         jLabel2.setText("ASSIGNED EMPLOYEE");
@@ -472,7 +475,7 @@ public class SECRETARY extends javax.swing.JFrame {
         LATEST_REGSOW_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         LATEST_REGSOW_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
         LATEST_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        EARTAG_CONTAINER.add(LATEST_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 60, 40));
+        EARTAG_CONTAINER.add(LATEST_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 40));
 
         jPanel2.add(EARTAG_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 180, 40));
 
@@ -481,6 +484,8 @@ public class SECRETARY extends javax.swing.JFrame {
         CURRENT_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CURRENT_REGSOW_EARTAG.setText("5000");
         jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 60, 40));
+
+        REGSOW_ASSIGNED_EMPLOYEE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 240, 40));
 
         jLabel6.setText("BATCH NUMBER");
@@ -616,6 +621,11 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("BOAR USED");
         BREEDING.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 130, 20));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("LIST OF SOW THAT ARE CURRENTLY BREEDING");
+        BREEDING.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 420, 30));
 
         PAGES.add(BREEDING, "PAGE_2");
 
@@ -1137,6 +1147,8 @@ public class SECRETARY extends javax.swing.JFrame {
         REGSOW_BNUMBER.setText("");
         LATEST_REGSOW_EARTAG.setText("");
         REGSOW_BUILDING.setSelectedIndex(0);
+        REGSOW_ASSIGNED_EMPLOYEE.setText("");
+        REGSOW_PEN.setText("");
         
         FETCH_CURRENT_EARTAG();
     }//GEN-LAST:event_REGSOW_BUTTONActionPerformed
@@ -1168,7 +1180,7 @@ public class SECRETARY extends javax.swing.JFrame {
             if (selectedDate != null) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(selectedDate);
-                cal.add(Calendar.DAY_OF_MONTH, 1);
+                cal.add(Calendar.DAY_OF_MONTH, 114);
 //                cal.add(Calendar.MINUTE, 5);
                 Date expectedFarrowingDate = cal.getTime();
                 String expectedFarrowing = new java.sql.Date(expectedFarrowingDate.getTime()).toString();
@@ -1187,9 +1199,9 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private void FARROWING_SUBMIT_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FARROWING_SUBMIT_BUTTONActionPerformed
 
-//        FARROWING_SUBMIT();
-//        FARROWING_RETRIEVE_DETAILS();
-//        BREEDING_RETRIEVE_BREEDING_DETAILS();
+        FARROWING_SUBMIT();
+        FARROWING_RETRIEVE_DETAILS();
+        BREEDING_RETRIEVE_BREEDING_DETAILS();
 //        
 //        FARROWING_SEARCH_FIELD.setText("");
 //        FARROWING_DETAILS_CONTAINER.setVisible(true);
@@ -1480,6 +1492,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1521,7 +1534,7 @@ public class SECRETARY extends javax.swing.JFrame {
             pst.setString(3, REGSOW_BNUMBER.getText());
             pst.setString(4, (String) REGSOW_BUILDING.getSelectedItem());
             pst.setString(5, REGSOW_PEN.getText());
-            pst.setString(5, REGSOW_ASSIGNED_EMPLOYEE.getText());
+            pst.setString(6, REGSOW_ASSIGNED_EMPLOYEE.getText());
 
             pst.execute();
              
@@ -1601,34 +1614,36 @@ public class SECRETARY extends javax.swing.JFrame {
     }
     
         
-    private void BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER(){
-
-            try{
-
-            String sql = "SELECT bnumber FROM register_sow";
-            pst = conn.prepareStatement(sql);
-
-
-            rs = pst.executeQuery();
+        private void BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER() {
+            try {
+                String sql = "SELECT bnumber FROM register_sow";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
 
 
-            while (rs.next()) {
-                String categoryName = rs.getString("bnumber");
-                DROPDOWN_FOR_BATCH_NUMBER.addItem(categoryName);
-             }
+                Set<String> batchNumbers = new HashSet<>();
+
+                while (rs.next()) {
+                    String batchNumber = rs.getString("bnumber");
+                    batchNumbers.add(batchNumber);
+                }
 
 
-            DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
-              public void actionPerformed(ActionEvent e) {
-                BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-              }
-            });
 
-            } catch (Exception e){
-                 JOptionPane.showMessageDialog(null,e);
+                for (String batchNumber : batchNumbers) {
+                    DROPDOWN_FOR_BATCH_NUMBER.addItem(batchNumber);
+                }
 
+                DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
+                    }
+                });
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
         }
+
     
     private void BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER(){
         try{
@@ -1981,7 +1996,7 @@ private void FARROWING_SEARCH_EARTAG() {
             Date currentDate = new Date(); // current date
             Calendar cal = Calendar.getInstance();
             cal.setTime(currentDate);
-            cal.add(Calendar.DAY_OF_MONTH, 1);
+            cal.add(Calendar.DAY_OF_MONTH, 114);
             Date expectedFarrowingDate = cal.getTime();
             String expectedFarrowing = new java.sql.Date(expectedFarrowingDate.getTime()).toString();
             String dateString = new java.sql.Date(currentDate.getTime()).toString(); 
@@ -2330,20 +2345,20 @@ private void FARROWING_SEARCH_EARTAG() {
                     }
                         
                     if (total_piglets < 7 && mortality > 0) {
-                            if (warningNotification.containsKey(eartag)) {
-                                warningNotification.put(eartag, "Eartag has low piglet count and mortality.\n");
-                            } else {
-                                warningNotification.put(eartag, "Eartag has low piglet count and mortality.\n");
-                            }
-                            numberOfNotification++;
+                        if (warningNotification.containsKey(eartag)) {
+                            warningNotification.put(eartag, "Eartag has low piglet count and mortality.\n");
+                        } else {
+                            warningNotification.put(eartag, "Eartag has low piglet count and mortality.\n");
                         }
-
+                        numberOfNotification++;
+                    }
 
                     if (remarksCount > 1) {
                         if (warningNotification.containsKey(eartag)) {
-                            warningNotification.put(eartag, warningNotification.get(eartag) + eartag + " - Remarks for have reached " + remarksCount + ".\n");
+                            warningNotification.put(eartag, warningNotification.get(eartag) + "Remarks for have reached " + remarksCount + ".\n");
                         } else {
-                            warningNotification.put(eartag, eartag + "Remarks for have reached " + remarksCount + ".\n");
+                            warningNotification.put(eartag, warningNotification.get(eartag) + "Remarks for have reached " + remarksCount + ".\n");
+
                         }
                         numberOfNotification++;
                     }
@@ -2381,7 +2396,7 @@ private void FARROWING_SEARCH_EARTAG() {
             }
         }
 
-    private void showNotificationDialog(Map<String, String> farrowingNotifications, Map<String, String> remarksNotifications, Map<String, String> weaningNotifications) {
+    private void showNotificationDialog(Map<String, String> farrowingNotifications, Map<String, String> warningNotifications, Map<String, String> weaningNotifications) {
             JDialog notificationDialog = new JDialog(this, "Notification", true);
             notificationDialog.setSize(500, 500);
             notificationDialog.setLayout(new BorderLayout());
@@ -2403,22 +2418,26 @@ private void FARROWING_SEARCH_EARTAG() {
             farrowingPanel.add(new JScrollPane(farrowingList), BorderLayout.CENTER);
 
 
-            JPanel remarksPanel = new JPanel(new BorderLayout());
-            JTextArea remarksTextArea = new JTextArea();
-            remarksTextArea.setEditable(false);
+            JPanel warningPanel = new JPanel(new BorderLayout());
+            DefaultListModel<String> warningListModel = new DefaultListModel<>();
+            JList<String> warningList = new JList<>(warningListModel);
 
-            for (Map.Entry<String, String> entry : remarksNotifications.entrySet()) {
-                remarksTextArea.append(entry.getKey() + " - " + entry.getValue() + "\n");
+            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
+                String value = entry.getValue();
+                String[] lines = value.split("\n");
+                for (String line : lines) {
+                    warningListModel.addElement(entry.getKey() + " - " + line);
+                }
             }
-            
-            remarksPanel.add(new JScrollPane(remarksTextArea), BorderLayout.CENTER);
+
+            warningPanel.add(new JScrollPane(warningList), BorderLayout.CENTER);
             
             JPanel weaningPanel = new JPanel(new BorderLayout());
             DefaultListModel<String> weaningListModel = new DefaultListModel<>();
             JList<String> weaningList = new JList<>(weaningListModel);
             weaningList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-
+            
             for (Map.Entry<String, String> entry : weaningNotifications.entrySet()) {
                 weaningListModel.addElement(entry.getKey() + " - " + entry.getValue());
             }
@@ -2426,10 +2445,11 @@ private void FARROWING_SEARCH_EARTAG() {
             weaningPanel.add(new JScrollPane(weaningList), BorderLayout.CENTER);
   
             tabbedPane.addTab("Farrowing (" + farrowingNotifications.size() + ")", farrowingPanel);
-            tabbedPane.addTab("Warning (" + remarksNotifications.size() + ")", remarksPanel);
+            tabbedPane.addTab("Warning (" + warningListModel.size() + ")", warningPanel);
             tabbedPane.addTab("Weaning (" + weaningNotifications.size() + ")", weaningPanel);
 
-
+            
+            System.out.println(warningNotifications );
 
 
             notificationDialog.add(tabbedPane, BorderLayout.CENTER);
