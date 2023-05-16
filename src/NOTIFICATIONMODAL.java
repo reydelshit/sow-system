@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -23,10 +24,10 @@ import javax.swing.JOptionPane;
  *
  * @author Reydel
  */
-public class FarrowingNotificationFrame extends JFrame implements Runnable {
+public class NOTIFICATIONMODAL extends JFrame implements Runnable {
 
     /**
-     * Creates new form FarrowingNotificationFrame
+     * Creates new form NOTIFICATIONMODAL
      */
     
     Connection conn = null;
@@ -34,9 +35,14 @@ public class FarrowingNotificationFrame extends JFrame implements Runnable {
     ResultSet rs = null;
     
     
-    public FarrowingNotificationFrame() {
+    public NOTIFICATIONMODAL() {
+        setUndecorated(true);
+
         conn = DBConnection.getConnection();
         initComponents();
+        
+        
+        FETCH_NOTIFICATION_TO_JLIST();
     }
 
     /**
@@ -49,25 +55,32 @@ public class FarrowingNotificationFrame extends JFrame implements Runnable {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        NOTIFICATION_CONTAINER = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("dadabnf");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 330, 110));
+        NOTIFICATION_CONTAINER.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(NOTIFICATION_CONTAINER);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -90,77 +103,59 @@ public class FarrowingNotificationFrame extends JFrame implements Runnable {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FarrowingNotificationFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NOTIFICATIONMODAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FarrowingNotificationFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NOTIFICATIONMODAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FarrowingNotificationFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NOTIFICATIONMODAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FarrowingNotificationFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NOTIFICATIONMODAL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FarrowingNotificationFrame().setVisible(true);
+                new NOTIFICATIONMODAL().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> NOTIFICATION_CONTAINER;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
-        @Override
-        public void run() {
-            // Check if the system tray is supported
-            if (!SystemTray.isSupported()) {
-                JOptionPane.showMessageDialog(null, "System tray is not supported in this system");
-                return;
-            }
-
-        // Create a system tray icon
-        Image icon = Toolkit.getDefaultToolkit().getImage("notif.png"); // Replace with your own icon file
-        TrayIcon trayIcon = new TrayIcon(icon, "Farrowing Notification");
-            trayIcon.setImageAutoSize(true);
-
+    
+    private void FETCH_NOTIFICATION_TO_JLIST() {
+            DefaultListModel<String> notificationListModel = new DefaultListModel<>();
+            int notificationCounter = 0;
             try {
-                // Add the system tray icon to the system tray
-                SystemTray systemTray = SystemTray.getSystemTray();
-                systemTray.add(trayIcon);
-
-                // Retrieve expected farrowing date from database for all breedings
-                String sql = "SELECT eartag, expected_farrowing FROM breeding";
+                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY id DESC";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
 
                 while (rs.next()) {
+                    notificationCounter++;
                     String eartag = rs.getString("eartag");
-                    Date expectedFarrowingDate = rs.getDate("expected_farrowing");
+                    String notificationMessage = rs.getString("notification_message");
 
-                    // Calculate time difference between expected farrowing date and current date
-                    Date currentDate = new Date();
-                    long timeDiff = expectedFarrowingDate.getTime() - currentDate.getTime();
-
-                    if (timeDiff > 0) {
-                        // Schedule notification for farrowing expected soon
-                        Timer timer = new Timer();
-                        timer.schedule(new TimerTask() {
-                            public void run() {
-                                trayIcon.displayMessage("Farrowing Notification", eartag + " Farrowing is expected soon!", TrayIcon.MessageType.INFO);
-                            }
-                        }, timeDiff - 1 * 60 * 1000); // Notify 1 minute before expected farrowing
-
-                    } else {
-                        // Schedule notification for farrowing already passed
-                        trayIcon.displayMessage("Farrowing Notification", "Farrowing for " + eartag + " has already passed!", TrayIcon.MessageType.INFO);
-                    }
+                    String notification = "Eartag: " + eartag + " - " + notificationMessage;
+                    notificationListModel.addElement(notification);
                 }
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+
+                NOTIFICATION_CONTAINER.setModel(notificationListModel);
+//                NUMBER_OF_NOTIFICATION.setText(String.valueOf(notificationCounter));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
             }
         }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+        
 }

@@ -1,12 +1,5 @@
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.SystemTray;
-import java.awt.Toolkit;
-import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,31 +11,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import javax.management.Notification;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -60,25 +35,45 @@ public class SECRETARY extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     CardLayout cardLayout;
-
+    
+    private NOTIFICATIONMODAL notificationModal;
+    int newNotificationCount = 0;
+    
     public SECRETARY() {
         conn = DBConnection.getConnection();
         initComponents();
-        REGISTER_RETRIEVE_REGISTERED_SOW();
         
+        notificationModal = new NOTIFICATIONMODAL();
+        notificationModal.setVisible(false);
+        
+
         FETCH_CURRENT_EARTAG();
-        
-        boolean setNotif = false;
-        FETCH_NOTIFICATION(setNotif);
-        
-//        FETCH_NOTIFICATION();
-        
-//        FARROWING_NOTIFICATION();
-        
-        
-//        BREEDING 
-        BREEDING_RETRIEVE_BREEDING_DETAILS();
+        REGISTER_RETRIEVE_REGISTERED_SOW();
+//
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
+//        BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
+
+        BREEDING_RETRIEVE_BREEDING_DETAILS();
+//
+//        FARROWING_RETRIEVE_DETAILS();
+//        FARROWING_REBREEDING();
+
+        FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+//
+//        WEANING_RETRIEVE_DETAILS();
+//
+//        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+//        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+//        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+
+        UPLOAD_NOTIFICATION();
+        NUMBER_OF_NOTIFICATION.setText(String.valueOf(newNotificationCount));
+
+        WARNING_FETCH_EARTAG();
+
+        CULLED_FETCH_EARTAG();
+
+        
         
         LIST_OF_SOW_BY_BATCH.addMouseListener(new MouseAdapter() {
             @Override
@@ -96,8 +91,6 @@ public class SECRETARY extends javax.swing.JFrame {
 //        BREEDING_EARTAG.setVisible(false);
         
 
-//      FARROWING 
-//        FARROWING_SEARCH_EARTAG();
           FARROWING_DETAILS_CONTAINER.setVisible(false);
           
         FARROWING_ONGOING_BREEDING.addMouseListener(new MouseAdapter() {
@@ -116,13 +109,29 @@ public class SECRETARY extends javax.swing.JFrame {
 
             }
         });
+        
+        LIST_OF_NOT_FARROWED.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
+                int row = table.getSelectedRow();
+                
+                int eartag = Integer.parseInt(table.getValueAt(row, 0).toString());
+                String farrowingDue = table.getValueAt(row, 1).toString();
+
+                FARROWING_EARTAG.setText(Integer.toString(eartag));
+                FARROWING_DUE.setText(farrowingDue);
+//                FARROWING_SEARCH_FIELD.setText(Integer.toString(eartag));
+
+                
+
+            }
+        });
           
 //          WEANING
 //        WEANING_RETRIEVE_DETAILS();
         
         
-//        WARNING 
-        WARNING_FETCH_EARTAG();
         
         
         WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
@@ -194,10 +203,10 @@ public class SECRETARY extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        NOTIFICATION_BUTTON = new javax.swing.JButton();
         NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -276,6 +285,9 @@ public class SECRETARY extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         FARROWING_MAIN_TABLE = new javax.swing.JTable();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        LIST_OF_NOT_FARROWED = new javax.swing.JTable();
+        jLabel38 = new javax.swing.JLabel();
         WEANING = new javax.swing.JPanel();
         WEANING_CALENDAR = new com.toedter.calendar.JDateChooser();
         WEANING_MALE = new javax.swing.JTextField();
@@ -377,19 +389,11 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 150, 40));
 
-        NOTIFICATION_BUTTON.setText("NOTIFICATION");
-        NOTIFICATION_BUTTON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NOTIFICATION_BUTTONActionPerformed(evt);
-            }
-        });
-        jPanel1.add(NOTIFICATION_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, 110, 50));
-
         NUMBER_OF_NOTIFICATION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
         NUMBER_OF_NOTIFICATION.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NUMBER_OF_NOTIFICATION.setText("0");
-        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 610, 30, 30));
+        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 650, 30, 40));
 
         jButton13.setText("WARNING SOW");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -406,6 +410,14 @@ public class SECRETARY extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 150, 40));
+
+        jToggleButton1.setText("NOTIFICATION");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 650, -1, 40));
 
         jSplitPane2.setLeftComponent(jPanel1);
 
@@ -656,8 +668,8 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         FARROWING.add(FARROWING_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, -1, 30));
 
-        jLabel19.setText("SEARCH EARTAG IF FARROWED");
-        FARROWING.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 270, 30));
+        jLabel19.setText("LIST OF EARTAG THAT ARE CURRENTLY NOT FARROWED");
+        FARROWING.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 360, 30));
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -814,6 +826,24 @@ public class SECRETARY extends javax.swing.JFrame {
 
         FARROWING.add(FARROWING_DETAILS_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 850, 430));
 
+        LIST_OF_NOT_FARROWED.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane14.setViewportView(LIST_OF_NOT_FARROWED);
+
+        FARROWING.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 390, 120));
+
+        jLabel38.setText("SEARCH EARTAG IF FARROWED");
+        FARROWING.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 270, 30));
+
         PAGES.add(FARROWING, "PAGE_3");
 
         WEANING.setBackground(new java.awt.Color(204, 51, 255));
@@ -932,7 +962,7 @@ public class SECRETARY extends javax.swing.JFrame {
         ));
         jScrollPane8.setViewportView(PERFORMANCE_WEANING_TABLE);
 
-        PERFORMANCE.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 450, 540, 300));
+        PERFORMANCE.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 400, 540, 300));
 
         PERFORMANCE_FARROWING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -947,8 +977,8 @@ public class SECRETARY extends javax.swing.JFrame {
         ));
         jScrollPane9.setViewportView(PERFORMANCE_FARROWING_TABLE);
 
-        PERFORMANCE.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 860, 250));
-        PERFORMANCE.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 260, 50));
+        PERFORMANCE.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 860, 250));
+        PERFORMANCE.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 260, 30));
 
         jButton12.setText("SEARCH");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -956,7 +986,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 jButton12ActionPerformed(evt);
             }
         });
-        PERFORMANCE.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, -1, 50));
+        PERFORMANCE.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, 30));
 
         PERFORMANCE_BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -971,22 +1001,22 @@ public class SECRETARY extends javax.swing.JFrame {
         ));
         jScrollPane10.setViewportView(PERFORMANCE_BREEDING_TABLE);
 
-        PERFORMANCE.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 510, 300));
+        PERFORMANCE.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 510, 300));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("FARROWING");
-        PERFORMANCE.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 540, 40));
+        PERFORMANCE.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 540, 40));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("BREEDING");
-        PERFORMANCE.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 510, 40));
+        PERFORMANCE.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 510, 40));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("WEANING");
-        PERFORMANCE.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 410, 540, 40));
+        PERFORMANCE.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 540, 40));
 
         PAGES.add(PERFORMANCE, "PAGE_5");
 
@@ -1163,10 +1193,10 @@ public class SECRETARY extends javax.swing.JFrame {
        
         BREEDING_START_BREEDING();
         BREEDING_RETRIEVE_BREEDING_DETAILS();
+        UPLOAD_NOTIFICATION();
+        FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
         
-        boolean setNotif = false;
-        FETCH_NOTIFICATION(setNotif);
-//        FARROWING_NOTIFICATION();
+
     }//GEN-LAST:event_START_BREEDING_BUTTONActionPerformed
 
     private void BREEDING_DATEPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_BREEDING_DATEPropertyChange
@@ -1202,12 +1232,17 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_SUBMIT();
         FARROWING_RETRIEVE_DETAILS();
         BREEDING_RETRIEVE_BREEDING_DETAILS();
+        FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+
+                
+        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+//        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+        
 //        
 //        FARROWING_SEARCH_FIELD.setText("");
 //        FARROWING_DETAILS_CONTAINER.setVisible(true);
 //        
-        boolean setNotif = false;
-        FETCH_NOTIFICATION(setNotif);
+        UPLOAD_NOTIFICATION();
 
     }//GEN-LAST:event_FARROWING_SUBMIT_BUTTONActionPerformed
 
@@ -1251,12 +1286,6 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_REBREEDING();
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void NOTIFICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NOTIFICATION_BUTTONActionPerformed
-        boolean setNotif = true;
-        FETCH_NOTIFICATION(setNotif);
-
-    }//GEN-LAST:event_NOTIFICATION_BUTTONActionPerformed
-
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
         WEANING_SEARCH_EARTAG();
@@ -1267,6 +1296,10 @@ public class SECRETARY extends javax.swing.JFrame {
         // TODO add your handling code here:
         WEANING_SUBMIT();
         WEANING_RETRIEVE_DETAILS();
+        
+        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1313,6 +1346,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
             if (rs.next() && rs.getBoolean("culled")) {
                 JOptionPane.showMessageDialog(null, "Sow with eartag number " + culledValue +  " is already culled.");
+                CULLED_FETCH_EARTAG();
                 return;
             }
             
@@ -1333,12 +1367,17 @@ public class SECRETARY extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Culling status for sow with eartag number " + culledValue +  " has been updated to culled.");
 
+            CULLED_FETCH_EARTAG();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
     }//GEN-LAST:event_WARNING_CULL_BUTTONActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+          notificationModal.setVisible(!notificationModal.isVisible());
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1409,9 +1448,9 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JButton FARROWING_SUBMIT_BUTTON;
     private javax.swing.JLabel FARROWING_TOTAL_PIGLETS;
     private javax.swing.JLabel LATEST_REGSOW_EARTAG;
+    private javax.swing.JTable LIST_OF_NOT_FARROWED;
     private javax.swing.JTable LIST_OF_SOW_BY_BATCH;
     private javax.swing.JPanel MAIN_PANEL;
-    private javax.swing.JButton NOTIFICATION_BUTTON;
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
     private javax.swing.JPanel PERFORMANCE;
@@ -1487,6 +1526,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1504,6 +1544,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1513,6 +1554,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
     
@@ -1849,6 +1891,7 @@ private void FARROWING_SEARCH_EARTAG() {
             FARROWING_DETAILS_CONTAINER.setVisible(false);
         }
         
+        
         if(FARROWING_ONGOING_BREEDING != null) {
             FARROWING_ONGOING_BREEDING.setModel(model);
         }
@@ -1857,6 +1900,37 @@ private void FARROWING_SEARCH_EARTAG() {
     }
 }
 
+     private void FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED(){  
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            
+            String notFarrowed = "SELECT eartag, expected_farrowing " +
+                "FROM breeding " +
+                "WHERE farrowed = false";
+
+            pst = conn.prepareStatement(notFarrowed);
+            rs = pst.executeQuery();
+            
+            model.addColumn("Eartag");
+            model.addColumn("expected_farrowing");
+
+
+            
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+
+            model.addRow(new Object[]{eartag, expected_farrowing});
+        }
+
+             if(LIST_OF_NOT_FARROWED != null){
+                LIST_OF_NOT_FARROWED.setModel(model);
+            }
+            
+        }  catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+     }
 
     
      private void FARROWING_SUBMIT(){
@@ -1924,7 +1998,7 @@ private void FARROWING_SEARCH_EARTAG() {
 
             String query = "SELECT eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks FROM farrowing_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
-            pst.setInt(1, Integer.parseInt(FARROWING_SEARCH_FIELD.getText())); // assuming the eartag is an integer
+            pst.setInt(1, Integer.parseInt(FARROWING_EARTAG.getText()));
             rs = pst.executeQuery();
 
             model.addColumn("eartag");
@@ -2274,212 +2348,349 @@ private void FARROWING_SEARCH_EARTAG() {
     }
     
 
-    private void FETCH_NOTIFICATION(boolean showNotif) {
-            Map<String, String> farrowingNotifications = new HashMap<>();
-            Map<String, String> warningNotifications = new HashMap<>();
-            Map<String, String> weaningNotifications = new HashMap<>();
-            int numberOfNotification = 0;
+//    private void FETCH_NOTIFICATION(boolean showNotif) {
+//            Map<String, String> farrowingNotifications = new HashMap<>();
+//            Map<String, String> warningNotifications = new HashMap<>();
+//            Map<String, String> weaningNotifications = new HashMap<>();
+//            int numberOfNotification = 0;
+//
+//
+//
+//            try {
+//                String sql = "SELECT eartag, expected_farrowing FROM breeding";
+//                pst = conn.prepareStatement(sql);
+//                rs = pst.executeQuery();
+//                
+//                
+//                String sqlForWarning = "SELECT eartag, remarks, total_piglets, mortality, farrowing_actualdate FROM farrowing_records";
+//                PreparedStatement pstForWarning = conn.prepareStatement(sqlForWarning);
+//                ResultSet rsForWarning = pstForWarning.executeQuery();
+//
+//
+//                while (rs.next()) {
+//                    String eartag = rs.getString("eartag");
+//                    LocalDate expectedFarrowing = rs.getDate("expected_farrowing").toLocalDate();
+//                    
+//                    LocalDate today = LocalDate.now();
+//                    long daysUntilFarrowing = ChronoUnit.DAYS.between(today, expectedFarrowing);
+//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+//                    String formattedDate = expectedFarrowing.format(formatter);
+//                    
+//                    System.out.println(daysUntilFarrowing+"dasd");
+//
+//                    int total_piglets = 0;
+//                    int mortality = 0;
+//                    
+//                    String notificationMessageForFarrowing = "";
+//                    String notificationMessageForWeaning = "";
+//                    
+//
+//                    
+//     
+//                    while (rsForWarning.next()) {
+//                        String eartagFromFarrowingRecords = rsForWarning.getString("eartag");
+//                        int remarksCount = 0;
+//
+//                        String remarks = rsForWarning.getString("remarks");
+//                        total_piglets = rsForWarning.getInt("total_piglets");
+//                        mortality = rsForWarning.getInt("mortality");
+//
+//                        LocalDate actualFarrowing = rsForWarning.getDate("farrowing_actualdate").toLocalDate();
+//                        LocalDate weaningDate = actualFarrowing.plusDays(28);
+//                        LocalDate currentDate = LocalDate.now();
+//                        String formattedDateForWeaning = weaningDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
+//
+//                        if (currentDate.isEqual(weaningDate)) {
+//                            notificationMessageForWeaning = "Today is weaning day! " + formattedDateForWeaning;
+//                            weaningNotifications.put(eartag, notificationMessageForWeaning);
+//                        } else if (currentDate.equals(weaningDate.minusDays(1))) {
+//                            notificationMessageForWeaning = "Tomorrow is weaning day! " + formattedDateForWeaning;
+//                            weaningNotifications.put(eartag, notificationMessageForWeaning);
+//                        }
+//
+//                        if (remarks != null && !remarks.trim().isEmpty()) {
+//                            String[] remarksArr = remarks.split(",");
+//                            for (String remark : remarksArr) {
+//                                if (remark.trim().length() > 0) {
+//                                    remarksCount++;
+//                                }
+//                            }
+//                        }
+//                        
+//                        if (remarksCount > 0) {
+//                            LocalDate notificationDate = LocalDate.now();
+//                            String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
+//
+//                            warningNotifications.put(eartagFromFarrowingRecords, "Remarks have reached " + remarksCount + " on " + notificationDateString + ".\n");
+//                            numberOfNotification++;
+//                       }
+//
+//                    }
+//                        
+//                    if (total_piglets < 7 && mortality > 0) {
+//                       LocalDate notificationDate = LocalDate.now();
+//                       String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
+//
+//                       if (warningNotifications.containsKey(eartag)) {
+//                           warningNotifications.put(eartag, "Eartag has low piglet count and mortality on " + notificationDateString + ".\n");
+//                       } else {
+//                           warningNotifications.put(eartag, "Eartag has low piglet count and mortality on " + notificationDateString + ".\n");
+//                       }
+//
+//                       numberOfNotification++;
+//                   }
+//                    
+//
+//                    if (daysUntilFarrowing == 0) {
+//                        notificationMessageForFarrowing = "Farrowing is happening today on " + formattedDate + "!";
+//                    } else if (daysUntilFarrowing == 1) {
+//                        notificationMessageForFarrowing = "Farrowing is expected soon on " + formattedDate + "!";
+//                    } else if (daysUntilFarrowing < 5) {
+//                        notificationMessageForFarrowing = "Farrowing is expected soon on " + formattedDate + "!";
+//                    }
+//
+//                    if (!notificationMessageForFarrowing.isEmpty()) {
+//                        if (farrowingNotifications.containsKey(eartag)) {
+//                            if (!farrowingNotifications.get(eartag).contains(notificationMessageForFarrowing)) {
+//                                farrowingNotifications.put(eartag, farrowingNotifications.get(eartag) + "\n" + notificationMessageForFarrowing);
+//                                numberOfNotification++;
+//                            }
+//                        } else {
+//                            farrowingNotifications.put(eartag, notificationMessageForFarrowing);
+//                            numberOfNotification++;
+//                        }
+//                    }
+//                }
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(null, ex);
+//            }
+//
+//            NUMBER_OF_NOTIFICATION.setText(Integer.toString(numberOfNotification));
+//
+//            if (showNotif) {
+//                showNotificationDialog(farrowingNotifications, warningNotifications, weaningNotifications);
+//            }
+//        }
 
+//        private void showNotificationDialog(Map<String, String> farrowingNotifications, Map<String, String> warningNotifications, Map<String, String> weaningNotifications) {
+//            Map<String, String> previousWarningNotifications = new HashMap<>();
+//            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
+//                previousWarningNotifications.put(entry.getKey(), entry.getValue());
+//            }
+//            warningNotifications = previousWarningNotifications;
+//
+//            JDialog notificationDialog = new JDialog(this, "Notification", true);
+//            notificationDialog.setSize(500, 500);
+//            notificationDialog.setLayout(new BorderLayout());
+//
+//            JTabbedPane tabbedPane = new JTabbedPane();
+//
+//
+//            JPanel farrowingPanel = new JPanel(new BorderLayout());
+//            DefaultListModel<String> farrowingListModel = new DefaultListModel<>();
+//            JList<String> farrowingList = new JList<>(farrowingListModel);
+//            farrowingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//
+//
+//            for (Map.Entry<String, String> entry : farrowingNotifications.entrySet()) {
+//                farrowingListModel.addElement(entry.getKey() + " - " + entry.getValue());
+//            }
+//
+//
+//            farrowingPanel.add(new JScrollPane(farrowingList), BorderLayout.CENTER);
+//
+//
+//            JPanel warningPanel = new JPanel(new BorderLayout());
+//            DefaultListModel<String> warningListModel = new DefaultListModel<>();
+//            JList<String> warningList = new JList<>(warningListModel);
+//
+//            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
+//                String value = entry.getValue();
+//                String[] lines = value.split("\n");
+//                for (String line : lines) {
+//                    String listItem = entry.getKey() + " - " + line;
+//                    System.out.println("Adding to list model: " + listItem);
+//                    warningListModel.addElement(listItem);
+//                }
+//            }
+//
+//            warningPanel.add(new JScrollPane(warningList), BorderLayout.CENTER);
+//
+//            JPanel weaningPanel = new JPanel(new BorderLayout());
+//            DefaultListModel<String> weaningListModel = new DefaultListModel<>();
+//            JList<String> weaningList = new JList<>(weaningListModel);
+//            weaningList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//
+//
+//            for (Map.Entry<String, String> entry : weaningNotifications.entrySet()) {
+//                weaningListModel.addElement(entry.getKey() + " - " + entry.getValue());
+//            }
+//
+//            weaningPanel.add(new JScrollPane(weaningList), BorderLayout.CENTER);
+//
+//            tabbedPane.addTab("Farrowing (" + farrowingNotifications.size() + ")", farrowingPanel);
+//            tabbedPane.addTab("Warning (" + warningListModel.size() + ")", warningPanel);
+//            tabbedPane.addTab("Weaning (" + weaningNotifications.size() + ")", weaningPanel);
+//
+//
+//            System.out.println(warningNotifications );
+//
+//
+//            notificationDialog.add(tabbedPane, BorderLayout.CENTER);
+//
+//
+//            notificationDialog.setVisible(true);
+//        }
+    
+        private Set<String> uploadedNotifications; // Declare the set
 
+        private void initializeUploadedNotifications() {
+            uploadedNotifications = new HashSet<>();
 
+            try {
+                // Load existing notifications from the database and populate the set
+                String sql = "SELECT eartag, notification_message FROM notifications";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    String eartag = rs.getString("eartag");
+                    String notificationMessage = rs.getString("notification_message");
+                    String notificationKey = eartag + notificationMessage;
+                    uploadedNotifications.add(notificationKey);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+        
+        private void UPLOAD_NOTIFICATION() {
+            initializeUploadedNotifications();
+            
             try {
                 String sql = "SELECT eartag, expected_farrowing FROM breeding";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
-                
-                
+
                 String sqlForWarning = "SELECT eartag, remarks, total_piglets, mortality, farrowing_actualdate FROM farrowing_records";
                 PreparedStatement pstForWarning = conn.prepareStatement(sqlForWarning);
                 ResultSet rsForWarning = pstForWarning.executeQuery();
 
-
                 while (rs.next()) {
                     String eartag = rs.getString("eartag");
                     LocalDate expectedFarrowing = rs.getDate("expected_farrowing").toLocalDate();
-                    
+
                     LocalDate today = LocalDate.now();
                     long daysUntilFarrowing = ChronoUnit.DAYS.between(today, expectedFarrowing);
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
                     String formattedDate = expectedFarrowing.format(formatter);
-                    
-                    System.out.println(daysUntilFarrowing+"dasd");
-
-                    int total_piglets = 0;
-                    int mortality = 0;
-                    
-                    String notificationMessageForFarrowing = "";
-                    String notificationMessageForWeaning = "";
-                    
-
-                    
-     
-                    while (rsForWarning.next()) {
-                        String eartagFromFarrowingRecords = rsForWarning.getString("eartag");
-                        int remarksCount = 0;
-
-                        String remarks = rsForWarning.getString("remarks");
-                        total_piglets = rsForWarning.getInt("total_piglets");
-                        mortality = rsForWarning.getInt("mortality");
-
-                        LocalDate actualFarrowing = rsForWarning.getDate("farrowing_actualdate").toLocalDate();
-                        LocalDate weaningDate = actualFarrowing.plusDays(28);
-                        LocalDate currentDate = LocalDate.now();
-                        String formattedDateForWeaning = weaningDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-
-                        if (currentDate.isEqual(weaningDate)) {
-                            notificationMessageForWeaning = "Today is weaning day! " + formattedDateForWeaning;
-                            weaningNotifications.put(eartag, notificationMessageForWeaning);
-                        } else if (currentDate.equals(weaningDate.minusDays(1))) {
-                            notificationMessageForWeaning = "Tomorrow is weaning day! " + formattedDateForWeaning;
-                            weaningNotifications.put(eartag, notificationMessageForWeaning);
-                        }
-
-                        if (remarks != null && !remarks.trim().isEmpty()) {
-                            String[] remarksArr = remarks.split(",");
-                            for (String remark : remarksArr) {
-                                if (remark.trim().length() > 0) {
-                                    remarksCount++;
-                                }
-                            }
-                        }
-                        
-                        if (remarksCount > 0) {
-                            LocalDate notificationDate = LocalDate.now();
-                            String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
-
-                            warningNotifications.put(eartagFromFarrowingRecords, "Remarks have reached " + remarksCount + " on " + notificationDateString + ".\n");
-                            numberOfNotification++;
-                       }
-
-                    }
-                        
-                    if (total_piglets < 7 && mortality > 0) {
-                       LocalDate notificationDate = LocalDate.now();
-                       String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
-
-                       if (warningNotifications.containsKey(eartag)) {
-                           warningNotifications.put(eartag, "Eartag has low piglet count and mortality on " + notificationDateString + ".\n");
-                       } else {
-                           warningNotifications.put(eartag, "Eartag has low piglet count and mortality on " + notificationDateString + ".\n");
-                       }
-
-                       numberOfNotification++;
-                   }
-                    
 
                     if (daysUntilFarrowing == 0) {
-                        notificationMessageForFarrowing = "Farrowing is happening today on " + formattedDate + "!";
+                        String notificationMessage = "Farrowing is happening today " + formattedDate;
+                        checkAndStoreNotification(eartag, notificationMessage);
                     } else if (daysUntilFarrowing == 1) {
-                        notificationMessageForFarrowing = "Farrowing is expected soon on " + formattedDate + "!";
+                        String notificationMessage = "Farrowing is expected soon " + formattedDate;
+                        checkAndStoreNotification(eartag, notificationMessage);
                     } else if (daysUntilFarrowing < 5) {
-                        notificationMessageForFarrowing = "Farrowing is expected soon on " + formattedDate + "!";
+                        String notificationMessage = "Farrowing is expected soon " + formattedDate;
+                        checkAndStoreNotification(eartag, notificationMessage);
+                    }
+                }
+
+                while (rsForWarning.next()) {
+                     String eartagFromFarrowingRecords = rsForWarning.getString("eartag");
+
+                    int remarksCount = 0;
+   
+                    
+                    String remarks = rsForWarning.getString("remarks");
+                    LocalDate actualFarrowing = rsForWarning.getDate("farrowing_actualdate").toLocalDate();
+                    int total_piglets = rsForWarning.getInt("total_piglets");
+                    int mortality = rsForWarning.getInt("mortality");
+
+                    LocalDate weaningDate = actualFarrowing.plusDays(28);
+                    LocalDate currentDate = LocalDate.now();
+    //                String formattedDateForWeaning = weaningDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
+
+
+                    if (currentDate.isEqual(weaningDate)) {
+                        String notificationMessageForWeaning = "Today is weaning day!";
+                        checkAndStoreNotification(eartagFromFarrowingRecords, notificationMessageForWeaning);
+                    } else if (currentDate.equals(weaningDate.minusDays(1))) {
+                        String notificationMessageForWeaning = "Tomorrow is weaning day!";
+                        checkAndStoreNotification(eartagFromFarrowingRecords, notificationMessageForWeaning);
                     }
 
-                    if (!notificationMessageForFarrowing.isEmpty()) {
-                        if (farrowingNotifications.containsKey(eartag)) {
-                            if (!farrowingNotifications.get(eartag).contains(notificationMessageForFarrowing)) {
-                                farrowingNotifications.put(eartag, farrowingNotifications.get(eartag) + "\n" + notificationMessageForFarrowing);
-                                numberOfNotification++;
-                            }
-                        } else {
-                            farrowingNotifications.put(eartag, notificationMessageForFarrowing);
-                            numberOfNotification++;
-                        }
+                  
+                    if (remarks != null) {
+                        remarksCount = remarks.split(",").length;
+                    }
+
+                    if (remarksCount > 0) {
+                        LocalDate notificationDate = LocalDate.now();
+                        String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
+
+                        String notificationMessage = "Remarks have reached " + remarksCount + " on " + notificationDateString + ".\n";
+                        checkAndStoreNotification(eartagFromFarrowingRecords, notificationMessage);
+                    }
+                    
+                    if (total_piglets < 7) {
+                        LocalDate notificationDate = LocalDate.now();
+                        String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
+
+                        String notificationMessage = "Eartag has total piglet count of " + total_piglets +" .";
+                        checkAndStoreNotification(eartagFromFarrowingRecords, notificationMessage);
+                    }
+                    
+                    if(mortality > 0){
+                         String notificationMessage = "Has a mortality of " + mortality +" .";
+                        checkAndStoreNotification(eartagFromFarrowingRecords, notificationMessage);
                     }
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
+        }
 
-            NUMBER_OF_NOTIFICATION.setText(Integer.toString(numberOfNotification));
+        private void checkAndStoreNotification(String eartag, String notificationMessage) throws SQLException {
+            String notificationKey = eartag + notificationMessage;
 
-            if (showNotif) {
-                showNotificationDialog(farrowingNotifications, warningNotifications, weaningNotifications);
+            if (!uploadedNotifications.contains(notificationKey)) {
+                storeNotification(eartag, notificationMessage);
+                uploadedNotifications.add(notificationKey);
+                newNotificationCount++;
             }
         }
 
-        private void showNotificationDialog(Map<String, String> farrowingNotifications, Map<String, String> warningNotifications, Map<String, String> weaningNotifications) {
-            Map<String, String> previousWarningNotifications = new HashMap<>();
-            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
-                previousWarningNotifications.put(entry.getKey(), entry.getValue());
+        
+        private void storeNotification(String eartag, String notificationMessage) {
+            try {
+                String sql = "INSERT INTO notifications (eartag, notification_message, created_at) VALUES (?, ?, ?)";
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, eartag);
+                pst.setString(2, notificationMessage);
+                pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+                pst.executeUpdate();
+                
+                String notificationKey = eartag + notificationMessage;
+                uploadedNotifications.add(notificationKey);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
             }
-            warningNotifications = previousWarningNotifications;
-
-            JDialog notificationDialog = new JDialog(this, "Notification", true);
-            notificationDialog.setSize(500, 500);
-            notificationDialog.setLayout(new BorderLayout());
-
-            JTabbedPane tabbedPane = new JTabbedPane();
-
-
-            JPanel farrowingPanel = new JPanel(new BorderLayout());
-            DefaultListModel<String> farrowingListModel = new DefaultListModel<>();
-            JList<String> farrowingList = new JList<>(farrowingListModel);
-            farrowingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-
-            for (Map.Entry<String, String> entry : farrowingNotifications.entrySet()) {
-                farrowingListModel.addElement(entry.getKey() + " - " + entry.getValue());
-            }
-
-
-            farrowingPanel.add(new JScrollPane(farrowingList), BorderLayout.CENTER);
-
-
-            JPanel warningPanel = new JPanel(new BorderLayout());
-            DefaultListModel<String> warningListModel = new DefaultListModel<>();
-            JList<String> warningList = new JList<>(warningListModel);
-
-            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
-                String value = entry.getValue();
-                String[] lines = value.split("\n");
-                for (String line : lines) {
-                    String listItem = entry.getKey() + " - " + line;
-                    System.out.println("Adding to list model: " + listItem);
-                    warningListModel.addElement(listItem);
-                }
-            }
-
-            warningPanel.add(new JScrollPane(warningList), BorderLayout.CENTER);
-
-            JPanel weaningPanel = new JPanel(new BorderLayout());
-            DefaultListModel<String> weaningListModel = new DefaultListModel<>();
-            JList<String> weaningList = new JList<>(weaningListModel);
-            weaningList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-
-            for (Map.Entry<String, String> entry : weaningNotifications.entrySet()) {
-                weaningListModel.addElement(entry.getKey() + " - " + entry.getValue());
-            }
-
-            weaningPanel.add(new JScrollPane(weaningList), BorderLayout.CENTER);
-
-            tabbedPane.addTab("Farrowing (" + farrowingNotifications.size() + ")", farrowingPanel);
-            tabbedPane.addTab("Warning (" + warningListModel.size() + ")", warningPanel);
-            tabbedPane.addTab("Weaning (" + weaningNotifications.size() + ")", weaningPanel);
-
-
-            System.out.println(warningNotifications );
-
-
-            notificationDialog.add(tabbedPane, BorderLayout.CENTER);
-
-
-            notificationDialog.setVisible(true);
         }
-
+        
      private void WARNING_FETCH_EARTAG(){
-         
+        
         try{
             DefaultTableModel model = new DefaultTableModel();
-            
+    
             String warningSowsQuery = "SELECT DISTINCT eartag " +
                 "FROM farrowing_records " +
                 "WHERE (female_piglets + male_piglets) < 7 " +
                 "OR mortality > 0 " +
                 "OR remarks IS NOT NULL " +
                 "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)";
-
+     
             pst = conn.prepareStatement(warningSowsQuery);
             rs = pst.executeQuery();
             
