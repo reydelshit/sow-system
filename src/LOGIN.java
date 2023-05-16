@@ -74,6 +74,7 @@ public class LOGIN extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -161,7 +162,7 @@ public class LOGIN extends javax.swing.JFrame {
                         setVisible(false);
                         break;
                     case "om":
-                        OM n= new OM();
+                        OPEMANAGER n= new OPEMANAGER();
                         
                     
                         n.setVisible(true);
