@@ -37,6 +37,7 @@ public class SECRETARY extends javax.swing.JFrame {
     CardLayout cardLayout;
     
     private NOTIFICATIONMODAL notificationModal;
+    
     int newNotificationCount = 0;
     
     public SECRETARY() {
@@ -1998,7 +1999,7 @@ private void FARROWING_SEARCH_EARTAG() {
 
             String query = "SELECT eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks FROM farrowing_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
-            pst.setInt(1, Integer.parseInt(FARROWING_EARTAG.getText()));
+            pst.setInt(1, Integer.parseInt(FARROWING_SEARCH_FIELD.getText()));
             rs = pst.executeQuery();
 
             model.addColumn("eartag");
@@ -2348,207 +2349,14 @@ private void FARROWING_SEARCH_EARTAG() {
     }
     
 
-//    private void FETCH_NOTIFICATION(boolean showNotif) {
-//            Map<String, String> farrowingNotifications = new HashMap<>();
-//            Map<String, String> warningNotifications = new HashMap<>();
-//            Map<String, String> weaningNotifications = new HashMap<>();
-//            int numberOfNotification = 0;
-//
-//
-//
-//            try {
-//                String sql = "SELECT eartag, expected_farrowing FROM breeding";
-//                pst = conn.prepareStatement(sql);
-//                rs = pst.executeQuery();
-//                
-//                
-//                String sqlForWarning = "SELECT eartag, remarks, total_piglets, mortality, farrowing_actualdate FROM farrowing_records";
-//                PreparedStatement pstForWarning = conn.prepareStatement(sqlForWarning);
-//                ResultSet rsForWarning = pstForWarning.executeQuery();
-//
-//
-//                while (rs.next()) {
-//                    String eartag = rs.getString("eartag");
-//                    LocalDate expectedFarrowing = rs.getDate("expected_farrowing").toLocalDate();
-//                    
-//                    LocalDate today = LocalDate.now();
-//                    long daysUntilFarrowing = ChronoUnit.DAYS.between(today, expectedFarrowing);
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-//                    String formattedDate = expectedFarrowing.format(formatter);
-//                    
-//                    System.out.println(daysUntilFarrowing+"dasd");
-//
-//                    int total_piglets = 0;
-//                    int mortality = 0;
-//                    
-//                    String notificationMessageForFarrowing = "";
-//                    String notificationMessageForWeaning = "";
-//                    
-//
-//                    
-//     
-//                    while (rsForWarning.next()) {
-//                        String eartagFromFarrowingRecords = rsForWarning.getString("eartag");
-//                        int remarksCount = 0;
-//
-//                        String remarks = rsForWarning.getString("remarks");
-//                        total_piglets = rsForWarning.getInt("total_piglets");
-//                        mortality = rsForWarning.getInt("mortality");
-//
-//                        LocalDate actualFarrowing = rsForWarning.getDate("farrowing_actualdate").toLocalDate();
-//                        LocalDate weaningDate = actualFarrowing.plusDays(28);
-//                        LocalDate currentDate = LocalDate.now();
-//                        String formattedDateForWeaning = weaningDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-//
-//                        if (currentDate.isEqual(weaningDate)) {
-//                            notificationMessageForWeaning = "Today is weaning day! " + formattedDateForWeaning;
-//                            weaningNotifications.put(eartag, notificationMessageForWeaning);
-//                        } else if (currentDate.equals(weaningDate.minusDays(1))) {
-//                            notificationMessageForWeaning = "Tomorrow is weaning day! " + formattedDateForWeaning;
-//                            weaningNotifications.put(eartag, notificationMessageForWeaning);
-//                        }
-//
-//                        if (remarks != null && !remarks.trim().isEmpty()) {
-//                            String[] remarksArr = remarks.split(",");
-//                            for (String remark : remarksArr) {
-//                                if (remark.trim().length() > 0) {
-//                                    remarksCount++;
-//                                }
-//                            }
-//                        }
-//                        
-//                        if (remarksCount > 0) {
-//                            LocalDate notificationDate = LocalDate.now();
-//                            String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
-//
-//                            warningNotifications.put(eartagFromFarrowingRecords, "Remarks have reached " + remarksCount + " on " + notificationDateString + ".\n");
-//                            numberOfNotification++;
-//                       }
-//
-//                    }
-//                        
-//                    if (total_piglets < 7 && mortality > 0) {
-//                       LocalDate notificationDate = LocalDate.now();
-//                       String notificationDateString = notificationDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
-//
-//                       if (warningNotifications.containsKey(eartag)) {
-//                           warningNotifications.put(eartag, "Eartag has low piglet count and mortality on " + notificationDateString + ".\n");
-//                       } else {
-//                           warningNotifications.put(eartag, "Eartag has low piglet count and mortality on " + notificationDateString + ".\n");
-//                       }
-//
-//                       numberOfNotification++;
-//                   }
-//                    
-//
-//                    if (daysUntilFarrowing == 0) {
-//                        notificationMessageForFarrowing = "Farrowing is happening today on " + formattedDate + "!";
-//                    } else if (daysUntilFarrowing == 1) {
-//                        notificationMessageForFarrowing = "Farrowing is expected soon on " + formattedDate + "!";
-//                    } else if (daysUntilFarrowing < 5) {
-//                        notificationMessageForFarrowing = "Farrowing is expected soon on " + formattedDate + "!";
-//                    }
-//
-//                    if (!notificationMessageForFarrowing.isEmpty()) {
-//                        if (farrowingNotifications.containsKey(eartag)) {
-//                            if (!farrowingNotifications.get(eartag).contains(notificationMessageForFarrowing)) {
-//                                farrowingNotifications.put(eartag, farrowingNotifications.get(eartag) + "\n" + notificationMessageForFarrowing);
-//                                numberOfNotification++;
-//                            }
-//                        } else {
-//                            farrowingNotifications.put(eartag, notificationMessageForFarrowing);
-//                            numberOfNotification++;
-//                        }
-//                    }
-//                }
-//            } catch (Exception ex) {
-//                JOptionPane.showMessageDialog(null, ex);
-//            }
-//
-//            NUMBER_OF_NOTIFICATION.setText(Integer.toString(numberOfNotification));
-//
-//            if (showNotif) {
-//                showNotificationDialog(farrowingNotifications, warningNotifications, weaningNotifications);
-//            }
-//        }
-
-//        private void showNotificationDialog(Map<String, String> farrowingNotifications, Map<String, String> warningNotifications, Map<String, String> weaningNotifications) {
-//            Map<String, String> previousWarningNotifications = new HashMap<>();
-//            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
-//                previousWarningNotifications.put(entry.getKey(), entry.getValue());
-//            }
-//            warningNotifications = previousWarningNotifications;
-//
-//            JDialog notificationDialog = new JDialog(this, "Notification", true);
-//            notificationDialog.setSize(500, 500);
-//            notificationDialog.setLayout(new BorderLayout());
-//
-//            JTabbedPane tabbedPane = new JTabbedPane();
-//
-//
-//            JPanel farrowingPanel = new JPanel(new BorderLayout());
-//            DefaultListModel<String> farrowingListModel = new DefaultListModel<>();
-//            JList<String> farrowingList = new JList<>(farrowingListModel);
-//            farrowingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//
-//
-//            for (Map.Entry<String, String> entry : farrowingNotifications.entrySet()) {
-//                farrowingListModel.addElement(entry.getKey() + " - " + entry.getValue());
-//            }
-//
-//
-//            farrowingPanel.add(new JScrollPane(farrowingList), BorderLayout.CENTER);
-//
-//
-//            JPanel warningPanel = new JPanel(new BorderLayout());
-//            DefaultListModel<String> warningListModel = new DefaultListModel<>();
-//            JList<String> warningList = new JList<>(warningListModel);
-//
-//            for (Map.Entry<String, String> entry : warningNotifications.entrySet()) {
-//                String value = entry.getValue();
-//                String[] lines = value.split("\n");
-//                for (String line : lines) {
-//                    String listItem = entry.getKey() + " - " + line;
-//                    System.out.println("Adding to list model: " + listItem);
-//                    warningListModel.addElement(listItem);
-//                }
-//            }
-//
-//            warningPanel.add(new JScrollPane(warningList), BorderLayout.CENTER);
-//
-//            JPanel weaningPanel = new JPanel(new BorderLayout());
-//            DefaultListModel<String> weaningListModel = new DefaultListModel<>();
-//            JList<String> weaningList = new JList<>(weaningListModel);
-//            weaningList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//
-//
-//            for (Map.Entry<String, String> entry : weaningNotifications.entrySet()) {
-//                weaningListModel.addElement(entry.getKey() + " - " + entry.getValue());
-//            }
-//
-//            weaningPanel.add(new JScrollPane(weaningList), BorderLayout.CENTER);
-//
-//            tabbedPane.addTab("Farrowing (" + farrowingNotifications.size() + ")", farrowingPanel);
-//            tabbedPane.addTab("Warning (" + warningListModel.size() + ")", warningPanel);
-//            tabbedPane.addTab("Weaning (" + weaningNotifications.size() + ")", weaningPanel);
-//
-//
-//            System.out.println(warningNotifications );
-//
-//
-//            notificationDialog.add(tabbedPane, BorderLayout.CENTER);
-//
-//
-//            notificationDialog.setVisible(true);
-//        }
     
-        private Set<String> uploadedNotifications; // Declare the set
+        private Set<String> uploadedNotifications; 
 
         private void initializeUploadedNotifications() {
             uploadedNotifications = new HashSet<>();
 
             try {
-                // Load existing notifications from the database and populate the set
+              
                 String sql = "SELECT eartag, notification_message FROM notifications";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
