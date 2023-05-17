@@ -308,8 +308,8 @@ public class SECRETARY extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         WEANING_MAIN_TABLE = new javax.swing.JTable();
         jLabel34 = new javax.swing.JLabel();
-        WEANING_TOTAL = new javax.swing.JTextField();
         WEANING_EARTAG = new javax.swing.JLabel();
+        WEANING_TOTAL = new javax.swing.JLabel();
         PERFORMANCE = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         PERFORMANCE_WEANING_TABLE = new javax.swing.JTable();
@@ -936,15 +936,16 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel34.setText("DATE");
         WEANING.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 50, 30));
 
-        WEANING_TOTAL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        WEANING_TOTAL.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        WEANING.add(WEANING_TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 210, 50));
-
         WEANING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         WEANING_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
         WEANING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WEANING_EARTAG.setText("EARTAG HERE");
         WEANING.add(WEANING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 210, 50));
+
+        WEANING_TOTAL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        WEANING_TOTAL.setForeground(new java.awt.Color(255, 255, 0));
+        WEANING_TOTAL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        WEANING.add(WEANING_TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 210, 50));
 
         PAGES.add(WEANING, "PAGE_4");
 
@@ -1332,22 +1333,31 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        WEANING_SUBMIT();
-        WEANING_RETRIEVE_DETAILS();
+        if (WEANING_TOTAL.getText().isEmpty() || WEANING_AW.getText().isEmpty() || !WEANING_AW.getText().matches("\\d+(\\.\\d+)?")
+            || WEANING_CALENDAR.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            WEANING_SUBMIT();
+            WEANING_RETRIEVE_DETAILS();
+
+            PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+        }
         
-        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
-        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
         
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        int maleCount = WEANING_MALE.getText().isEmpty() ? 0 : Integer.parseInt(WEANING_MALE.getText());
-        int femaleCount = WEANING_FEMALE.getText().isEmpty() ? 0 : Integer.parseInt(WEANING_FEMALE.getText());
-        
-        int total = maleCount + femaleCount;
-        WEANING_TOTAL.setText(Integer.toString(total));
+    
+        if(WEANING_MALE.getText().isEmpty() || !WEANING_MALE.getText().matches("\\d+")
+            || WEANING_FEMALE.getText().isEmpty() || !WEANING_FEMALE.getText().matches("\\d+")){
+                JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int maleCount = WEANING_MALE.getText().isEmpty() ? 0 : Integer.parseInt(WEANING_MALE.getText());
+            int femaleCount = WEANING_FEMALE.getText().isEmpty() ? 0 : Integer.parseInt(WEANING_FEMALE.getText());
+
+            int total = maleCount + femaleCount;
+            WEANING_TOTAL.setText(Integer.toString(total));
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -1518,7 +1528,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JTable WEANING_MAIN_TABLE;
     private javax.swing.JTextField WEANING_MALE;
     private javax.swing.JTextField WEANING_SEARCH_FIELD;
-    private javax.swing.JTextField WEANING_TOTAL;
+    private javax.swing.JLabel WEANING_TOTAL;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
