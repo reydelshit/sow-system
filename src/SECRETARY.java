@@ -123,7 +123,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
                 FARROWING_EARTAG.setText(Integer.toString(eartag));
                 FARROWING_DUE.setText(farrowingDue);
-//                FARROWING_SEARCH_FIELD.setText(Integer.toString(eartag));
+                FARROWING_SEARCH_FIELD.setText(Integer.toString(eartag));
 
                 
 
@@ -209,6 +209,7 @@ public class SECRETARY extends javax.swing.JFrame {
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jButton15 = new javax.swing.JButton();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -395,7 +396,7 @@ public class SECRETARY extends javax.swing.JFrame {
         NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
         NUMBER_OF_NOTIFICATION.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NUMBER_OF_NOTIFICATION.setText("0");
-        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 650, 30, 40));
+        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 650, 30, 40));
 
         jButton13.setText("WARNING SOW");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -419,7 +420,15 @@ public class SECRETARY extends javax.swing.JFrame {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 650, -1, 40));
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 650, -1, 40));
+
+        jButton15.setText("LOGOUT");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 650, -1, 40));
 
         jSplitPane2.setLeftComponent(jPanel1);
 
@@ -1266,12 +1275,10 @@ public class SECRETARY extends javax.swing.JFrame {
 
 
                 PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-        //        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
-
-        //        
-        //        FARROWING_SEARCH_FIELD.setText("");
-        //        FARROWING_DETAILS_CONTAINER.setVisible(true);
-        //        
+                
+                WARNING_FETCH_EARTAG();
+                CULLED_FETCH_EARTAG();
+     
                 UPLOAD_NOTIFICATION();
          }
 
@@ -1341,6 +1348,7 @@ public class SECRETARY extends javax.swing.JFrame {
             WEANING_RETRIEVE_DETAILS();
 
             PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+            
         }
         
         
@@ -1414,7 +1422,8 @@ public class SECRETARY extends javax.swing.JFrame {
             
             
             JOptionPane.showMessageDialog(null, "Culling status for sow with eartag number " + culledValue +  " has been updated to culled.");
-
+            
+            WARNING_FETCH_EARTAG();
             CULLED_FETCH_EARTAG();
 
         } catch (SQLException ex) {
@@ -1426,6 +1435,14 @@ public class SECRETARY extends javax.swing.JFrame {
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
           notificationModal.setVisible(!notificationModal.isVisible());
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        LOGIN n= new LOGIN();
+                        
+                    
+        n.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton15ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1535,6 +1552,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

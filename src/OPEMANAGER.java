@@ -1,12 +1,25 @@
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import javax.swing.*;
+import org.knowm.xchart.*;
+import org.knowm.xchart.style.MatlabTheme;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -24,6 +37,9 @@ public class OPEMANAGER extends javax.swing.JFrame {
     ResultSet rs = null;
     CardLayout cardLayout;
     
+    private JPanel chartPanel;
+    private JPanel pieChartPanel;
+    
     public OPEMANAGER() {
         conn = DBConnection.getConnection();
         initComponents();
@@ -31,6 +47,127 @@ public class OPEMANAGER extends javax.swing.JFrame {
         WARNING_FETCH_EARTAG();
 
         cardLayout = (CardLayout)(PAGES.getLayout());
+        
+       
+
+        // Create a chart object and set the MATLAB theme
+        CategoryChart chartForRegSOw = new CategoryChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
+
+        // Customize the chart
+        chartForRegSOw.setTitle("Registered Sows");
+        chartForRegSOw.setXAxisTitle("Date");
+        chartForRegSOw.setYAxisTitle("Number of Sows");
+
+        // Retrieve data from MySQL database table
+        try {
+            String query = "SELECT date, COUNT(eartag) AS count FROM register_sow GROUP BY date";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            // Create lists to store x and y values
+            List<String> xValues = new ArrayList<>();
+            List<Integer> yValues = new ArrayList<>();
+
+            // Add data to the lists
+            while (rs.next()) {
+                Date date = rs.getDate("date");
+                int count = rs.getInt("count");
+
+                xValues.add(date.toString()); // Convert date to string for category chart
+                yValues.add(count);
+            }
+
+            // Add series data to the chart
+            chartForRegSOw.addSeries("Number of Sows", xValues, yValues);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        // Create a chart panel
+        chartPanel = new XChartPanel<>(chartForRegSOw);
+
+        // Set the layout manager for the CHART_PANEL
+        CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
+
+        // Add the chart panel to the CHART_PANEL
+        CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
+
+        // Set the JFrame size and visibility
+        pack();
+        setVisible(true);
+        
+        
+        
+
+         // Create a chart object and set the MATLAB theme
+        PieChart chartForPie = new PieChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
+
+        // Customize the chart
+        chartForPie.setTitle("Farrowing Records");
+
+        // Retrieve data from the database
+        try {
+            // Count culled records
+            String culledQuery = "SELECT COUNT(*) AS culledCount FROM farrowing_records WHERE culled = 1";
+            pst = conn.prepareStatement(culledQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int culledCount = rs.getInt("culledCount");
+                chartForPie.addSeries("Culled (" + culledCount + ")", culledCount);
+            }
+
+            // Count farrowed records
+            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM farrowing_records WHERE culled = 0";
+            pst = conn.prepareStatement(farrowedQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int farrowedCount = rs.getInt("farrowedCount");
+                chartForPie.addSeries("Farrowed (" + farrowedCount + ")", farrowedCount);
+            }
+
+            // Count warning records
+            String warningQuery = "SELECT COUNT(DISTINCT eartag) AS warningCount " +
+                    "FROM farrowing_records " +
+                    "WHERE ((female_piglets + male_piglets) < 7 " +
+                    "OR mortality > 0 " +
+                    "OR remarks IS NOT NULL " +
+                    "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)) " +
+                    "AND culled = 0";
+            pst = conn.prepareStatement(warningQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int warningCount = rs.getInt("warningCount");
+                 chartForPie.addSeries("Warning (" + warningCount + ")", warningCount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        // Create a chart panel
+        pieChartPanel = new XChartPanel<>(chartForPie);
+
+        // Set the layout manager for the PANEL_PIE_CHART
+        PANEL_PIE_CHART.setLayout(new GridBagLayout());
+
+        // Create constraints for the chart panel
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+
+        // Add the chart panel to the PANEL_PIE_CHART with constraints
+        PANEL_PIE_CHART.add(pieChartPanel, gbc);
+
+        // Set the JFrame size and visibility
+        pack();
+        setVisible(true);
+
+    
     }
     
 
@@ -49,13 +186,13 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        CHART_PANEL_REG_SOW = new javax.swing.JPanel();
+        PANEL_PIE_CHART = new javax.swing.JPanel();
         PERFORMANCE = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         PERFORMANCE_WEANING_TABLE = new javax.swing.JTable();
@@ -105,12 +242,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
         });
         jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 150, 40));
 
-        NUMBER_OF_NOTIFICATION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
-        NUMBER_OF_NOTIFICATION.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        NUMBER_OF_NOTIFICATION.setText("0");
-        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 650, 30, 40));
-
         jButton13.setText("WARNING SOW");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,14 +258,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
         });
         jPanel1.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 150, 40));
 
-        jToggleButton1.setText("NOTIFICATION");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 650, -1, 40));
-
         jSplitPane2.setLeftComponent(jPanel1);
 
         PAGES.setLayout(new java.awt.CardLayout());
@@ -145,7 +268,33 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("RDJ FARM");
-        MAIN_PANEL.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 350, 60));
+        MAIN_PANEL.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 350, 60));
+
+        javax.swing.GroupLayout CHART_PANEL_REG_SOWLayout = new javax.swing.GroupLayout(CHART_PANEL_REG_SOW);
+        CHART_PANEL_REG_SOW.setLayout(CHART_PANEL_REG_SOWLayout);
+        CHART_PANEL_REG_SOWLayout.setHorizontalGroup(
+            CHART_PANEL_REG_SOWLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 640, Short.MAX_VALUE)
+        );
+        CHART_PANEL_REG_SOWLayout.setVerticalGroup(
+            CHART_PANEL_REG_SOWLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 440, Short.MAX_VALUE)
+        );
+
+        MAIN_PANEL.add(CHART_PANEL_REG_SOW, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 640, 440));
+
+        javax.swing.GroupLayout PANEL_PIE_CHARTLayout = new javax.swing.GroupLayout(PANEL_PIE_CHART);
+        PANEL_PIE_CHART.setLayout(PANEL_PIE_CHARTLayout);
+        PANEL_PIE_CHARTLayout.setHorizontalGroup(
+            PANEL_PIE_CHARTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 360, Short.MAX_VALUE)
+        );
+        PANEL_PIE_CHARTLayout.setVerticalGroup(
+            PANEL_PIE_CHARTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        MAIN_PANEL.add(PANEL_PIE_CHART, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 360, 300));
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
@@ -410,10 +559,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
         
     }//GEN-LAST:event_WARNING_CULL_BUTTONActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-      
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -451,12 +596,13 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel CHART_PANEL_REG_SOW;
     private javax.swing.JTable CULLED_MAIN_TABLE;
     private javax.swing.JPanel CULLED_SOW;
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
     private javax.swing.JPanel MAIN_PANEL;
-    private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
+    private javax.swing.JPanel PANEL_PIE_CHART;
     private javax.swing.JPanel PERFORMANCE;
     private javax.swing.JTable PERFORMANCE_BREEDING_TABLE;
     private javax.swing.JTable PERFORMANCE_FARROWING_TABLE;
@@ -487,7 +633,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
 
