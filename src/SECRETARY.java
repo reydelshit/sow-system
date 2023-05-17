@@ -36,13 +36,14 @@ public class SECRETARY extends javax.swing.JFrame {
     ResultSet rs = null;
     CardLayout cardLayout;
     
-    private NOTIFICATIONMODAL notificationModal;
+    private final NOTIFICATIONMODAL notificationModal;
     
     int newNotificationCount = 0;
     
     public SECRETARY() {
         conn = DBConnection.getConnection();
         initComponents();
+
         
         notificationModal = new NOTIFICATIONMODAL();
         notificationModal.setVisible(false);
@@ -1171,17 +1172,29 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private void REGSOW_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGSOW_BUTTONActionPerformed
         // TODO add your handling code here:
-        SOW_REGISTRATION();
-        REGISTER_RETRIEVE_REGISTERED_SOW();
         
-        REGSOW_DATE.setDate(null);
-        REGSOW_BNUMBER.setText("");
-        LATEST_REGSOW_EARTAG.setText("");
-        REGSOW_BUILDING.setSelectedIndex(0);
-        REGSOW_ASSIGNED_EMPLOYEE.setText("");
-        REGSOW_PEN.setText("");
+        String pen = REGSOW_PEN.getText();
+        String employee = REGSOW_ASSIGNED_EMPLOYEE.getText();
+        String bNumber = REGSOW_BNUMBER.getText();
+        if (pen.isEmpty() || !pen.matches("\\d+")
+            || employee.isEmpty() || !employee.matches("[a-zA-Z]+")
+            || bNumber.isEmpty() || !bNumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            SOW_REGISTRATION();
+            REGISTER_RETRIEVE_REGISTERED_SOW();
+
+            REGSOW_DATE.setDate(null);
+            REGSOW_BNUMBER.setText("");
+            LATEST_REGSOW_EARTAG.setText("");
+            REGSOW_BUILDING.setSelectedIndex(0);
+            REGSOW_ASSIGNED_EMPLOYEE.setText("");
+            REGSOW_PEN.setText("");
+
+            FETCH_CURRENT_EARTAG();
+        }
         
-        FETCH_CURRENT_EARTAG();
+
     }//GEN-LAST:event_REGSOW_BUTTONActionPerformed
 
     private void ADD_EARTAGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD_EARTAGActionPerformed
@@ -1191,11 +1204,21 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD_EARTAGActionPerformed
 
     private void START_BREEDING_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_START_BREEDING_BUTTONActionPerformed
-       
-        BREEDING_START_BREEDING();
-        BREEDING_RETRIEVE_BREEDING_DETAILS();
-        UPLOAD_NOTIFICATION();
-        FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+         
+        String boarUsed = BREEDING_BOAR_USED.getText();
+        String comments = BREEDING_COMMENTS.getText();
+        
+        if (boarUsed.isEmpty() || !boarUsed.matches("\\d+") 
+           || !comments.matches("[a-zA-Z0-9]*") || comments.isEmpty() 
+           || BREEDING_DATE.getDate() == null || DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {   
+            BREEDING_START_BREEDING();
+            BREEDING_RETRIEVE_BREEDING_DETAILS();
+            UPLOAD_NOTIFICATION();
+            FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+        }
+
         
 
     }//GEN-LAST:event_START_BREEDING_BUTTONActionPerformed
@@ -1229,21 +1252,28 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_FARROWING_MALEActionPerformed
 
     private void FARROWING_SUBMIT_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FARROWING_SUBMIT_BUTTONActionPerformed
+            
+           if (FARROWING_ACTUAL.getDate() == null || FARROWING_ABW.getText().isEmpty()
+                    || FARROWING_MORT.getText().isEmpty() || !FARROWING_MORT.getText().matches("\\d+")
+                    || Double.parseDouble(FARROWING_ABW.getText()) <= 0 || !FARROWING_ABW.getText().matches("[0-9]+\\.?[0-9]*")) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                FARROWING_SUBMIT();
+                FARROWING_RETRIEVE_DETAILS();
+                BREEDING_RETRIEVE_BREEDING_DETAILS();
+                FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
 
-        FARROWING_SUBMIT();
-        FARROWING_RETRIEVE_DETAILS();
-        BREEDING_RETRIEVE_BREEDING_DETAILS();
-        FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
 
-                
-        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-//        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
-        
-//        
-//        FARROWING_SEARCH_FIELD.setText("");
-//        FARROWING_DETAILS_CONTAINER.setVisible(true);
-//        
-        UPLOAD_NOTIFICATION();
+                PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+        //        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+
+        //        
+        //        FARROWING_SEARCH_FIELD.setText("");
+        //        FARROWING_DETAILS_CONTAINER.setVisible(true);
+        //        
+                UPLOAD_NOTIFICATION();
+         }
+
 
     }//GEN-LAST:event_FARROWING_SUBMIT_BUTTONActionPerformed
 
@@ -1273,11 +1303,18 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         
-        int maleCount = FARROWING_MALE.getText().isEmpty() ? 0 : Integer.parseInt(FARROWING_MALE.getText());
-        int femaleCount = FARROWING_FEMALE.getText().isEmpty() ? 0 : Integer.parseInt(FARROWING_FEMALE.getText());
         
-        int total = maleCount + femaleCount;
-        FARROWING_TOTAL_PIGLETS.setText(Integer.toString(total));
+        if(FARROWING_MALE.getText().isEmpty() || !FARROWING_MALE.getText().matches("\\d+")
+            || FARROWING_FEMALE.getText().isEmpty() || !FARROWING_FEMALE.getText().matches("\\d+")){
+                JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int maleCount = FARROWING_MALE.getText().isEmpty() ? 0 : Integer.parseInt(FARROWING_MALE.getText());
+            int femaleCount = FARROWING_FEMALE.getText().isEmpty() ? 0 : Integer.parseInt(FARROWING_FEMALE.getText());
+            int total = maleCount + femaleCount;
+            FARROWING_TOTAL_PIGLETS.setText(Integer.toString(total));
+        }
+        
+
 
         
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -1588,6 +1625,7 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
     
+    
     private void FETCH_CURRENT_EARTAG() {
         try {
             String currentEartagQuery = "SELECT eartag, MAX(eartag) AS highest_eartag FROM register_sow";
@@ -1818,7 +1856,7 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 
             
-            String query = "SELECT eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed FROM breeding";
+            String query = "SELECT eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, culled FROM breeding";
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
             
@@ -1828,6 +1866,7 @@ public class SECRETARY extends javax.swing.JFrame {
             model.addColumn("expected_farrowing");
             model.addColumn("comments");
             model.addColumn("status");
+            model.addColumn("culling");
 
 
             
@@ -1839,8 +1878,11 @@ public class SECRETARY extends javax.swing.JFrame {
                 String comments = rs.getString("comments");
                 int isFarrowed = rs.getInt("farrowed");
                 String status = isFarrowed == 1 ? "farrowed" : "not farrowed";
+                
+                int isCulled = rs.getInt("culled");
+                String statusForCulling = isCulled == 1 ? "culled" : "not";
 
-            model.addRow(new Object[]{eartag, boar_used, breeding_date, expected_farrowing, comments, status});
+            model.addRow(new Object[]{eartag, boar_used, breeding_date, expected_farrowing, comments, status, statusForCulling});
         }
 
              if(BREEDING_TABLE != null){
@@ -1937,54 +1979,91 @@ private void FARROWING_SEARCH_EARTAG() {
      private void FARROWING_SUBMIT(){
         
         try{
-            boolean isCulling = false;
-            Date selectedDate = FARROWING_ACTUAL.getDate();
-            String dateString = new java.sql.Date(selectedDate.getTime()).toString();
-            
-            
-            String sql = "INSERT INTO farrowing_records (eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, culled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-            
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, FARROWING_EARTAG.getText());
-            pst.setString(2, dateString);
-            pst.setString(3, FARROWING_DUE.getText());
-            pst.setString(4, FARROWING_FEMALE.getText());
-            pst.setString(5, FARROWING_MALE.getText());
-            pst.setString(6, FARROWING_TOTAL_PIGLETS.getText());
-            pst.setDouble(7, Double.parseDouble(FARROWING_ABW.getText()));
-            pst.setString(8, FARROWING_MORT.getText());
-            pst.setString(9, FARROWING_REMARKS.getText());
-            pst.setBoolean(10, isCulling);
-            
-            
-            pst.execute();
-            
-            // Update breeding record
-            String updateSql = "UPDATE breeding SET farrowed = true WHERE eartag = ?";
-            pst = conn.prepareStatement(updateSql);
-            pst.setString(1, FARROWING_EARTAG.getText());
-            pst.execute();
-             
-            JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " EARTAG DETAILS ARE UPLOADED");
-            
-            FARROWING_RETRIEVE_DETAILS();
-            FARROWING_DETAILS_CONTAINER.setVisible(true);
-            BREEDING_RETRIEVE_BREEDING_DETAILS();
-            
+                String checkSql = "SELECT eartag, culled, farrowed FROM breeding WHERE eartag = ?";
+                pst = conn.prepareStatement(checkSql);
+                pst.setString(1, FARROWING_EARTAG.getText());
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    boolean isCulled = rs.getBoolean("culled");
+                    boolean isFarrowed = rs.getBoolean("farrowed");
+                    if (isCulled) {
+                        JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " already exists in the farrowing table and is marked as culled.", "Error", JOptionPane.ERROR_MESSAGE);
+                        FARROWING_EARTAG.setText("");
+                        FARROWING_DUE.setText("");
+                        FARROWING_ACTUAL.setDate(null);
+                        FARROWING_FEMALE.setText("");
+                        FARROWING_MALE.setText("");
+                        FARROWING_TOTAL_PIGLETS.setText("");
+                        FARROWING_ABW.setText("");
+                        FARROWING_MORT.setText("");
+                        FARROWING_REMARKS.setText("");
+                    } else if(isFarrowed){
+                        JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " already exists in the farrowing table and is marked as farrowed.", "Error", JOptionPane.ERROR_MESSAGE);
+                        FARROWING_EARTAG.setText("");
+                        FARROWING_DUE.setText("");
+                        FARROWING_ACTUAL.setDate(null);
+                        FARROWING_FEMALE.setText("");
+                        FARROWING_MALE.setText("");
+                        FARROWING_TOTAL_PIGLETS.setText("");
+                        FARROWING_ABW.setText("");
+                        FARROWING_MORT.setText("");
+                        FARROWING_REMARKS.setText("");
+                    } else {
+                         
+                        boolean isCulling = false;
+                        Date selectedDate = FARROWING_ACTUAL.getDate();
+                        String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
-            FARROWING_EARTAG.setText("");
-            FARROWING_DUE.setText("");
-            FARROWING_ACTUAL.setDate(null);
-            FARROWING_FEMALE.setText("");
-            FARROWING_MALE.setText("");
-            FARROWING_TOTAL_PIGLETS.setText("");
-            FARROWING_ABW.setText("");
-            FARROWING_MORT.setText("");
-            FARROWING_REMARKS.setText("");
 
-            
+                        String sql = "INSERT INTO farrowing_records (eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, culled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+
+                        pst = conn.prepareStatement(sql);
+                        pst.setString(1, FARROWING_EARTAG.getText());
+                        pst.setString(2, dateString);
+                        pst.setString(3, FARROWING_DUE.getText());
+                        pst.setString(4, FARROWING_FEMALE.getText());
+                        pst.setString(5, FARROWING_MALE.getText());
+                        pst.setString(6, FARROWING_TOTAL_PIGLETS.getText());
+                        String abwText = FARROWING_ABW.getText();
+                        if (!abwText.isEmpty()) {
+                            try {
+                                double abwValue = Double.parseDouble(abwText);
+                                pst.setDouble(7, abwValue);
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(null, "Invalid input for ABW. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "ABW field is empty. Please enter a value.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        pst.setDouble(7, Double.parseDouble(FARROWING_ABW.getText()));
+                        pst.setString(8, FARROWING_MORT.getText());
+                        pst.setString(9, FARROWING_REMARKS.getText());
+                        pst.setBoolean(10, isCulling);
+
+
+                        pst.execute();
+
+                        // Update breeding record
+                        String updateSql = "UPDATE breeding SET farrowed = true WHERE eartag = ?";
+                        pst = conn.prepareStatement(updateSql);
+                        pst.setString(1, FARROWING_EARTAG.getText());
+                        pst.execute();
+
+                        JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " EARTAG DETAILS ARE UPLOADED");
+
+                        FARROWING_RETRIEVE_DETAILS();
+                        FARROWING_DETAILS_CONTAINER.setVisible(true);
+                        BREEDING_RETRIEVE_BREEDING_DETAILS();
+
+
+
+                    }
+                }
+                
+           
             
         } catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
@@ -1997,7 +2076,7 @@ private void FARROWING_SEARCH_EARTAG() {
             DefaultTableModel model = new DefaultTableModel();
 
 
-            String query = "SELECT eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks FROM farrowing_records WHERE eartag = ?";
+            String query = "SELECT eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, culled FROM farrowing_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(FARROWING_SEARCH_FIELD.getText()));
             rs = pst.executeQuery();
@@ -2011,6 +2090,7 @@ private void FARROWING_SEARCH_EARTAG() {
             model.addColumn("abw");
             model.addColumn("mortality");
             model.addColumn("remarks");
+            model.addColumn("culling");
 
 
 
@@ -2024,11 +2104,15 @@ private void FARROWING_SEARCH_EARTAG() {
                 double abw = rs.getDouble("abw");
                 int mortality = rs.getInt("mortality");
                 String remarks = rs.getString("remarks");
+   
+                int isCulled = rs.getInt("culled");
+                String status = isCulled == 1 ? "culled" : "not";
+
     
 
 
 
-                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks});
+                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, status});
             }
 
              if(FARROWING_MAIN_TABLE != null){
@@ -2494,10 +2578,11 @@ private void FARROWING_SEARCH_EARTAG() {
     
             String warningSowsQuery = "SELECT DISTINCT eartag " +
                 "FROM farrowing_records " +
-                "WHERE (female_piglets + male_piglets) < 7 " +
+                "WHERE ((female_piglets + male_piglets) < 7 " +
                 "OR mortality > 0 " +
                 "OR remarks IS NOT NULL " +
-                "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)";
+                "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)) " +
+                "AND culled = 0";
      
             pst = conn.prepareStatement(warningSowsQuery);
             rs = pst.executeQuery();
@@ -2555,5 +2640,4 @@ private void FARROWING_SEARCH_EARTAG() {
             }
     }
       
-
 }
