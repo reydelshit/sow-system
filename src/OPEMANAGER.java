@@ -38,13 +38,18 @@ public class OPEMANAGER extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     CardLayout cardLayout;
-
+    
+    private final NOTIFICATIONMODAL notificationModal;
+    
     private JPanel chartPanel;
     private JPanel pieChartPanel;
 
     public OPEMANAGER() {
         conn = DBConnection.getConnection();
         initComponents();
+        
+        notificationModal = new NOTIFICATIONMODAL();
+        notificationModal.setVisible(false);
 
         WARNING_FETCH_EARTAG();
         CULLED_FETCH_EARTAG();
@@ -107,10 +112,13 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
+        rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover2 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover3 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover4 = new rojeru_san.complementos.RSButtonHover();
+        jButton16 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -145,47 +153,85 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(26, 46, 53));
         jPanel1.setMinimumSize(new java.awt.Dimension(250, 330));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("LIST OF SOW");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover1.setText("HOME");
+        rSButtonHover1.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover1.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover1.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                rSButtonHover1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 150, 40));
+        jPanel1.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 170, -1));
 
-        jButton8.setText("HOME");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonHover2.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover2.setText("LIST OF SOW");
+        rSButtonHover2.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover2.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover2.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                rSButtonHover2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 150, 40));
+        jPanel1.add(rSButtonHover2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 170, -1));
 
-        jButton13.setText("WARNING SOW");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonHover3.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover3.setText("WARNING SOW");
+        rSButtonHover3.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover3.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover3.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                rSButtonHover3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 150, 40));
+        jPanel1.add(rSButtonHover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 170, -1));
 
-        jButton14.setText("CULLED SOW");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonHover4.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover4.setText("CULLED SOW");
+        rSButtonHover4.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover4.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover4.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                rSButtonHover4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 150, 40));
+        jPanel1.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 170, -1));
+
+        jButton16.setText("LOGOUT");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 640, -1, 40));
+
+        jToggleButton1.setText("NOTIFICATION");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 640, 90, 40));
+
+        NUMBER_OF_NOTIFICATION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
+        NUMBER_OF_NOTIFICATION.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NUMBER_OF_NOTIFICATION.setText("0");
+        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 640, 30, 40));
 
         jSplitPane2.setLeftComponent(jPanel1);
 
         PAGES.setLayout(new java.awt.CardLayout());
 
-        MAIN_PANEL.setBackground(new java.awt.Color(153, 255, 153));
+        MAIN_PANEL.setBackground(new java.awt.Color(255, 217, 90));
         MAIN_PANEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -221,7 +267,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
-        LIST_OF_SOW.setBackground(new java.awt.Color(204, 204, 204));
+        LIST_OF_SOW.setBackground(new java.awt.Color(255, 217, 90));
         LIST_OF_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         LIST_OF_SOW.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 260, 30));
 
@@ -267,6 +313,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        PERFORMANCE_FARROWING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        PERFORMANCE_FARROWING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_FARROWING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_FARROWING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_FARROWING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_FARROWING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_FARROWING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -293,6 +343,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        PERFORMANCE_WEANING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        PERFORMANCE_WEANING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_WEANING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_WEANING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_WEANING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_WEANING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_WEANING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -319,6 +373,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        PERFORMANCE_BREEDING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        PERFORMANCE_BREEDING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_BREEDING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_BREEDING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_BREEDING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_BREEDING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         PERFORMANCE_BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -328,14 +386,14 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         PAGES.add(LIST_OF_SOW, "PAGE_5");
 
-        WARNING_SOW.setBackground(new java.awt.Color(0, 153, 153));
+        WARNING_SOW.setBackground(new java.awt.Color(255, 217, 90));
         WARNING_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("WARNING SOW");
-        WARNING_SOW.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 120, 40));
+        WARNING_SOW.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 120, 40));
 
         WARNING_CULL_BUTTON.setText("CULL");
         WARNING_CULL_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -365,6 +423,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        WARNING_SOW_DETAILS.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        WARNING_SOW_DETAILS.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_DETAILS.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_DETAILS.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         WARNING_SOW_DETAILS.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         WARNING_SOW_DETAILS.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         WARNING_SOW_DETAILS.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -391,13 +453,17 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        WARNING_SOW_LIST_WARNING_SOW.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        WARNING_SOW_LIST_WARNING_SOW.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_LIST_WARNING_SOW.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_LIST_WARNING_SOW.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         jScrollPane10.setViewportView(WARNING_SOW_LIST_WARNING_SOW);
 
-        WARNING_SOW.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 140, 620));
+        WARNING_SOW.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 140, 620));
 
         PAGES.add(WARNING_SOW, "PAGE_6");
 
-        CULLED_SOW.setBackground(new java.awt.Color(51, 0, 51));
+        CULLED_SOW.setBackground(new java.awt.Color(255, 217, 90));
         CULLED_SOW.setForeground(new java.awt.Color(51, 0, 51));
         CULLED_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -408,13 +474,13 @@ public class OPEMANAGER extends javax.swing.JFrame {
         CULLED_SOW.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 300, 40));
 
         CULLED_TOTAL_CULLED.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        CULLED_TOTAL_CULLED.setForeground(new java.awt.Color(255, 255, 0));
+        CULLED_TOTAL_CULLED.setForeground(new java.awt.Color(26, 46, 53));
         CULLED_TOTAL_CULLED.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CULLED_TOTAL_CULLED.setText("10000");
         CULLED_SOW.add(CULLED_TOTAL_CULLED, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 200, 70));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setForeground(new java.awt.Color(26, 46, 53));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("TOTAL CULLED SOW");
         CULLED_SOW.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 200, 40));
@@ -430,6 +496,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 "Culled"
             }
         ));
+        CULLED_MAIN_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        CULLED_MAIN_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        CULLED_MAIN_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        CULLED_MAIN_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         jScrollPane11.setViewportView(CULLED_MAIN_TABLE);
 
         CULLED_SOW.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, 180, 580));
@@ -454,26 +524,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(PAGES, "PAGE_5");
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(PAGES, "MAIN_PANEL");
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-
-        cardLayout.show(PAGES, "PAGE_6");
-    }//GEN-LAST:event_jButton13ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        cardLayout.show(PAGES, "PAGE_7");
-    }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
@@ -521,6 +571,33 @@ public class OPEMANAGER extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_WARNING_CULL_BUTTONActionPerformed
 
+    private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
+        cardLayout.show(PAGES, "MAIN_PANEL");
+    }//GEN-LAST:event_rSButtonHover1ActionPerformed
+
+    private void rSButtonHover2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover2ActionPerformed
+        cardLayout.show(PAGES, "PAGE_5");
+    }//GEN-LAST:event_rSButtonHover2ActionPerformed
+
+    private void rSButtonHover3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover3ActionPerformed
+       cardLayout.show(PAGES, "PAGE_6");
+    }//GEN-LAST:event_rSButtonHover3ActionPerformed
+
+    private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
+        cardLayout.show(PAGES, "PAGE_7");
+    }//GEN-LAST:event_rSButtonHover4ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        LOGIN n = new LOGIN();
+
+        n.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        notificationModal.setVisible(!notificationModal.isVisible());
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -564,6 +641,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
     private javax.swing.JPanel LIST_OF_SOW;
     private javax.swing.JPanel MAIN_PANEL;
+    private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
     private javax.swing.JPanel PANEL_PIE_CHART;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_BREEDING_TABLE;
@@ -575,11 +653,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JPanel WARNING_SOW;
     private rojeru_san.complementos.RSTableMetro WARNING_SOW_DETAILS;
     private rojeru_san.complementos.RSTableMetro WARNING_SOW_LIST_WARNING_SOW;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton16;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel38;
@@ -595,6 +670,11 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JToggleButton jToggleButton1;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover1;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover2;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover3;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover4;
     // End of variables declaration//GEN-END:variables
 
     private void PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS() {

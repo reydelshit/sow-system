@@ -92,7 +92,6 @@ public class SECRETARY extends javax.swing.JFrame {
 //        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
 
         UPLOAD_NOTIFICATION();
-        NUMBER_OF_NOTIFICATION.setText(String.valueOf(newNotificationCount));
 
         WARNING_FETCH_EARTAG();
 
@@ -221,7 +220,9 @@ public class SECRETARY extends javax.swing.JFrame {
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
         REGISTER_OF_SOW = new javax.swing.JPanel();
         jScrollPane16 = new javax.swing.JScrollPane();
         REGSOW_TABLE = new rojeru_san.complementos.RSTableMetro();
@@ -367,7 +368,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 650, -1, 40));
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 650, 90, 40));
 
         jButton15.setText("LOGOUT");
         jButton15.addActionListener(new java.awt.event.ActionListener() {
@@ -375,7 +376,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 jButton15ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 650, -1, 40));
+        jPanel1.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 650, -1, 40));
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover1.setForeground(new java.awt.Color(0, 0, 0));
@@ -476,12 +477,23 @@ public class SECRETARY extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(26, 46, 53));
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        MAIN_PANEL.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 1020, 580));
 
-        jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/larawan2.jpg"))); // NOI18N
+        jPanel10.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 900, 400));
+
+        jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel39.setText("RDJ FARM");
-        MAIN_PANEL.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 350, 60));
+        jLabel39.setText("SOW MONITORING SYSTEM");
+        jPanel10.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 770, 60));
+
+        jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("WELCOME TO RDJ FARM INC. ");
+        jPanel10.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 770, 60));
+
+        MAIN_PANEL.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1110, 620));
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
@@ -1796,6 +1808,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1828,6 +1841,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2758,6 +2772,9 @@ public class SECRETARY extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+        
+        newNotificationCount++;
+        NUMBER_OF_NOTIFICATION.setText(String.valueOf(newNotificationCount));
     }
 
     private void checkAndStoreNotification(String eartag, String notificationMessage) throws SQLException {
@@ -2778,6 +2795,7 @@ public class SECRETARY extends javax.swing.JFrame {
             pst.setString(2, notificationMessage);
             pst.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
             pst.executeUpdate();
+
 
             String notificationKey = eartag + notificationMessage;
             uploadedNotifications.add(notificationKey);
