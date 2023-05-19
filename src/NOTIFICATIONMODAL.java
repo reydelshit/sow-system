@@ -58,6 +58,8 @@ public class NOTIFICATIONMODAL extends JFrame implements Runnable {
 
         NOTIFICATION_CONTAINER_SCROLL_PANE.setOpaque(false);
 
+        NOTIFICATION_CONTAINER.setBackground(new java.awt.Color(26, 46, 53));
+        NOTIFICATION_CONTAINER.setForeground(new java.awt.Color(255, 217, 90));
         NOTIFICATION_CONTAINER.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }

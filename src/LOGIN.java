@@ -33,9 +33,15 @@ public class LOGIN extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         EMAIL_FIELD = new javax.swing.JTextField();
-        PASSWORD_FIELD = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
+        PASSWORD_FIELD = new javax.swing.JPasswordField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -46,31 +52,73 @@ public class LOGIN extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(EMAIL_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 180, 40));
-        jPanel1.add(PASSWORD_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 180, 40));
 
-        jButton1.setText("LOGIN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 120, 30));
+        EMAIL_FIELD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel1.add(EMAIL_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 250, 40));
+
+        jPanel2.setBackground(new java.awt.Color(255, 217, 90));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/malakilogo.png"))); // NOI18N
+        jLabel4.setText("jLabel4");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 350, 250));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 490));
+
+        jPanel3.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 217, 90));
         jLabel1.setText("LOGIN");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 120, 30));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 120, 30));
+
+        jLabel2.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel2.setText("EMAIL");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 80, 20));
+
+        jLabel3.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel3.setText("PASSWORD");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 80, 20));
+
+        rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover1.setText("LOGIN");
+        rSButtonHover1.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover1.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover1.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
+
+        PASSWORD_FIELD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel3.add(PASSWORD_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 250, 40));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/eyes.png"))); // NOI18N
+        jLabel5.setText("jLabel5");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel5MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel5MouseReleased(evt);
+            }
+        });
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 50, 40));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 440, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -83,11 +131,17 @@ public class LOGIN extends javax.swing.JFrame {
         conn = DBConnection.getConnection();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
+         LOGIN_FUNCTION();
+    }//GEN-LAST:event_rSButtonHover1ActionPerformed
 
-        // TODO add your handling code here:
-        LOGIN_FUNCTION();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
+       PASSWORD_FIELD.setEchoChar((char) 0);
+    }//GEN-LAST:event_jLabel5MousePressed
+
+    private void jLabel5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseReleased
+        PASSWORD_FIELD.setEchoChar('*');
+    }//GEN-LAST:event_jLabel5MouseReleased
 
     /**
      * @param args the command line arguments
@@ -126,10 +180,16 @@ public class LOGIN extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EMAIL_FIELD;
-    private javax.swing.JTextField PASSWORD_FIELD;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JPasswordField PASSWORD_FIELD;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     // End of variables declaration//GEN-END:variables
     
     private void LOGIN_FUNCTION(){

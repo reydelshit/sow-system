@@ -56,15 +56,17 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         REBREEDING_EARTAG = new javax.swing.JLabel();
         REBREEDING_COMMENTS = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel1.setForeground(new java.awt.Color(255, 217, 90));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         REBREEDING_EXPECTED_DATE.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        REBREEDING_EXPECTED_DATE.setForeground(new java.awt.Color(255, 217, 90));
         REBREEDING_EXPECTED_DATE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         REBREEDING_EXPECTED_DATE.setText("EXPECTED FARROWING");
         jPanel1.add(REBREEDING_EXPECTED_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 190, 50));
@@ -77,31 +79,27 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         jPanel1.add(REBREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 200, 40));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 217, 90));
         jLabel2.setText("COMMENTS");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 110, -1));
         jPanel1.add(REBREEDING_BOARD_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 200, 40));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 217, 90));
         jLabel3.setText("DATE");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 110, -1));
 
         REBREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        REBREEDING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
         REBREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         REBREEDING_EARTAG.setText("EARTAG HERE");
         jPanel1.add(REBREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 190, 50));
         jPanel1.add(REBREEDING_COMMENTS, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 200, 90));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 217, 90));
         jLabel5.setText("BOAR USED");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 110, -1));
-
-        jButton1.setText("START REBREEDING");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, 160, 40));
 
         jButton2.setText("CANCEL");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +108,18 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 530, -1, -1));
+
+        rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover1.setText("REBREED");
+        rSButtonHover1.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover1.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover1.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, 160, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,10 +135,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void REBREEDING_DATEPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_REBREEDING_DATEPropertyChange
         if (evt.getPropertyName().equals("date")) {
@@ -153,9 +159,13 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_REBREEDING_DATEPropertyChange
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
         REBREEDING();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_rSButtonHover1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,12 +208,12 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser REBREEDING_DATE;
     private javax.swing.JLabel REBREEDING_EARTAG;
     private javax.swing.JLabel REBREEDING_EXPECTED_DATE;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     // End of variables declaration//GEN-END:variables
 
     private void REBREEDING() {
