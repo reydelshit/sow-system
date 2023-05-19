@@ -224,26 +224,27 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         REGSOW_PEN = new javax.swing.JTextField();
         BREEDING = new javax.swing.JPanel();
-        DROPDOWN_FOR_BATCH_NUMBER = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        BREEDING_BOAR_USED = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        BREEDING_COMMENTS = new javax.swing.JTextArea();
         jLabel16 = new javax.swing.JLabel();
-        START_BREEDING_BUTTON = new javax.swing.JButton();
-        BREEDING_DATE = new com.toedter.calendar.JDateChooser();
         EXPECTED_FARROWING_LABEL = new javax.swing.JPanel();
         BREEDING_EXPECTED_FARROWING = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         BREEDING_EARTAG = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BREEDING_TABLE = new rojeru_san.complementos.RSTableMetro();
+        jPanel3 = new javax.swing.JPanel();
+        BREEDING_DATE = new com.toedter.calendar.JDateChooser();
+        BREEDING_BOAR_USED = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         LIST_OF_SOW_BY_BATCH = new rojeru_san.complementos.RSTableMetro();
+        DROPDOWN_FOR_BATCH_NUMBER = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        BREEDING_COMMENTS = new javax.swing.JTextArea();
+        START_BREEDING_BUTTON = new javax.swing.JButton();
         FARROWING = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         FARROWING_ONGOING_BREEDING = new rojeru_san.complementos.RSTableMetro();
@@ -329,7 +330,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(26, 46, 53));
         jPanel1.setMinimumSize(new java.awt.Dimension(250, 330));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -423,7 +424,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.setLayout(new java.awt.CardLayout());
 
-        MAIN_PANEL.setBackground(new java.awt.Color(153, 255, 153));
+        MAIN_PANEL.setBackground(new java.awt.Color(255, 217, 90));
         MAIN_PANEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -433,7 +434,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
-        REGISTER_OF_SOW.setBackground(new java.awt.Color(204, 204, 255));
+        REGISTER_OF_SOW.setBackground(new java.awt.Color(255, 217, 90));
         REGISTER_OF_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         REGSOW_TABLE.setModel(new javax.swing.table.DefaultTableModel(
@@ -455,6 +456,11 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        REGSOW_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        REGSOW_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        REGSOW_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        REGSOW_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
+        REGSOW_TABLE.setColorSelBackgound(new java.awt.Color(255, 217, 90));
         REGSOW_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         REGSOW_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jScrollPane16.setViewportView(REGSOW_TABLE);
@@ -470,32 +476,36 @@ public class SECRETARY extends javax.swing.JFrame {
             REGSOW_TABLE.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 650, 650));
+        REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 680, 650));
 
-        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(26, 46, 53));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(REGSOW_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 230, 40));
+        jPanel2.add(REGSOW_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 240, 40));
 
+        jLabel1.setForeground(new java.awt.Color(255, 217, 90));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DATE");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 50, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 50, -1));
 
+        jLabel4.setForeground(new java.awt.Color(255, 217, 90));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("BUILDING");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 210, 70, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 70, -1));
 
         REGSOW_BUILDING.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
-        jPanel2.add(REGSOW_BUILDING, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 110, 30));
+        jPanel2.add(REGSOW_BUILDING, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 110, 30));
 
+        jLabel5.setForeground(new java.awt.Color(255, 217, 90));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PEN");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 80, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 80, -1));
 
         REGSOW_BNUMBER.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 240, 40));
+        jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 240, 40));
 
+        jLabel2.setForeground(new java.awt.Color(255, 217, 90));
         jLabel2.setText("ASSIGNED EMPLOYEE");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, -1, -1));
 
         REGSOW_BUTTON.setText("REGISTER SOW");
         REGSOW_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -513,9 +523,10 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         jPanel2.add(ADD_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, -1, 30));
 
+        jLabel12.setForeground(new java.awt.Color(255, 217, 90));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("SUGGESTED EARTAG");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 150, 30));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 150, 40));
 
         EARTAG_CONTAINER.setBackground(new java.awt.Color(153, 153, 153));
         EARTAG_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -531,66 +542,40 @@ public class SECRETARY extends javax.swing.JFrame {
         CURRENT_REGSOW_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
         CURRENT_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CURRENT_REGSOW_EARTAG.setText("5000");
-        jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 60, 40));
+        jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, 60, 40));
 
         REGSOW_ASSIGNED_EMPLOYEE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 240, 40));
+        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 240, 40));
 
+        jLabel6.setForeground(new java.awt.Color(255, 217, 90));
         jLabel6.setText("BATCH NUMBER");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, -1, -1));
-        jPanel2.add(REGSOW_PEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 120, 30));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, -1, -1));
+        jPanel2.add(REGSOW_PEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 120, 30));
 
-        REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 350, 690));
+        REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 350, 680));
 
         PAGES.add(REGISTER_OF_SOW, "PAGE_1");
 
-        BREEDING.setBackground(new java.awt.Color(0, 255, 255));
+        BREEDING.setBackground(new java.awt.Color(255, 217, 90));
         BREEDING.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT BATCH" }));
-        BREEDING.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, 30));
-
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 217, 90));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("COMMENTS");
-        BREEDING.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 130, 20));
+        BREEDING.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 220, 20));
 
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("LIST OF SOW");
-        BREEDING.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 20));
-        BREEDING.add(BREEDING_BOAR_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 220, 40));
-
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 217, 90));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("EAR TAG");
-        BREEDING.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 130, 20));
+        BREEDING.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 220, 20));
 
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("BREEDING DATE");
-        BREEDING.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 130, 20));
-
-        BREEDING_COMMENTS.setColumns(20);
-        BREEDING_COMMENTS.setRows(5);
-        jScrollPane4.setViewportView(BREEDING_COMMENTS);
-
-        BREEDING.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 570, -1, -1));
-
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 217, 90));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("EXPECTED FARROWING");
-        BREEDING.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 200, 20));
-
-        START_BREEDING_BUTTON.setText("START BREEDING");
-        START_BREEDING_BUTTON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                START_BREEDING_BUTTONActionPerformed(evt);
-            }
-        });
-        BREEDING.add(START_BREEDING_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, 170, 30));
-
-        BREEDING_DATE.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                BREEDING_DATEPropertyChange(evt);
-            }
-        });
-        BREEDING.add(BREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 220, 40));
+        BREEDING.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 220, 20));
 
         EXPECTED_FARROWING_LABEL.setBackground(new java.awt.Color(153, 153, 153));
         EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -600,7 +585,7 @@ public class SECRETARY extends javax.swing.JFrame {
         BREEDING_EXPECTED_FARROWING.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         EXPECTED_FARROWING_LABEL.add(BREEDING_EXPECTED_FARROWING, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
-        BREEDING.add(EXPECTED_FARROWING_LABEL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 220, 40));
+        BREEDING.add(EXPECTED_FARROWING_LABEL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 220, 40));
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -608,13 +593,9 @@ public class SECRETARY extends javax.swing.JFrame {
         BREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         BREEDING_EARTAG.setForeground(new java.awt.Color(255, 255, 255));
         BREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
+        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 210, 40));
 
-        BREEDING.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 220, 40));
-
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("BOAR USED");
-        BREEDING.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 130, 20));
+        BREEDING.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 220, 40));
 
         BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -627,12 +608,27 @@ public class SECRETARY extends javax.swing.JFrame {
                 "Eartag", "Boar Used", "Breeding Date", "Expected", "Comments", "Status", "Culled"
             }
         ));
+        BREEDING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        BREEDING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        BREEDING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        BREEDING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         BREEDING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         BREEDING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane1.setViewportView(BREEDING_TABLE);
 
-        BREEDING.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 840, 580));
+        BREEDING.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 830, 580));
+
+        jPanel3.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BREEDING_DATE.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                BREEDING_DATEPropertyChange(evt);
+            }
+        });
+        jPanel3.add(BREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 220, 40));
+        jPanel3.add(BREEDING_BOAR_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 220, 40));
 
         LIST_OF_SOW_BY_BATCH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -645,12 +641,53 @@ public class SECRETARY extends javax.swing.JFrame {
                 "ID", "Eartag", "Batch"
             }
         ));
+        LIST_OF_SOW_BY_BATCH.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        LIST_OF_SOW_BY_BATCH.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        LIST_OF_SOW_BY_BATCH.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        LIST_OF_SOW_BY_BATCH.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         LIST_OF_SOW_BY_BATCH.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         LIST_OF_SOW_BY_BATCH.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         LIST_OF_SOW_BY_BATCH.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane3.setViewportView(LIST_OF_SOW_BY_BATCH);
 
-        BREEDING.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 220, 130));
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 230, 130));
+
+        DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT BATCH" }));
+        jPanel3.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 150, 30));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("LIST OF SOW");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 230, 20));
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("BOAR USED");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 20));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("BREEDING DATE");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 220, 20));
+
+        BREEDING_COMMENTS.setColumns(20);
+        BREEDING_COMMENTS.setRows(5);
+        jScrollPane4.setViewportView(BREEDING_COMMENTS);
+
+        jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
+
+        START_BREEDING_BUTTON.setText("START BREEDING");
+        START_BREEDING_BUTTON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                START_BREEDING_BUTTONActionPerformed(evt);
+            }
+        });
+        jPanel3.add(START_BREEDING_BUTTON, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, 170, 30));
+
+        BREEDING.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 250, 710));
 
         PAGES.add(BREEDING, "PAGE_2");
 
@@ -1260,7 +1297,7 @@ public class SECRETARY extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jSplitPane2)
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1716,6 +1753,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
