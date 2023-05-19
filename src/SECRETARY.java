@@ -296,11 +296,13 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
         jLabel34 = new javax.swing.JLabel();
-        WEANING_EARTAG = new javax.swing.JLabel();
-        WEANING_TOTAL = new javax.swing.JLabel();
         WEANING_REBREEDING_BTN = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         WEANING_MAIN_TABLE = new rojeru_san.complementos.RSTableMetro();
+        jPanel8 = new javax.swing.JPanel();
+        WEANING_EARTAG = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        WEANING_TOTAL = new javax.swing.JLabel();
         PERFORMANCE = new javax.swing.JPanel();
         PERFORMANCE_SEARCHFIELD = new javax.swing.JTextField();
         jButton12 = new javax.swing.JButton();
@@ -581,7 +583,7 @@ public class SECRETARY extends javax.swing.JFrame {
         EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BREEDING_EXPECTED_FARROWING.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BREEDING_EXPECTED_FARROWING.setForeground(new java.awt.Color(255, 255, 255));
+        BREEDING_EXPECTED_FARROWING.setForeground(new java.awt.Color(255, 217, 90));
         BREEDING_EXPECTED_FARROWING.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         EXPECTED_FARROWING_LABEL.add(BREEDING_EXPECTED_FARROWING, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
@@ -591,9 +593,9 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BREEDING_EARTAG.setForeground(new java.awt.Color(255, 255, 255));
+        BREEDING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
         BREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 210, 40));
+        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
         BREEDING.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 220, 40));
 
@@ -627,8 +629,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 BREEDING_DATEPropertyChange(evt);
             }
         });
-        jPanel3.add(BREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 220, 40));
-        jPanel3.add(BREEDING_BOAR_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 220, 40));
+        jPanel3.add(BREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 230, 40));
+
+        BREEDING_BOAR_USED.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel3.add(BREEDING_BOAR_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 220, 40));
 
         LIST_OF_SOW_BY_BATCH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -653,25 +657,25 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 230, 130));
 
         DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT BATCH" }));
-        jPanel3.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 150, 30));
+        jPanel3.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 150, 30));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 217, 90));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("LIST OF SOW");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 230, 20));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 20));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 217, 90));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("BOAR USED");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 220, 20));
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 220, 20));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 217, 90));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("BREEDING DATE");
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 220, 20));
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 220, 20));
 
         BREEDING_COMMENTS.setColumns(20);
         BREEDING_COMMENTS.setRows(5);
@@ -691,7 +695,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(BREEDING, "PAGE_2");
 
-        FARROWING.setBackground(new java.awt.Color(0, 153, 255));
+        FARROWING.setBackground(new java.awt.Color(255, 217, 90));
         FARROWING.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         FARROWING_ONGOING_BREEDING.setModel(new javax.swing.table.DefaultTableModel(
@@ -710,6 +714,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        FARROWING_ONGOING_BREEDING.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        FARROWING_ONGOING_BREEDING.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        FARROWING_ONGOING_BREEDING.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        FARROWING_ONGOING_BREEDING.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         FARROWING_ONGOING_BREEDING.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         FARROWING_ONGOING_BREEDING.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         FARROWING_ONGOING_BREEDING.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -741,13 +749,13 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel19.setText("LIST OF EARTAG THAT ARE CURRENTLY NOT FARROWED");
         FARROWING.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 360, 30));
 
-        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel5.setBackground(new java.awt.Color(26, 46, 53));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         FARROWING_DUE.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FARROWING_DUE.setForeground(new java.awt.Color(255, 255, 255));
+        FARROWING_DUE.setForeground(new java.awt.Color(255, 217, 90));
         FARROWING_DUE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel5.add(FARROWING_DUE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
+        jPanel5.add(FARROWING_DUE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 190, 40));
 
         FARROWING.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, 40));
 
@@ -806,11 +814,11 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel23.setText("TOTAL BORN");
         FARROWING.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 120, -1));
 
-        jPanel6.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel6.setBackground(new java.awt.Color(26, 46, 53));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         FARROWING_TOTAL_PIGLETS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FARROWING_TOTAL_PIGLETS.setForeground(new java.awt.Color(255, 255, 255));
+        FARROWING_TOTAL_PIGLETS.setForeground(new java.awt.Color(255, 217, 90));
         FARROWING_TOTAL_PIGLETS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel6.add(FARROWING_TOTAL_PIGLETS, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 40));
 
@@ -854,11 +862,11 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         FARROWING.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 50, 30));
 
-        jPanel7.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel7.setBackground(new java.awt.Color(26, 46, 53));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         FARROWING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FARROWING_EARTAG.setForeground(new java.awt.Color(255, 255, 255));
+        FARROWING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
         FARROWING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel7.add(FARROWING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
 
@@ -882,6 +890,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 "test", "test", "test", "test"
             }
         ));
+        FARROWING_MAIN_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        FARROWING_MAIN_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        FARROWING_MAIN_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        FARROWING_MAIN_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         FARROWING_MAIN_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         FARROWING_MAIN_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         FARROWING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -910,6 +922,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        LIST_OF_NOT_FARROWED.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        LIST_OF_NOT_FARROWED.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        LIST_OF_NOT_FARROWED.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        LIST_OF_NOT_FARROWED.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         LIST_OF_NOT_FARROWED.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         LIST_OF_NOT_FARROWED.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         LIST_OF_NOT_FARROWED.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -923,7 +939,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(FARROWING, "PAGE_3");
 
-        WEANING.setBackground(new java.awt.Color(204, 51, 255));
+        WEANING.setBackground(new java.awt.Color(255, 217, 90));
         WEANING.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         WEANING.add(WEANING_CALENDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 210, 40));
 
@@ -996,17 +1012,6 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel34.setText("DATE");
         WEANING.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 50, 30));
 
-        WEANING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        WEANING_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
-        WEANING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WEANING_EARTAG.setText("EARTAG HERE");
-        WEANING.add(WEANING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 210, 50));
-
-        WEANING_TOTAL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        WEANING_TOTAL.setForeground(new java.awt.Color(255, 255, 0));
-        WEANING_TOTAL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WEANING.add(WEANING_TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 210, 50));
-
         WEANING_REBREEDING_BTN.setText("START REBREEDING");
         WEANING_REBREEDING_BTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1026,6 +1031,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 "Eartag", "Actual", "Male", "Female", "Total", "AW"
             }
         ));
+        WEANING_MAIN_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        WEANING_MAIN_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        WEANING_MAIN_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        WEANING_MAIN_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         WEANING_MAIN_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         WEANING_MAIN_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         WEANING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1033,9 +1042,29 @@ public class SECRETARY extends javax.swing.JFrame {
 
         WEANING.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 760, 540));
 
+        jPanel8.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WEANING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        WEANING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
+        WEANING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel8.add(WEANING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
+
+        WEANING.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 210, 40));
+
+        jPanel9.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WEANING_TOTAL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        WEANING_TOTAL.setForeground(new java.awt.Color(255, 217, 90));
+        WEANING_TOTAL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel9.add(WEANING_TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
+
+        WEANING.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 210, 40));
+
         PAGES.add(WEANING, "PAGE_4");
 
-        PERFORMANCE.setBackground(new java.awt.Color(204, 204, 204));
+        PERFORMANCE.setBackground(new java.awt.Color(255, 217, 90));
         PERFORMANCE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         PERFORMANCE.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 260, 30));
 
@@ -1081,6 +1110,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        PERFORMANCE_FARROWING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        PERFORMANCE_FARROWING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_FARROWING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_FARROWING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_FARROWING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_FARROWING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_FARROWING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1117,6 +1150,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        PERFORMANCE_WEANING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        PERFORMANCE_WEANING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_WEANING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_WEANING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_WEANING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_WEANING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_WEANING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1150,6 +1187,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        PERFORMANCE_BREEDING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        PERFORMANCE_BREEDING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_BREEDING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        PERFORMANCE_BREEDING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_BREEDING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_BREEDING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         PERFORMANCE_BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1166,7 +1207,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(PERFORMANCE, "PAGE_5");
 
-        WARNING_SOW.setBackground(new java.awt.Color(0, 153, 153));
+        WARNING_SOW.setBackground(new java.awt.Color(255, 217, 90));
         WARNING_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1203,6 +1244,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        WARNING_SOW_DETAILS.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        WARNING_SOW_DETAILS.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_DETAILS.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_DETAILS.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         WARNING_SOW_DETAILS.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         WARNING_SOW_DETAILS.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         WARNING_SOW_DETAILS.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1238,6 +1283,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        WARNING_SOW_LIST_WARNING_SOW.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        WARNING_SOW_LIST_WARNING_SOW.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_LIST_WARNING_SOW.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        WARNING_SOW_LIST_WARNING_SOW.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         jScrollPane10.setViewportView(WARNING_SOW_LIST_WARNING_SOW);
         if (WARNING_SOW_LIST_WARNING_SOW.getColumnModel().getColumnCount() > 0) {
             WARNING_SOW_LIST_WARNING_SOW.getColumnModel().getColumn(0).setResizable(false);
@@ -1247,7 +1296,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(WARNING_SOW, "PAGE_6");
 
-        CULLED_SOW.setBackground(new java.awt.Color(51, 0, 51));
+        CULLED_SOW.setBackground(new java.awt.Color(255, 217, 90));
         CULLED_SOW.setForeground(new java.awt.Color(51, 0, 51));
         CULLED_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1258,13 +1307,13 @@ public class SECRETARY extends javax.swing.JFrame {
         CULLED_SOW.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 300, 40));
 
         CULLED_TOTAL_CULLED.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        CULLED_TOTAL_CULLED.setForeground(new java.awt.Color(255, 255, 0));
+        CULLED_TOTAL_CULLED.setForeground(new java.awt.Color(26, 46, 53));
         CULLED_TOTAL_CULLED.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CULLED_TOTAL_CULLED.setText("10000");
         CULLED_SOW.add(CULLED_TOTAL_CULLED, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 200, 70));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setForeground(new java.awt.Color(26, 46, 53));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("TOTAL CULLED SOW");
         CULLED_SOW.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 200, 40));
@@ -1280,6 +1329,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 "Culled"
             }
         ));
+        CULLED_MAIN_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        CULLED_MAIN_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        CULLED_MAIN_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        CULLED_MAIN_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         jScrollPane11.setViewportView(CULLED_MAIN_TABLE);
 
         CULLED_SOW.add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, 180, 580));
@@ -1431,9 +1484,9 @@ public class SECRETARY extends javax.swing.JFrame {
             FARROWING_RETRIEVE_DETAILS();
             BREEDING_RETRIEVE_BREEDING_DETAILS();
             FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-
-            PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-
+//
+//            PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+//
             WARNING_FETCH_EARTAG();
             CULLED_FETCH_EARTAG();
 
@@ -1498,7 +1551,7 @@ public class SECRETARY extends javax.swing.JFrame {
             WEANING_SUBMIT();
             WEANING_RETRIEVE_DETAILS();
 
-            PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+//            PERFORMANCE_WEANING_RETRIEVE_DETAILS();
 
         }
 
@@ -1758,6 +1811,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
@@ -2175,12 +2230,13 @@ public class SECRETARY extends javax.swing.JFrame {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "dsadadadsaedwjjjjjj");
         }
     }
 
     private void FARROWING_SUBMIT() {
-
+          
+        
         try {
             String checkSql = "SELECT eartag, culled, farrowed FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(checkSql);
@@ -2226,20 +2282,7 @@ public class SECRETARY extends javax.swing.JFrame {
                     pst.setString(4, FARROWING_FEMALE.getText());
                     pst.setString(5, FARROWING_MALE.getText());
                     pst.setString(6, FARROWING_TOTAL_PIGLETS.getText());
-                    String abwText = FARROWING_ABW.getText();
-                    if (!abwText.isEmpty()) {
-                        try {
-                            double abwValue = Double.parseDouble(abwText);
-                            pst.setDouble(7, abwValue);
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Invalid input for ABW. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "ABW field is empty. Please enter a value.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    pst.setDouble(7, Double.parseDouble(FARROWING_ABW.getText()));
+                    pst.setString(7, FARROWING_ABW.getText());
                     pst.setString(8, FARROWING_MORT.getText());
                     pst.setString(9, FARROWING_REMARKS.getText());
                     pst.setBoolean(10, isCulling);
@@ -2272,7 +2315,7 @@ public class SECRETARY extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+//            JOptionPane.showMessageDialog(null, "Dasdbad");
         }
     }
 
@@ -2328,7 +2371,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 FARROWING_MAIN_TABLE.setModel(model);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+//            JOptionPane.showMessageDialog(null, "wwwwwwwwwww");
         }
     }
 
