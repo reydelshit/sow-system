@@ -19,7 +19,7 @@ public class DBConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection myConn = DriverManager.getConnection(dbUrl, hostUsername, hostPassword);
             
-            JOptionPane.showMessageDialog(null, "Connected to Database");
+//            JOptionPane.showMessageDialog(null, "Connected to Database");
             return myConn;
 
           } catch(Exception e){
