@@ -1,6 +1,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
@@ -50,94 +51,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         cardLayout = (CardLayout) (PAGES.getLayout());
 
-        CategoryChart chartForRegSOw = new CategoryChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
-
-        chartForRegSOw.setTitle("Registered Sows");
-        chartForRegSOw.setXAxisTitle("Date");
-        chartForRegSOw.setYAxisTitle("Number of Sows");
-
-        try {
-            String query = "SELECT date, COUNT(eartag) AS count FROM register_sow GROUP BY date";
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
-
-            List<String> xValues = new ArrayList<>();
-            List<Integer> yValues = new ArrayList<>();
-
-            while (rs.next()) {
-                Date date = rs.getDate("date");
-                int count = rs.getInt("count");
-
-                xValues.add(date.toString()); // Convert date to string for category chart
-                yValues.add(count);
-            }
-
-            chartForRegSOw.addSeries("Number of Sows", xValues, yValues);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        chartPanel = new XChartPanel<>(chartForRegSOw);
-        CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
-        CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
-
-        pack();
-        setVisible(true);
-
-        PieChart chartForPie = new PieChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
-
-        chartForPie.setTitle("Farrowing Records");
-
-        try {
-            String culledQuery = "SELECT COUNT(*) AS culledCount FROM farrowing_records WHERE culled = 1";
-            pst = conn.prepareStatement(culledQuery);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                int culledCount = rs.getInt("culledCount");
-                chartForPie.addSeries("Culled (" + culledCount + ")", culledCount);
-            }
-
-            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM farrowing_records WHERE culled = 0";
-            pst = conn.prepareStatement(farrowedQuery);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                int farrowedCount = rs.getInt("farrowedCount");
-                chartForPie.addSeries("Farrowed (" + farrowedCount + ")", farrowedCount);
-            }
-
-            String warningQuery = "SELECT COUNT(DISTINCT eartag) AS warningCount "
-                    + "FROM farrowing_records "
-                    + "WHERE ((female_piglets + male_piglets) < 7 "
-                    + "OR mortality > 0 "
-                    + "OR remarks IS NOT NULL "
-                    + "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)) "
-                    + "AND culled = 0";
-            pst = conn.prepareStatement(warningQuery);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                int warningCount = rs.getInt("warningCount");
-                chartForPie.addSeries("Warning (" + warningCount + ")", warningCount);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        pieChartPanel = new XChartPanel<>(chartForPie);
-
-        PANEL_PIE_CHART.setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        PANEL_PIE_CHART.add(pieChartPanel, gbc);
-
-        pack();
-        setVisible(true);
-
+        DISPLAYCHART();
+        
         WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -853,6 +768,100 @@ public class OPEMANAGER extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+    }
+    
+      private void DISPLAYCHART() {
+
+        XYChart chartForRegSOw = new XYChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
+
+        chartForRegSOw.setTitle("Registered Sows");
+        chartForRegSOw.setXAxisTitle("Date");
+        chartForRegSOw.setYAxisTitle("Number of Sows");
+
+        try {
+            String query = "SELECT date, COUNT(eartag) AS count FROM register_sow GROUP BY date";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            List<Date> xValues = new ArrayList<>();
+            List<Integer> yValues = new ArrayList<>();
+
+            while (rs.next()) {
+                Date date = rs.getDate("date");
+                int count = rs.getInt("count");
+
+                xValues.add(date);
+                yValues.add(count);
+            }
+
+            chartForRegSOw.addSeries("Number of Sows", xValues, yValues);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+// Create the chart panel and add it to the container
+        chartPanel = new XChartPanel<>(chartForRegSOw);
+        CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
+        CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
+
+        pack();
+        setVisible(true);
+
+        PieChart chartForPie = new PieChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
+        Styler styler = chartForPie.getStyler();
+        styler.setChartBackgroundColor(new Color(255, 217, 90));
+
+        chartForPie.setTitle("Farrowing Records");
+
+        try {
+            String culledQuery = "SELECT COUNT(*) AS culledCount FROM farrowing_records WHERE culled = 1";
+            pst = conn.prepareStatement(culledQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int culledCount = rs.getInt("culledCount");
+                chartForPie.addSeries("Culled (" + culledCount + ")", culledCount);
+            }
+
+            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM farrowing_records WHERE culled = 0";
+            pst = conn.prepareStatement(farrowedQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int farrowedCount = rs.getInt("farrowedCount");
+                chartForPie.addSeries("Farrowed (" + farrowedCount + ")", farrowedCount);
+            }
+
+            String warningQuery = "SELECT COUNT(DISTINCT eartag) AS warningCount "
+                    + "FROM farrowing_records "
+                    + "WHERE ((female_piglets + male_piglets) < 7 "
+                    + "OR mortality > 0 "
+                    + "OR remarks IS NOT NULL "
+                    + "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)) "
+                    + "AND culled = 0";
+            pst = conn.prepareStatement(warningQuery);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                int warningCount = rs.getInt("warningCount");
+                chartForPie.addSeries("Warning (" + warningCount + ")", warningCount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        pieChartPanel = new XChartPanel<>(chartForPie);
+
+        PANEL_PIE_CHART.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+
+        PANEL_PIE_CHART.add(pieChartPanel, gbc);
+
+        pack();
+        setVisible(true);
     }
 
 }
