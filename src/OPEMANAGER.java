@@ -193,7 +193,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         CHART_PANEL_REG_SOW = new javax.swing.JPanel();
         PANEL_PIE_CHART = new javax.swing.JPanel();
-        PERFORMANCE = new javax.swing.JPanel();
+        LIST_OF_SOW = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         PERFORMANCE_WEANING_TABLE = new javax.swing.JTable();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -298,8 +298,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
-        PERFORMANCE.setBackground(new java.awt.Color(204, 204, 204));
-        PERFORMANCE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        LIST_OF_SOW.setBackground(new java.awt.Color(204, 204, 204));
+        LIST_OF_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PERFORMANCE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -314,7 +314,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         ));
         jScrollPane8.setViewportView(PERFORMANCE_WEANING_TABLE);
 
-        PERFORMANCE.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 400, 540, 300));
+        LIST_OF_SOW.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 400, 540, 300));
 
         PERFORMANCE_FARROWING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -329,8 +329,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
         ));
         jScrollPane9.setViewportView(PERFORMANCE_FARROWING_TABLE);
 
-        PERFORMANCE.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 860, 250));
-        PERFORMANCE.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 260, 30));
+        LIST_OF_SOW.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 860, 250));
+        LIST_OF_SOW.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 260, 30));
 
         jButton12.setText("SEARCH");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -338,7 +338,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 jButton12ActionPerformed(evt);
             }
         });
-        PERFORMANCE.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, 30));
+        LIST_OF_SOW.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, 30));
 
         PERFORMANCE_BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -353,24 +353,24 @@ public class OPEMANAGER extends javax.swing.JFrame {
         ));
         jScrollPane10.setViewportView(PERFORMANCE_BREEDING_TABLE);
 
-        PERFORMANCE.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 510, 300));
+        LIST_OF_SOW.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 510, 300));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("FARROWING");
-        PERFORMANCE.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 540, 40));
+        LIST_OF_SOW.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 540, 40));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("BREEDING");
-        PERFORMANCE.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 510, 40));
+        LIST_OF_SOW.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 510, 40));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("WEANING");
-        PERFORMANCE.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 540, 40));
+        LIST_OF_SOW.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 540, 40));
 
-        PAGES.add(PERFORMANCE, "PAGE_5");
+        PAGES.add(LIST_OF_SOW, "PAGE_5");
 
         WARNING_SOW.setBackground(new java.awt.Color(0, 153, 153));
         WARNING_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -600,10 +600,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JTable CULLED_MAIN_TABLE;
     private javax.swing.JPanel CULLED_SOW;
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
+    private javax.swing.JPanel LIST_OF_SOW;
     private javax.swing.JPanel MAIN_PANEL;
     private javax.swing.JPanel PAGES;
     private javax.swing.JPanel PANEL_PIE_CHART;
-    private javax.swing.JPanel PERFORMANCE;
     private javax.swing.JTable PERFORMANCE_BREEDING_TABLE;
     private javax.swing.JTable PERFORMANCE_FARROWING_TABLE;
     private javax.swing.JTextField PERFORMANCE_SEARCHFIELD;
