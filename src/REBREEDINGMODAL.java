@@ -207,9 +207,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void REBREEDING() {
-        System.out.print("dnajsdbjabf");
         try {
-            System.out.print("dddddddddddd");
             boolean setFarrowedFalse = false;
             boolean isCulling = false;
             int parity = 0;
@@ -227,7 +225,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 boolean isCurrentlyBreeding = rs.getBoolean("breeding_status");
                 parity = rs.getInt("parity");
                 if (!isCulled) {
-                    if (!isFarrowed && !isCurrentlyBreeding) {
+                    if (!isFarrowed && isCurrentlyBreeding) {
                         // Insert new breeding record
                         String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity, culled, rebreed, breeding_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         pst = conn.prepareStatement(sql);
@@ -240,8 +238,8 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                         parity++;
                         pst.setInt(7, parity);
                         pst.setBoolean(8, isCulling);
-                        pst.setBoolean(9, true);
-                        pst.setBoolean(10, true);
+                        pst.setBoolean(9, !isCurrentlyBreeding); // Set rebreed status based on breeding status
+                        pst.setBoolean(10, !isCurrentlyBreeding); // Set breeding status
 
                         pst.execute();
 
@@ -263,10 +261,9 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                     REBREEDING_EXPECTED_DATE.setText("");
                     REBREEDING_COMMENTS.setText("");
                 }
-
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
     }
 }

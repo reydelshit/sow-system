@@ -845,9 +845,9 @@ public class SECRETARY extends javax.swing.JFrame {
                 "test", "test", "test", "test"
             }
         ));
-        FARROWING_MAIN_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        FARROWING_MAIN_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        FARROWING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        FARROWING_MAIN_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        FARROWING_MAIN_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        FARROWING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane14.setViewportView(FARROWING_MAIN_TABLE);
 
         FARROWING_DETAILS_CONTAINER.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 420));
@@ -929,8 +929,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("CHECK EARTAG IF ALREADY FARROWED");
-        WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, 230, 30));
+        jLabel32.setText("CHECK EARTAG IF IT IS ON WEANING PERIOD");
+        WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, 270, 30));
 
         jButton7.setText("SUBMIT");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -1892,8 +1892,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
 //    BREEDING 
     private void BREEDING_START_BREEDING() {
-        try {
-            boolean isBreeding = false;
+        try {            
+            boolean isFarrowed = false;
             boolean isCulling = false;
 
             Date selectedDate = BREEDING_DATE.getDate();
@@ -1949,7 +1949,7 @@ public class SECRETARY extends javax.swing.JFrame {
             pst.setString(3, dateString);
             pst.setString(4, BREEDING_EXPECTED_FARROWING.getText());
             pst.setString(5, BREEDING_COMMENTS.getText());
-            pst.setBoolean(6, isBreeding);
+            pst.setBoolean(6, isFarrowed);
             pst.setInt(7, 0);
             pst.setBoolean(8, isCulling);
             pst.setBoolean(9, false);
@@ -2019,10 +2019,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 String statusForFarrowing = isFarrowed == 1 ? "farrowed" : "not farrowed";
 
                 boolean breedStatus = rs.getBoolean("breeding_status");
-                String setStatusForBreeding = breedStatus ? "not breeding" : "on breeding";
+                String setStatusForBreeding = breedStatus ? "on breeding" : "not breeding";
 
                 boolean rebreed = rs.getBoolean("rebreed");
-                String setStatusForRebreedStatus = rebreed ? "no" : "yes";
+                String setStatusForRebreedStatus = rebreed ? "yes" : "no";
 
                 int parity = rs.getInt("highest_parity");
                 String penbuilding = rs.getString("penbuilding");
@@ -2209,16 +2209,26 @@ public class SECRETARY extends javax.swing.JFrame {
                     pst.execute();
 
                     // Update breeding record
-                    String updateSql = "UPDATE breeding SET farrowed = true WHERE eartag = ?";
+                    String updateSql = "UPDATE breeding SET farrowed = true, breeding_status = false WHERE eartag = ?";
                     pst = conn.prepareStatement(updateSql);
                     pst.setString(1, FARROWING_EARTAG.getText());
                     pst.execute();
 
-                    JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " EARTAG DETAILS ARE UPLOADED");
+                    JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " eartag is now farrowed!");
 
                     FARROWING_RETRIEVE_DETAILS();
                     FARROWING_DETAILS_CONTAINER.setVisible(true);
                     BREEDING_RETRIEVE_BREEDING_DETAILS();
+                    
+                    FARROWING_EARTAG.setText("");
+                    FARROWING_DUE.setText("");
+                    FARROWING_ACTUAL.setDate(null);
+                    FARROWING_FEMALE.setText("");
+                    FARROWING_MALE.setText("");
+                    FARROWING_TOTAL_PIGLETS.setText("");
+                    FARROWING_ABW.setText("");
+                    FARROWING_MORT.setText("");
+                    FARROWING_REMARKS.setText("");
 
                 }
             }
@@ -2286,48 +2296,61 @@ public class SECRETARY extends javax.swing.JFrame {
 
 
     //    WEANING 
-    private void WEANING_SEARCH_EARTAG() {
-        try {
-            DefaultTableModel model = new DefaultTableModel();
+private void WEANING_SEARCH_EARTAG() {
+    try {
+        DefaultTableModel model = new DefaultTableModel();
 
-            String searchValue = WEANING_SEARCH_FIELD.getText();
-            String query = "SELECT * FROM breeding WHERE eartag = ?";
+        String searchValue = WEANING_SEARCH_FIELD.getText();
+        String query = "SELECT eartag, farrowed, expected_farrowing "
+                + "FROM breeding "
+                + "WHERE eartag = ?";
 
-            pst = conn.prepareStatement(query);
-            pst.setString(1, searchValue);
+        pst = conn.prepareStatement(query);
+        pst.setString(1, searchValue);
 
-            rs = pst.executeQuery();
+        rs = pst.executeQuery();
 
-            model.addColumn("eartag");
-            model.addColumn("farrowed");
+        model.addColumn("eartag");
+        model.addColumn("farrowed");
 
-            if (rs.next()) {
-                int eartag = rs.getInt("eartag");
-                boolean farrowed = rs.getBoolean("farrowed");
+        if (rs.next()) {
+            int eartag = rs.getInt("eartag");
+            boolean farrowed = rs.getBoolean("farrowed");
+            Date expectedFarrowingDate = rs.getDate("expected_farrowing");
 
-                model.addRow(new Object[]{eartag, farrowed});
+            model.addRow(new Object[]{eartag, farrowed});
 
-                // Check if the sow has already farrowed
-                if (farrowed) {
-                    JOptionPane.showMessageDialog(null, "This sow has already farrowed");
+            if (farrowed) {
+                // Calculate the actual weaning date (28 days after expected farrowing)
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(expectedFarrowingDate);
+                cal.add(Calendar.DAY_OF_MONTH, 28);
+                Date actualWeaningDate = cal.getTime();
+
+                // Check if current date is after the actual weaning date
+                Date currentDate = new Date();
+                if (currentDate.after(actualWeaningDate)) {
+                    // Perform weaning operation
                     WEANING_EARTAG.setText(String.valueOf(eartag));
-//                    FARROWING_RETRIEVE_DETAILS();
-//                    FARROWING_SELECT_BUTTON.setEnabled(false);
-//                    FARROWING_DETAILS_CONTAINER.setVisible(true);
+                    // ... perform the weaning operation here
                 } else {
-//                    FARROWING_SELECT_BUTTON.setEnabled(true);
+                    JOptionPane.showMessageDialog(null, "This sow has not reached the weaning period yet.");
                 }
-
             } else {
-                JOptionPane.showMessageDialog(null, "No result found");
-//                FARROWING_RETRIEVE_DETAILS();
-//                FARROWING_DETAILS_CONTAINER.setVisible(false);
+                JOptionPane.showMessageDialog(null, "This sow has not farrowed yet.");
             }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        } else {
+            JOptionPane.showMessageDialog(null, "No result found");
         }
+
+        // Update the table or display the model as needed
+        // ...
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
     }
+}
 
     private void WEANING_SUBMIT() {
 
