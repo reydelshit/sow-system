@@ -1792,13 +1792,13 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover13ActionPerformed
 
     private void rSButtonHover14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover14ActionPerformed
-                WEANING_SEARCH_EARTAG();
+        WEANING_SEARCH_EARTAG();
         WEANING_RETRIEVE_DETAILS();
         WEANING_REBREEDING_BTN.setVisible(true);
     }//GEN-LAST:event_rSButtonHover14ActionPerformed
 
     private void WEANING_REBREEDING_BTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WEANING_REBREEDING_BTNActionPerformed
-                String eartag = WEANING_MAIN_TABLE.getValueAt(0, 0).toString();
+        String eartag = WEANING_MAIN_TABLE.getValueAt(0, 0).toString();
         rebreedingModal.setEartag(eartag);
         rebreedingModal.setVisible(true);
     }//GEN-LAST:event_WEANING_REBREEDING_BTNActionPerformed
@@ -1808,13 +1808,13 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover15ActionPerformed
 
     private void rSButtonHover16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover16ActionPerformed
-                PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
         PERFORMCE_FARROWING_RETRIEVE_DETAILS();
         PERFORMANCE_WEANING_RETRIEVE_DETAILS();
     }//GEN-LAST:event_rSButtonHover16ActionPerformed
 
     private void WARNING_CULL_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WARNING_CULL_BUTTONActionPerformed
-               String culledValue = WARNING_FORCULLED_LABEL.getText();
+        String culledValue = WARNING_FORCULLED_LABEL.getText();
         int culledInt = Integer.parseInt(culledValue);
         try {
 
@@ -2535,7 +2535,7 @@ public class SECRETARY extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Dasdbad");
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
@@ -2591,7 +2591,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 FARROWING_MAIN_TABLE.setModel(model);
             }
         } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "wwwwwwwwwww");
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
@@ -2603,8 +2603,7 @@ public class SECRETARY extends javax.swing.JFrame {
             String searchValue = WEANING_SEARCH_FIELD.getText();
             String query = "SELECT eartag, farrowed, expected_farrowing "
                     + "FROM breeding "
-                    + "WHERE eartag = ?";
-
+                    + "WHERE eartag = ? AND culled = false";
             pst = conn.prepareStatement(query);
             pst.setString(1, searchValue);
 
@@ -2621,31 +2620,25 @@ public class SECRETARY extends javax.swing.JFrame {
                 model.addRow(new Object[]{eartag, farrowed});
 
                 if (farrowed) {
-                    // Calculate the actual weaning date (28 days after expected farrowing)
+
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(expectedFarrowingDate);
                     cal.add(Calendar.DAY_OF_MONTH, 28);
                     Date actualWeaningDate = cal.getTime();
 
-                    // Check if current date is after the actual weaning date
                     Date currentDate = new Date();
                     if (currentDate.after(actualWeaningDate)) {
-                        // Perform weaning operation
                         WEANING_EARTAG.setText(String.valueOf(eartag));
-                        // ... perform the weaning operation here
                     } else {
                         JOptionPane.showMessageDialog(null, "This sow has not reached the weaning period yet.");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "This sow has not farrowed yet.");
                 }
-
             } else {
-                JOptionPane.showMessageDialog(null, "No result found");
+                JOptionPane.showMessageDialog(null, "No result found or the sow has been culled.");
             }
 
-            // Update the table or display the model as needed
-            // ...
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
