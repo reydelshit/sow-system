@@ -2,6 +2,7 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
@@ -13,13 +14,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.*;
 import org.knowm.xchart.*;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.style.MatlabTheme;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.*;
@@ -38,16 +42,16 @@ public class OPEMANAGER extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     CardLayout cardLayout;
-    
+
     private final NOTIFICATIONMODAL notificationModal;
-    
+
     private JPanel chartPanel;
     private JPanel pieChartPanel;
 
     public OPEMANAGER() {
         conn = DBConnection.getConnection();
         initComponents();
-        
+
         notificationModal = new NOTIFICATIONMODAL();
         notificationModal.setVisible(false);
 
@@ -57,7 +61,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         cardLayout = (CardLayout) (PAGES.getLayout());
 
         DISPLAYCHART();
-        
+
         WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -587,7 +591,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover2ActionPerformed
 
     private void rSButtonHover3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover3ActionPerformed
-       cardLayout.show(PAGES, "PAGE_6");
+        cardLayout.show(PAGES, "PAGE_6");
     }//GEN-LAST:event_rSButtonHover3ActionPerformed
 
     private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
@@ -907,40 +911,59 @@ public class OPEMANAGER extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
-      private void DISPLAYCHART() {
 
-        XYChart chartForRegSOw = new XYChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
+private int calculateAliveSowCount(int batch) throws SQLException {
+    String query = "SELECT COUNT(*) AS count "
+            + "FROM register_sow rs "
+            + "JOIN breeding b ON rs.eartag = b.eartag "
+            + "WHERE rs.bnumber = ? AND b.culled = false";
+    pst = conn.prepareStatement(query);
+    pst.setInt(1, batch);
+    rs = pst.executeQuery();
 
-        chartForRegSOw.setTitle("Registered Sows");
-        chartForRegSOw.setXAxisTitle("Date");
-        chartForRegSOw.setYAxisTitle("Number of Sows");
+    if (rs.next()) {
+        return rs.getInt("count");
+    }
 
-        try {
-            String query = "SELECT date, COUNT(eartag) AS count FROM register_sow GROUP BY date";
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
+    return 0; // Return 0 if no count is found
+}
+private void DISPLAYCHART() {
+XYChart chartForRegSow = new XYChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
 
-            List<Date> xValues = new ArrayList<>();
-            List<Integer> yValues = new ArrayList<>();
+chartForRegSow.setTitle("Registered Sows");
+chartForRegSow.setXAxisTitle("Batch");
+chartForRegSow.setYAxisTitle("Alive Sow Count");
 
-            while (rs.next()) {
-                Date date = rs.getDate("date");
-                int count = rs.getInt("count");
+try {
+    String query = "SELECT rs.bnumber, COUNT(*) AS count "
+            + "FROM register_sow rs "
+            + "JOIN breeding b ON rs.eartag = b.eartag "
+            + "WHERE b.culled = false "
+            + "GROUP BY rs.bnumber";
+    pst = conn.prepareStatement(query);
+    rs = pst.executeQuery();
 
-                xValues.add(date);
-                yValues.add(count);
-            }
+    List<Integer> xValues = new ArrayList<>();
+    List<Integer> yValues = new ArrayList<>();
 
-            chartForRegSOw.addSeries("Number of Sows", xValues, yValues);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    while (rs.next()) {
+        int batch = rs.getInt("bnumber");
+        int count = rs.getInt("count");
+
+        xValues.add(batch);
+        yValues.add(count);
+    }
+
+    chartForRegSow.addSeries("Alive Sow Count", xValues, yValues);
+} catch (SQLException e) {
+    e.printStackTrace();
+}
 
 // Create the chart panel and add it to the container
-        chartPanel = new XChartPanel<>(chartForRegSOw);
-        CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
-        CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
+chartPanel = new XChartPanel<>(chartForRegSow);
+CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
+CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
+
 
         pack();
         setVisible(true);
