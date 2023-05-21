@@ -510,7 +510,7 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel40.setText("WELCOME TO RDJ FARM INC. ");
         jPanel10.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 770, 60));
 
-        MAIN_PANEL.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1110, 620));
+        MAIN_PANEL.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 1110, 620));
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 

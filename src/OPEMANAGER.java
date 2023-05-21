@@ -47,6 +47,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
     private JPanel chartPanel;
     private JPanel pieChartPanel;
+    private JPanel barGraphForCulled;
 
     public OPEMANAGER() {
         conn = DBConnection.getConnection();
@@ -61,6 +62,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
         cardLayout = (CardLayout) (PAGES.getLayout());
 
         DISPLAYCHART();
+        PIE_CHART();
+        BAR_GRAPH();
 
         WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
             @Override
@@ -125,9 +128,9 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         CHART_PANEL_REG_SOW = new javax.swing.JPanel();
         PANEL_PIE_CHART = new javax.swing.JPanel();
+        OPEMANAGER_BAR_GRAPH = new javax.swing.JPanel();
         LIST_OF_SOW = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
@@ -245,11 +248,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
         MAIN_PANEL.setBackground(new java.awt.Color(255, 217, 90));
         MAIN_PANEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("RDJ FARM");
-        MAIN_PANEL.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 350, 60));
-
         javax.swing.GroupLayout CHART_PANEL_REG_SOWLayout = new javax.swing.GroupLayout(CHART_PANEL_REG_SOW);
         CHART_PANEL_REG_SOW.setLayout(CHART_PANEL_REG_SOWLayout);
         CHART_PANEL_REG_SOWLayout.setHorizontalGroup(
@@ -261,7 +259,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        MAIN_PANEL.add(CHART_PANEL_REG_SOW, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 650, 300));
+        MAIN_PANEL.add(CHART_PANEL_REG_SOW, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 650, 300));
 
         javax.swing.GroupLayout PANEL_PIE_CHARTLayout = new javax.swing.GroupLayout(PANEL_PIE_CHART);
         PANEL_PIE_CHART.setLayout(PANEL_PIE_CHARTLayout);
@@ -274,7 +272,20 @@ public class OPEMANAGER extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        MAIN_PANEL.add(PANEL_PIE_CHART, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, 410, 300));
+        MAIN_PANEL.add(PANEL_PIE_CHART, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 410, 300));
+
+        javax.swing.GroupLayout OPEMANAGER_BAR_GRAPHLayout = new javax.swing.GroupLayout(OPEMANAGER_BAR_GRAPH);
+        OPEMANAGER_BAR_GRAPH.setLayout(OPEMANAGER_BAR_GRAPHLayout);
+        OPEMANAGER_BAR_GRAPHLayout.setHorizontalGroup(
+            OPEMANAGER_BAR_GRAPHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
+        OPEMANAGER_BAR_GRAPHLayout.setVerticalGroup(
+            OPEMANAGER_BAR_GRAPHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 320, Short.MAX_VALUE)
+        );
+
+        MAIN_PANEL.add(OPEMANAGER_BAR_GRAPH, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 650, 320));
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
@@ -697,6 +708,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JPanel LIST_OF_SOW;
     private javax.swing.JPanel MAIN_PANEL;
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
+    private javax.swing.JPanel OPEMANAGER_BAR_GRAPH;
     private javax.swing.JPanel PAGES;
     private javax.swing.JPanel PANEL_PIE_CHART;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_BREEDING_TABLE;
@@ -709,7 +721,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private rojeru_san.complementos.RSTableMetro WARNING_SOW_DETAILS;
     private rojeru_san.complementos.RSTableMetro WARNING_SOW_LIST_WARNING_SOW;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -912,62 +923,92 @@ public class OPEMANAGER extends javax.swing.JFrame {
         }
     }
 
-private int calculateAliveSowCount(int batch) throws SQLException {
-    String query = "SELECT COUNT(*) AS count "
-            + "FROM register_sow rs "
-            + "JOIN breeding b ON rs.eartag = b.eartag "
-            + "WHERE rs.bnumber = ? AND b.culled = false";
-    pst = conn.prepareStatement(query);
-    pst.setInt(1, batch);
-    rs = pst.executeQuery();
+    private void DISPLAYCHART() {
+        XYChart chartForRegSow = new XYChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
 
-    if (rs.next()) {
-        return rs.getInt("count");
-    }
+        chartForRegSow.setTitle("ALIVE SOW BY BATCH");
+        chartForRegSow.setXAxisTitle("Batch");
+        chartForRegSow.setYAxisTitle("Alive Sow Count");
 
-    return 0; // Return 0 if no count is found
-}
-private void DISPLAYCHART() {
-XYChart chartForRegSow = new XYChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
+        try {
+            String query = "SELECT rs.bnumber, COUNT(*) AS count "
+                    + "FROM register_sow rs "
+                    + "JOIN breeding b ON rs.eartag = b.eartag "
+                    + "WHERE b.culled = false "
+                    + "GROUP BY rs.bnumber";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
 
-chartForRegSow.setTitle("Registered Sows");
-chartForRegSow.setXAxisTitle("Batch");
-chartForRegSow.setYAxisTitle("Alive Sow Count");
+            List<Integer> xValues = new ArrayList<>();
+            List<Integer> yValues = new ArrayList<>();
 
-try {
-    String query = "SELECT rs.bnumber, COUNT(*) AS count "
-            + "FROM register_sow rs "
-            + "JOIN breeding b ON rs.eartag = b.eartag "
-            + "WHERE b.culled = false "
-            + "GROUP BY rs.bnumber";
-    pst = conn.prepareStatement(query);
-    rs = pst.executeQuery();
+            while (rs.next()) {
+                int batch = rs.getInt("bnumber");
+                int count = rs.getInt("count");
 
-    List<Integer> xValues = new ArrayList<>();
-    List<Integer> yValues = new ArrayList<>();
+                xValues.add(batch);
+                yValues.add(count);
+            }
 
-    while (rs.next()) {
-        int batch = rs.getInt("bnumber");
-        int count = rs.getInt("count");
+            chartForRegSow.addSeries("Alive Sow Count", xValues, yValues);
 
-        xValues.add(batch);
-        yValues.add(count);
-    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-    chartForRegSow.addSeries("Alive Sow Count", xValues, yValues);
-} catch (SQLException e) {
-    e.printStackTrace();
-}
-
-// Create the chart panel and add it to the container
-chartPanel = new XChartPanel<>(chartForRegSow);
-CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
-CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
-
+        chartPanel = new XChartPanel<>(chartForRegSow);
+        CHART_PANEL_REG_SOW.setLayout(new BorderLayout());
+        CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
 
         pack();
         setVisible(true);
 
+    }
+
+    private void BAR_GRAPH() {
+
+        CategoryChart chartForCulledSow = new CategoryChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
+
+        chartForCulledSow.setTitle("CULLED SOW BY BATCH");
+        chartForCulledSow.setXAxisTitle("Batch");
+        chartForCulledSow.setYAxisTitle("Culled Sow Count");
+
+        try {
+            String query = "SELECT rs.bnumber, COUNT(*) AS count "
+                    + "FROM register_sow rs "
+                    + "JOIN breeding b ON rs.eartag = b.eartag "
+                    + "WHERE b.culled = true "
+                    + "GROUP BY rs.bnumber "
+                    + "ORDER BY rs.bnumber";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            List<String> xLabels = new ArrayList<>();
+            List<Integer> yValues = new ArrayList<>();
+
+            while (rs.next()) {
+                String batch = Integer.toString(rs.getInt("bnumber"));
+                int count = rs.getInt("count");
+
+                xLabels.add(batch);
+                yValues.add(count);
+            }
+
+            chartForCulledSow.addSeries("Culled Sow Count", xLabels, yValues);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        barGraphForCulled = new XChartPanel<>(chartForCulledSow);
+        OPEMANAGER_BAR_GRAPH.setLayout(new BorderLayout());
+        OPEMANAGER_BAR_GRAPH.add(barGraphForCulled, BorderLayout.CENTER);
+
+        // Pack the container and set it visible
+        pack();
+        OPEMANAGER_BAR_GRAPH.setVisible(true);
+    }
+
+    private void PIE_CHART() {
         PieChart chartForPie = new PieChartBuilder().width(800).height(600).theme(Styler.ChartTheme.Matlab).build();
         Styler styler = chartForPie.getStyler();
         styler.setChartBackgroundColor(new Color(255, 217, 90));
@@ -1022,7 +1063,7 @@ CHART_PANEL_REG_SOW.add(chartPanel, BorderLayout.CENTER);
         PANEL_PIE_CHART.add(pieChartPanel, gbc);
 
         pack();
-        setVisible(true);
+        PANEL_PIE_CHART.setVisible(true);
     }
 
 }
