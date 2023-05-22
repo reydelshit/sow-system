@@ -706,7 +706,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT boar_used, breeding_date, expected_farrowing, comments, farrowed FROM breeding WHERE eartag = ?";
+            String query = "SELECT boar_used, breeding_date, expected_farrowing, comments, rebreed FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
             rs = pst.executeQuery();
@@ -715,15 +715,15 @@ public class OPEMANAGER extends javax.swing.JFrame {
             model.addColumn("Date");
             model.addColumn("Expected");
             model.addColumn("Comments");
-            model.addColumn("Status");
+            model.addColumn("Rebreed");
 
             while (rs.next()) {
                 Date breeding_date = rs.getDate("breeding_date");
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 String comments = rs.getString("comments");
-                int isFarrowed = rs.getInt("farrowed");
-                String status = isFarrowed == 1 ? "farrowed" : "not farrowed";
+                int isFarrowed = rs.getInt("rebreed");
+                String status = isFarrowed == 1 ? "rebreed" : "not";
 
                 model.addRow(new Object[]{boar_used, breeding_date, expected_farrowing, comments, status});
             }

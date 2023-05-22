@@ -2591,15 +2591,20 @@ public class SECRETARY extends javax.swing.JFrame {
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 boolean farrowed = rs.getBoolean("farrowed");
+                boolean culled = rs.getBoolean("culled");
 
-                model.addRow(new Object[]{eartag, boar_used, expected_farrowing});
-
-                if (farrowed) {
+                if (culled) {
+                    JOptionPane.showMessageDialog(null, "This sow has been culled");
+                    return;
+                } else if (farrowed) {
                     JOptionPane.showMessageDialog(null, "This sow has already farrowed");
                     FARROWING_RETRIEVE_DETAILS();
                     FARROWING_DETAILS_CONTAINER.setVisible(true);
+                } else {
+                    model.addRow(new Object[]{eartag, boar_used, expected_farrowing});
+                    FARROWING_RETRIEVE_DETAILS();
+                    FARROWING_DETAILS_CONTAINER.setVisible(false);
                 }
-
             } else {
                 JOptionPane.showMessageDialog(null, "No result found");
                 FARROWING_RETRIEVE_DETAILS();
@@ -2620,7 +2625,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
             String notFarrowed = "SELECT b.eartag, MAX(b.parity) AS highest_parity, b.expected_farrowing "
                     + "FROM breeding b "
-                    + "WHERE b.farrowed = false "
+                    + "WHERE b.farrowed = false AND b.culled = false "
                     + "GROUP BY b.eartag";
 
             pst = conn.prepareStatement(notFarrowed);
@@ -2641,7 +2646,7 @@ public class SECRETARY extends javax.swing.JFrame {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "dsadadadsaedwjjjjjj");
+            JOptionPane.showMessageDialog(null, "An error occurred while retrieving not farrowed eartags");
         }
     }
 
@@ -2912,7 +2917,7 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT boar_used, breeding_date, expected_farrowing, comments, farrowed FROM breeding WHERE eartag = ?";
+            String query = "SELECT boar_used, breeding_date, expected_farrowing, comments, rebreed FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
             rs = pst.executeQuery();
@@ -2922,7 +2927,7 @@ public class SECRETARY extends javax.swing.JFrame {
             model.addColumn("Breeding Date");
             model.addColumn("Expected");
             model.addColumn("Comments");
-            model.addColumn("Status");
+            model.addColumn("Rebreed");
 
             while (rs.next()) {
 //                int eartag = rs.getInt("eartag");
@@ -2930,8 +2935,8 @@ public class SECRETARY extends javax.swing.JFrame {
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 String comments = rs.getString("comments");
-                int isFarrowed = rs.getInt("farrowed");
-                String status = isFarrowed == 1 ? "farrowed" : "not farrowed";
+                int isFarrowed = rs.getInt("rebreed");
+                String status = isFarrowed == 1 ? "rebreed" : "no";
 
                 model.addRow(new Object[]{boar_used, breeding_date, expected_farrowing, comments, status});
             }
