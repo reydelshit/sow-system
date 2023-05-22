@@ -235,8 +235,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 boolean isCurrentlyBreeding = rs.getBoolean("breeding_status");
                 parity = rs.getInt("parity");
                 if (!isCulled) {
-                    if (!isFarrowed && isCurrentlyBreeding) {
-                        // Insert new breeding record
+                    if (!isFarrowed && !isCurrentlyBreeding) {
                         String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity, culled, rebreed, breeding_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         pst = conn.prepareStatement(sql);
                         pst.setString(1, REBREEDING_EARTAG.getText());
