@@ -1718,6 +1718,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private void rSButtonHover3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover3ActionPerformed
         cardLayout.show(PAGES, "PAGE_2");
         BREEDING_RETRIEVE_BREEDING_DETAILS();
+
     }//GEN-LAST:event_rSButtonHover3ActionPerformed
 
     private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
@@ -1772,7 +1773,6 @@ public class SECRETARY extends javax.swing.JFrame {
             SOW_REGISTRATION();
             REGISTER_RETRIEVE_REGISTERED_SOW();
 //            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-            BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
 
             REGSOW_DATE.setDate(null);
 //            REGSOW_BNUMBER.setSelectedItem(null);
@@ -1810,21 +1810,20 @@ public class SECRETARY extends javax.swing.JFrame {
         String abw = FARROWING_ABW.getText().trim();
         String mort = FARROWING_MORT.getText().trim();
 
-        if (FARROWING_ACTUAL.getDate() == null || abw.isEmpty() || mort.isEmpty()
-                || !mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9]+\\.?[0-9]*")) {
-            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty and have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            FARROWING_SUBMIT();
-            FARROWING_RETRIEVE_DETAILS();
-            BREEDING_RETRIEVE_BREEDING_DETAILS();
-            FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-            // Perform other actions as needed
+if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9]+\\.?[0-9]*")) && FARROWING_REMARKS.getText().isEmpty()) {
+    JOptionPane.showMessageDialog(null, "Invalid input. Please make sure at least one field is not empty or all fields have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+} else {
+    FARROWING_SUBMIT();
+    FARROWING_RETRIEVE_DETAILS();
+    BREEDING_RETRIEVE_BREEDING_DETAILS();
+    FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+    // Perform other actions as needed
 
-            WARNING_FETCH_EARTAG();
-            CULLED_FETCH_EARTAG();
+    WARNING_FETCH_EARTAG();
+    CULLED_FETCH_EARTAG();
 
-            UPLOAD_NOTIFICATION();
-        }
+    UPLOAD_NOTIFICATION();
+}
     }//GEN-LAST:event_rSButtonHover12ActionPerformed
 
     private void rSButtonHover13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover13ActionPerformed
@@ -1976,7 +1975,7 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover18ActionPerformed
 
     private void rSButtonHover19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover19ActionPerformed
-        // TODO add your handling code here:
+       WEANING_SEARCH_EARTAG();
     }//GEN-LAST:event_rSButtonHover19ActionPerformed
 
     /**
@@ -2246,7 +2245,7 @@ public class SECRETARY extends javax.swing.JFrame {
             if (rs.next()) {
                 int currentEartag;
                 if (rs.getObject("highest_eartag") == null) {
-                    currentEartag = 5000;
+                    currentEartag = 4563;
                 } else {
                     currentEartag = rs.getInt("highest_eartag") + 1;
                 }
@@ -2624,9 +2623,11 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 
             String notFarrowed = "SELECT b.eartag, MAX(b.parity) AS highest_parity, b.expected_farrowing "
-                    + "FROM breeding b "
-                    + "WHERE b.farrowed = false AND b.culled = false "
-                    + "GROUP BY b.eartag";
+                  + "FROM breeding b "
+                  + "LEFT JOIN weaning_records wr ON b.eartag = wr.eartag "
+                  + "WHERE b.farrowed = false AND b.culled = false "
+                  + "AND wr.eartag IS NULL "
+                  + "GROUP BY b.eartag";
 
             pst = conn.prepareStatement(notFarrowed);
             rs = pst.executeQuery();
@@ -3183,7 +3184,7 @@ public class SECRETARY extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
-            model.addColumn("Criteria");
+            model.addColumn("Description");
 
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");

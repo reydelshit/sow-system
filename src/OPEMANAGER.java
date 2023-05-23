@@ -832,7 +832,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
-            model.addColumn("Criteria");
+            model.addColumn("Description");
 
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");
