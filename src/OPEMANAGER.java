@@ -12,20 +12,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.*;
 import org.knowm.xchart.*;
-import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.style.MatlabTheme;
-import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.*;
 
 /*

@@ -1,9 +1,5 @@
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,27 +11,16 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
-import org.knowm.xchart.PieChart;
-import org.knowm.xchart.PieChartBuilder;
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.style.Styler;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -72,6 +57,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
         FETCH_CURRENT_EARTAG();
         REGISTER_RETRIEVE_REGISTERED_SOW();
+
+        REGISTER_FETCH_ASSIGNED_EMPLOYEE();
 //
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
 //        BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
@@ -238,12 +225,12 @@ public class SECRETARY extends javax.swing.JFrame {
         EARTAG_CONTAINER = new javax.swing.JPanel();
         LATEST_REGSOW_EARTAG = new javax.swing.JLabel();
         CURRENT_REGSOW_EARTAG = new javax.swing.JLabel();
-        REGSOW_ASSIGNED_EMPLOYEE = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         REGSOW_PEN = new javax.swing.JTextField();
         rSButtonHover9 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover10 = new rojeru_san.complementos.RSButtonHover();
         REGSOW_BNUMBER = new javax.swing.JComboBox<>();
+        REGSOW_ASSIGNED_EMPLOYEE = new javax.swing.JComboBox<>();
         jPanel19 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
         BREEDING = new javax.swing.JPanel();
@@ -608,9 +595,6 @@ public class SECRETARY extends javax.swing.JFrame {
         CURRENT_REGSOW_EARTAG.setText("5000");
         jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 60, 40));
 
-        REGSOW_ASSIGNED_EMPLOYEE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 240, 40));
-
         jLabel6.setForeground(new java.awt.Color(255, 217, 90));
         jLabel6.setText("BATCH NUMBER");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, -1, -1));
@@ -640,7 +624,14 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         jPanel2.add(rSButtonHover10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 210, -1));
 
+        REGSOW_BNUMBER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                REGSOW_BNUMBERActionPerformed(evt);
+            }
+        });
         jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 240, 40));
+
+        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 240, 40));
 
         REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 350, 610));
 
@@ -1760,7 +1751,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private void rSButtonHover10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover10ActionPerformed
 
         String pen = REGSOW_PEN.getText().trim();
-        String employee = REGSOW_ASSIGNED_EMPLOYEE.getText().trim();
+        String employee = (String) REGSOW_ASSIGNED_EMPLOYEE.getSelectedItem();
         String bNumber = (String) REGSOW_BNUMBER.getSelectedItem();
 
         if (!pen.isEmpty() && !pen.matches("\\d+")) {
@@ -1778,7 +1769,7 @@ public class SECRETARY extends javax.swing.JFrame {
 //            REGSOW_BNUMBER.setSelectedItem(null);
             LATEST_REGSOW_EARTAG.setText("");
             REGSOW_BUILDING.setSelectedIndex(0);
-            REGSOW_ASSIGNED_EMPLOYEE.setText("");
+            REGSOW_ASSIGNED_EMPLOYEE.setSelectedIndex(0);
             REGSOW_PEN.setText("");
 
             FETCH_CURRENT_EARTAG();
@@ -1810,20 +1801,20 @@ public class SECRETARY extends javax.swing.JFrame {
         String abw = FARROWING_ABW.getText().trim();
         String mort = FARROWING_MORT.getText().trim();
 
-if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9]+\\.?[0-9]*")) && FARROWING_REMARKS.getText().isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Invalid input. Please make sure at least one field is not empty or all fields have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
-} else {
-    FARROWING_SUBMIT();
-    FARROWING_RETRIEVE_DETAILS();
-    BREEDING_RETRIEVE_BREEDING_DETAILS();
-    FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-    // Perform other actions as needed
+        if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9]+\\.?[0-9]*")) && FARROWING_REMARKS.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure at least one field is not empty or all fields have the correct format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            FARROWING_SUBMIT();
+            FARROWING_RETRIEVE_DETAILS();
+            BREEDING_RETRIEVE_BREEDING_DETAILS();
+            FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+            // Perform other actions as needed
 
-    WARNING_FETCH_EARTAG();
-    CULLED_FETCH_EARTAG();
+            WARNING_FETCH_EARTAG();
+            CULLED_FETCH_EARTAG();
 
-    UPLOAD_NOTIFICATION();
-}
+            UPLOAD_NOTIFICATION();
+        }
     }//GEN-LAST:event_rSButtonHover12ActionPerformed
 
     private void rSButtonHover13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover13ActionPerformed
@@ -1975,8 +1966,12 @@ if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9
     }//GEN-LAST:event_rSButtonHover18ActionPerformed
 
     private void rSButtonHover19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover19ActionPerformed
-       WEANING_SEARCH_EARTAG();
+        WEANING_SEARCH_EARTAG();
     }//GEN-LAST:event_rSButtonHover19ActionPerformed
+
+    private void REGSOW_BNUMBERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGSOW_BNUMBERActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_REGSOW_BNUMBERActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2055,7 +2050,7 @@ if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9
     private javax.swing.JTextField PERFORMANCE_SEARCHFIELD;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_WEANING_TABLE;
     private javax.swing.JPanel REGISTER_OF_SOW;
-    private javax.swing.JTextField REGSOW_ASSIGNED_EMPLOYEE;
+    private javax.swing.JComboBox<String> REGSOW_ASSIGNED_EMPLOYEE;
     private javax.swing.JComboBox<String> REGSOW_BNUMBER;
     private javax.swing.JComboBox<String> REGSOW_BUILDING;
     private com.toedter.calendar.JDateChooser REGSOW_DATE;
@@ -2198,7 +2193,7 @@ if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9
             pst.setString(3, (String) REGSOW_BNUMBER.getSelectedItem());
             pst.setString(4, (String) REGSOW_BUILDING.getSelectedItem());
             pst.setString(5, REGSOW_PEN.getText());
-            pst.setString(6, REGSOW_ASSIGNED_EMPLOYEE.getText());
+            pst.setString(6, (String) REGSOW_ASSIGNED_EMPLOYEE.getSelectedItem());
 
             pst.execute();
 
@@ -2223,7 +2218,7 @@ if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9
             pst.setString(2, (String) REGSOW_BNUMBER.getSelectedItem());
             pst.setString(3, (String) REGSOW_BUILDING.getSelectedItem());
             pst.setString(4, REGSOW_PEN.getText());
-            pst.setString(5, REGSOW_ASSIGNED_EMPLOYEE.getText());
+            pst.setString(5, (String) REGSOW_ASSIGNED_EMPLOYEE.getSelectedItem());
             pst.setString(6, LATEST_REGSOW_EARTAG.getText());
 
             pst.execute();
@@ -2293,6 +2288,39 @@ if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9
                 REGSOW_TABLE.setModel(model);
 
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void REGISTER_FETCH_ASSIGNED_EMPLOYEE() {
+        try {
+            String sql = "SELECT DISTINCT assigned_employee FROM register_sow";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String batchNumber = rs.getString("assigned_employee");
+                REGSOW_ASSIGNED_EMPLOYEE.addItem(batchNumber);
+            }
+
+            REGSOW_ASSIGNED_EMPLOYEE.addItem("Add Employee?"); // Add "Add Batch" option
+
+            REGSOW_ASSIGNED_EMPLOYEE.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Object selectedBatch = REGSOW_ASSIGNED_EMPLOYEE.getSelectedItem();
+                    if (selectedBatch.equals("Add Employee?")) {
+                        try {
+                            String newBatch = JOptionPane.showInputDialog("Enter a new employee:");
+
+                            REGSOW_ASSIGNED_EMPLOYEE.addItem(newBatch);
+                            REGSOW_ASSIGNED_EMPLOYEE.setSelectedItem(newBatch);
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex);
+                        }
+                    }
+                }
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -2623,11 +2651,11 @@ if ((!mort.matches("\\d+") || Double.parseDouble(abw) <= 0 || !abw.matches("[0-9
             DefaultTableModel model = new DefaultTableModel();
 
             String notFarrowed = "SELECT b.eartag, MAX(b.parity) AS highest_parity, b.expected_farrowing "
-                  + "FROM breeding b "
-                  + "LEFT JOIN weaning_records wr ON b.eartag = wr.eartag "
-                  + "WHERE b.farrowed = false AND b.culled = false "
-                  + "AND wr.eartag IS NULL "
-                  + "GROUP BY b.eartag";
+                    + "FROM breeding b "
+                    + "LEFT JOIN weaning_records wr ON b.eartag = wr.eartag "
+                    + "WHERE b.farrowed = false AND b.culled = false "
+                    + "AND wr.eartag IS NULL "
+                    + "GROUP BY b.eartag";
 
             pst = conn.prepareStatement(notFarrowed);
             rs = pst.executeQuery();
