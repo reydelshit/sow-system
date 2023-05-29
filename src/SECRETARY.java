@@ -39,6 +39,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private final NOTIFICATIONMODAL notificationModal;
     private final REBREEDINGMODAL rebreedingModal;
+    private final BREEDING_MODAL breedingModal;
 
     private JPanel chartPanel;
     private JPanel pieChartPanel;
@@ -52,6 +53,9 @@ public class SECRETARY extends javax.swing.JFrame {
         notificationModal = new NOTIFICATIONMODAL();
         notificationModal.setVisible(false);
 
+        breedingModal = new BREEDING_MODAL();
+        breedingModal.setVisible(false);
+
         rebreedingModal = new REBREEDINGMODAL();
         rebreedingModal.setVisible(false);
 
@@ -60,7 +64,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
         REGISTER_FETCH_ASSIGNED_EMPLOYEE();
 //
-        BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
+//        BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
 //        BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER_TO_USE_IN_REG_SOW();
 
@@ -84,18 +88,6 @@ public class SECRETARY extends javax.swing.JFrame {
         WARNING_FETCH_EARTAG();
 
         CULLED_FETCH_EARTAG();
-
-        LIST_OF_SOW_BY_BATCH.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                JTable table = (JTable) evt.getSource();
-                int row = table.getSelectedRow();
-                int eartag = Integer.parseInt(table.getValueAt(row, 1).toString());
-
-                BREEDING_EARTAG.setText(Integer.toString(eartag));
-
-            }
-        });
 
 //        VISIBILITY
 //        BREEDING_EARTAG.setVisible(false);
@@ -135,6 +127,10 @@ public class SECRETARY extends javax.swing.JFrame {
 
 //          WEANING
 //        WEANING_RETRIEVE_DETAILS();
+
+        WEANING_TABLE_CONTAINER.setVisible(false);
+
+        
         WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -234,29 +230,11 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel19 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
         BREEDING = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        EXPECTED_FARROWING_LABEL = new javax.swing.JPanel();
-        BREEDING_EXPECTED_FARROWING = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        BREEDING_EARTAG = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BREEDING_TABLE = new rojeru_san.complementos.RSTableMetro();
-        jPanel3 = new javax.swing.JPanel();
-        BREEDING_DATE = new com.toedter.calendar.JDateChooser();
-        BREEDING_BOAR_USED = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        LIST_OF_SOW_BY_BATCH = new rojeru_san.complementos.RSTableMetro();
-        DROPDOWN_FOR_BATCH_NUMBER = new javax.swing.JComboBox<>();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        BREEDING_COMMENTS = new javax.swing.JTextArea();
-        rSButtonHover11 = new rojeru_san.complementos.RSButtonHover();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
         jLabel48 = new javax.swing.JLabel();
+        rSButtonHover14 = new rojeru_san.complementos.RSButtonHover();
         FARROWING = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         FARROWING_ONGOING_BREEDING = new rojeru_san.complementos.RSTableMetro();
@@ -296,14 +274,13 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jLabel47 = new javax.swing.JLabel();
         rSButtonHover17 = new rojeru_san.complementos.RSButtonHover();
+        jLabel51 = new javax.swing.JLabel();
         WEANING = new javax.swing.JPanel();
         WEANING_CALENDAR = new com.toedter.calendar.JDateChooser();
         WEANING_MALE = new javax.swing.JTextField();
         WEANING_FEMALE = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
-        WEANING_AW = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -311,18 +288,24 @@ public class SECRETARY extends javax.swing.JFrame {
         WEANING_SEARCH_FIELD = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        WEANING_REBREEDING_BTN = new rojeru_san.complementos.RSButtonHover();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        WEANING_MAIN_TABLE = new rojeru_san.complementos.RSTableMetro();
         jPanel8 = new javax.swing.JPanel();
         WEANING_EARTAG = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         WEANING_TOTAL = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         rSButtonHover15 = new rojeru_san.complementos.RSButtonHover();
+        WEANING_AW = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel46 = new javax.swing.JLabel();
         rSButtonHover19 = new rojeru_san.complementos.RSButtonHover();
+        jScrollPane17 = new javax.swing.JScrollPane();
+        CLOSE_WEANING_TABLE = new rojeru_san.complementos.RSTableMetro();
+        jLabel50 = new javax.swing.JLabel();
+        WEANING_TABLE_CONTAINER = new javax.swing.JPanel();
+        WEANING_REBREEDING_BTN = new rojeru_san.complementos.RSButtonHover();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        WEANING_MAIN_TABLE = new rojeru_san.complementos.RSTableMetro();
         PERFORMANCE = new javax.swing.JPanel();
         PERFORMANCE_SEARCHFIELD = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
@@ -543,41 +526,43 @@ public class SECRETARY extends javax.swing.JFrame {
             REGSOW_TABLE.getColumnModel().getColumn(2).setPreferredWidth(20);
             REGSOW_TABLE.getColumnModel().getColumn(3).setResizable(false);
             REGSOW_TABLE.getColumnModel().getColumn(3).setPreferredWidth(20);
+            REGSOW_TABLE.getColumnModel().getColumn(3).setHeaderValue("Building");
             REGSOW_TABLE.getColumnModel().getColumn(4).setResizable(false);
+            REGSOW_TABLE.getColumnModel().getColumn(4).setHeaderValue("Employee");
         }
 
-        REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 720, 580));
+        REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 850, 610));
 
         jPanel2.setBackground(new java.awt.Color(26, 46, 53));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(REGSOW_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 240, 40));
+        jPanel2.add(REGSOW_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 190, 40));
 
         jLabel1.setForeground(new java.awt.Color(255, 217, 90));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DATE");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 50, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 50, -1));
 
         jLabel4.setForeground(new java.awt.Color(255, 217, 90));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("BUILDING");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 70, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 70, -1));
 
         REGSOW_BUILDING.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
-        jPanel2.add(REGSOW_BUILDING, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 110, 30));
+        jPanel2.add(REGSOW_BUILDING, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 80, 30));
 
         jLabel5.setForeground(new java.awt.Color(255, 217, 90));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PEN");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 80, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 70, -1));
 
         jLabel2.setForeground(new java.awt.Color(255, 217, 90));
         jLabel2.setText("ASSIGNED EMPLOYEE");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
 
         jLabel12.setForeground(new java.awt.Color(255, 217, 90));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("EARTAG");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 90, 40));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 90, 40));
 
         EARTAG_CONTAINER.setBackground(new java.awt.Color(153, 153, 153));
         EARTAG_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -585,20 +570,20 @@ public class SECRETARY extends javax.swing.JFrame {
         LATEST_REGSOW_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         LATEST_REGSOW_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
         LATEST_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        EARTAG_CONTAINER.add(LATEST_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
+        EARTAG_CONTAINER.add(LATEST_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 40));
 
-        jPanel2.add(EARTAG_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 200, 40));
+        jPanel2.add(EARTAG_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 190, 40));
 
         CURRENT_REGSOW_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         CURRENT_REGSOW_EARTAG.setForeground(new java.awt.Color(255, 255, 0));
         CURRENT_REGSOW_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CURRENT_REGSOW_EARTAG.setText("5000");
-        jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 60, 40));
+        jPanel2.add(CURRENT_REGSOW_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 60, 40));
 
         jLabel6.setForeground(new java.awt.Color(255, 217, 90));
         jLabel6.setText("BATCH NUMBER");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, -1, -1));
-        jPanel2.add(REGSOW_PEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 120, 30));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
+        jPanel2.add(REGSOW_PEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 70, 30));
 
         rSButtonHover9.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover9.setText("ADD EARTAG");
@@ -610,7 +595,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover9ActionPerformed(evt);
             }
         });
-        jPanel2.add(rSButtonHover9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 140, -1));
+        jPanel2.add(rSButtonHover9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 140, -1));
 
         rSButtonHover10.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover10.setText("REGISTER");
@@ -622,18 +607,18 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover10ActionPerformed(evt);
             }
         });
-        jPanel2.add(rSButtonHover10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 210, -1));
+        jPanel2.add(rSButtonHover10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 520, 130, -1));
 
         REGSOW_BNUMBER.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 REGSOW_BNUMBERActionPerformed(evt);
             }
         });
-        jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 240, 40));
+        jPanel2.add(REGSOW_BNUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 190, 40));
 
-        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 240, 40));
+        jPanel2.add(REGSOW_ASSIGNED_EMPLOYEE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 190, 40));
 
-        REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 350, 610));
+        REGISTER_OF_SOW.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 240, 610));
 
         jPanel19.setBackground(new java.awt.Color(26, 46, 53));
         jPanel19.setForeground(new java.awt.Color(26, 46, 53));
@@ -645,38 +630,12 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel49.setText("REGISTER SOW");
         jPanel19.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
 
-        REGISTER_OF_SOW.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 360, 50));
+        REGISTER_OF_SOW.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 350, 50));
 
         PAGES.add(REGISTER_OF_SOW, "PAGE_1");
 
         BREEDING.setBackground(new java.awt.Color(255, 217, 90));
         BREEDING.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("EAR TAG");
-        BREEDING.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 220, 20));
-
-        EXPECTED_FARROWING_LABEL.setBackground(new java.awt.Color(153, 153, 153));
-        EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        BREEDING_EXPECTED_FARROWING.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BREEDING_EXPECTED_FARROWING.setForeground(new java.awt.Color(255, 217, 90));
-        BREEDING_EXPECTED_FARROWING.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        EXPECTED_FARROWING_LABEL.add(BREEDING_EXPECTED_FARROWING, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
-
-        BREEDING.add(EXPECTED_FARROWING_LABEL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 220, 40));
-
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        BREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BREEDING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
-        BREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
-
-        BREEDING.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 220, 40));
 
         BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -698,95 +657,7 @@ public class SECRETARY extends javax.swing.JFrame {
         BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane1.setViewportView(BREEDING_TABLE);
 
-        BREEDING.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 830, 580));
-
-        jPanel3.setBackground(new java.awt.Color(26, 46, 53));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        BREEDING_DATE.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                BREEDING_DATEPropertyChange(evt);
-            }
-        });
-        jPanel3.add(BREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 220, 40));
-
-        BREEDING_BOAR_USED.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel3.add(BREEDING_BOAR_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 220, 40));
-
-        LIST_OF_SOW_BY_BATCH.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "ID", "Eartag", "Batch"
-            }
-        ));
-        LIST_OF_SOW_BY_BATCH.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
-        LIST_OF_SOW_BY_BATCH.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
-        LIST_OF_SOW_BY_BATCH.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
-        LIST_OF_SOW_BY_BATCH.setColorForegroundHead(new java.awt.Color(255, 217, 90));
-        LIST_OF_SOW_BY_BATCH.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        LIST_OF_SOW_BY_BATCH.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        LIST_OF_SOW_BY_BATCH.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jScrollPane3.setViewportView(LIST_OF_SOW_BY_BATCH);
-
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 230, 130));
-
-        DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT BATCH" }));
-        jPanel3.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 150, 30));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("LIST OF SOW");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 20));
-
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("BOAR USED");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 220, 20));
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("BREEDING DATE");
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 220, 20));
-
-        BREEDING_COMMENTS.setColumns(20);
-        BREEDING_COMMENTS.setRows(5);
-        jScrollPane4.setViewportView(BREEDING_COMMENTS);
-
-        jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, -1, -1));
-
-        rSButtonHover11.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover11.setText("START BREEDING");
-        rSButtonHover11.setColorHover(new java.awt.Color(255, 217, 90));
-        rSButtonHover11.setColorText(new java.awt.Color(26, 46, 53));
-        rSButtonHover11.setColorTextHover(new java.awt.Color(26, 46, 53));
-        rSButtonHover11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover11ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, 170, 40));
-
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("EXPECTED FARROWING");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 220, 20));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("COMMENTS");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 220, 20));
-
-        BREEDING.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 250, 710));
+        BREEDING.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 1040, 580));
 
         jPanel18.setBackground(new java.awt.Color(26, 46, 53));
         jPanel18.setForeground(new java.awt.Color(26, 46, 53));
@@ -799,6 +670,19 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel18.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
 
         BREEDING.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 360, 50));
+
+        rSButtonHover14.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover14.setText("SHOW BREEDING MODAL");
+        rSButtonHover14.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover14.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover14.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover14.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover14ActionPerformed(evt);
+            }
+        });
+        BREEDING.add(rSButtonHover14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 170, 30));
 
         PAGES.add(BREEDING, "PAGE_2");
 
@@ -836,18 +720,18 @@ public class SECRETARY extends javax.swing.JFrame {
             FARROWING_ONGOING_BREEDING.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        FARROWING.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 400, 120));
+        FARROWING.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 400, 120));
 
         FARROWING_SEARCH_FIELD.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 FARROWING_SEARCH_FIELDKeyTyped(evt);
             }
         });
-        FARROWING.add(FARROWING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 150, 30));
+        FARROWING.add(FARROWING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 180, 40));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel19.setText("LIST OF EARTAG THAT ARE CURRENTLY NOT FARROWED");
-        FARROWING.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 90, 360, 30));
+        jLabel19.setText("CLOSE TO FARROWED");
+        FARROWING.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 140, 30));
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1026,13 +910,13 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane14.setViewportView(FARROWING_MAIN_TABLE);
 
-        FARROWING_DETAILS_CONTAINER.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 390));
+        FARROWING_DETAILS_CONTAINER.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 350));
 
-        FARROWING.add(FARROWING_DETAILS_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 820, 390));
+        FARROWING.add(FARROWING_DETAILS_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 820, 350));
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel38.setText("SEARCH EARTAG IF FARROWED");
-        FARROWING.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 200, 30));
+        FARROWING.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 200, 30));
 
         LIST_OF_NOT_FARROWED.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1063,7 +947,7 @@ public class SECRETARY extends javax.swing.JFrame {
             LIST_OF_NOT_FARROWED.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        FARROWING.add(jScrollPane15, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 120, 400, 120));
+        FARROWING.add(jScrollPane15, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 140, 400, 120));
 
         rSButtonHover13.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover13.setText("SEARCH");
@@ -1076,7 +960,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover13ActionPerformed(evt);
             }
         });
-        FARROWING.add(rSButtonHover13, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 80, 30));
+        FARROWING.add(rSButtonHover13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 80, 40));
 
         jPanel17.setBackground(new java.awt.Color(26, 46, 53));
         jPanel17.setForeground(new java.awt.Color(26, 46, 53));
@@ -1101,7 +985,11 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover17ActionPerformed(evt);
             }
         });
-        FARROWING.add(rSButtonHover17, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 250, -1, -1));
+        FARROWING.add(rSButtonHover17, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 290, -1, -1));
+
+        jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel51.setText("LIST OF EARTAG THAT ARE CURRENTLY NOT FARROWED");
+        FARROWING.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 360, 30));
 
         PAGES.add(FARROWING, "PAGE_3");
 
@@ -1123,20 +1011,11 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         WEANING.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 40, -1));
 
-        WEANING_AW.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        WEANING.add(WEANING_AW, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 210, 40));
-
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 217, 90));
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel28.setText("EARTAG");
         WEANING.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 80, 30));
-
-        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel29.setText("AVERAGE WEIGHT");
-        WEANING.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 210, 30));
 
         jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 217, 90));
@@ -1152,8 +1031,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("CHECK EARTAG IF IT IS ON WEANING PERIOD");
-        WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 270, 30));
+        jLabel32.setText("CLOSE TO WEANING");
+        WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, 130, 30));
 
         rSButtonHover18.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover18.setText("SHOW LIST OF WEANING");
@@ -1166,8 +1045,8 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover18ActionPerformed(evt);
             }
         });
-        WEANING.add(rSButtonHover18, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 90, -1, -1));
-        WEANING.add(WEANING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 250, 40));
+        WEANING.add(rSButtonHover18, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 240, -1, -1));
+        WEANING.add(WEANING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 250, 40));
 
         jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(255, 217, 90));
@@ -1180,39 +1059,6 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel34.setText("DATE");
         WEANING.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 50, 30));
-
-        WEANING_REBREEDING_BTN.setBackground(new java.awt.Color(255, 217, 90));
-        WEANING_REBREEDING_BTN.setText("START REBREEDING");
-        WEANING_REBREEDING_BTN.setColorHover(new java.awt.Color(26, 46, 53));
-        WEANING_REBREEDING_BTN.setColorText(new java.awt.Color(26, 46, 53));
-        WEANING_REBREEDING_BTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WEANING_REBREEDING_BTNActionPerformed(evt);
-            }
-        });
-        WEANING.add(WEANING_REBREEDING_BTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, -1, -1));
-
-        WEANING_MAIN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Eartag", "Actual", "Male", "Female", "Total", "AW"
-            }
-        ));
-        WEANING_MAIN_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
-        WEANING_MAIN_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
-        WEANING_MAIN_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
-        WEANING_MAIN_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
-        WEANING_MAIN_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        WEANING_MAIN_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        WEANING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jScrollPane5.setViewportView(WEANING_MAIN_TABLE);
-
-        WEANING.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 760, 540));
 
         jPanel8.setBackground(new java.awt.Color(153, 153, 153));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1249,6 +1095,15 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         jPanel12.add(rSButtonHover15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 210, -1));
 
+        WEANING_AW.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel12.add(WEANING_AW, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 210, 40));
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel29.setText("AVERAGE WEIGHT");
+        jPanel12.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 210, 30));
+
         WEANING.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 270, 610));
 
         jPanel16.setBackground(new java.awt.Color(26, 46, 53));
@@ -1273,7 +1128,87 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover19ActionPerformed(evt);
             }
         });
-        WEANING.add(rSButtonHover19, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 80, 40));
+        WEANING.add(rSButtonHover19, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 80, 40));
+
+        CLOSE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Eartag", "Date", "Batch"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        CLOSE_WEANING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        CLOSE_WEANING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        CLOSE_WEANING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        CLOSE_WEANING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
+        CLOSE_WEANING_TABLE.setColorSelBackgound(new java.awt.Color(255, 217, 90));
+        CLOSE_WEANING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        CLOSE_WEANING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jScrollPane17.setViewportView(CLOSE_WEANING_TABLE);
+        if (CLOSE_WEANING_TABLE.getColumnModel().getColumnCount() > 0) {
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(0).setResizable(false);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(0).setPreferredWidth(20);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(1).setResizable(false);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(1).setPreferredWidth(30);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(2).setResizable(false);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(2).setPreferredWidth(20);
+        }
+
+        WEANING.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 90, 330, 130));
+
+        jLabel50.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel50.setText("CHECK EARTAG IF IT IS ON WEANING PERIOD");
+        WEANING.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 270, 30));
+
+        WEANING_TABLE_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WEANING_REBREEDING_BTN.setBackground(new java.awt.Color(255, 217, 90));
+        WEANING_REBREEDING_BTN.setText("START REBREEDING");
+        WEANING_REBREEDING_BTN.setColorHover(new java.awt.Color(26, 46, 53));
+        WEANING_REBREEDING_BTN.setColorText(new java.awt.Color(26, 46, 53));
+        WEANING_REBREEDING_BTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WEANING_REBREEDING_BTNActionPerformed(evt);
+            }
+        });
+        WEANING_TABLE_CONTAINER.add(WEANING_REBREEDING_BTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
+
+        WEANING_MAIN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Eartag", "Actual", "Male", "Female", "Total", "AW"
+            }
+        ));
+        WEANING_MAIN_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        WEANING_MAIN_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        WEANING_MAIN_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        WEANING_MAIN_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
+        WEANING_MAIN_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        WEANING_MAIN_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        WEANING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jScrollPane5.setViewportView(WEANING_MAIN_TABLE);
+
+        WEANING_TABLE_CONTAINER.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 390));
+
+        WEANING.add(WEANING_TABLE_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 760, 390));
 
         PAGES.add(WEANING, "PAGE_4");
 
@@ -1621,30 +1556,6 @@ public class SECRETARY extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BREEDING_DATEPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_BREEDING_DATEPropertyChange
-        // TODO add your handling code here:
-        if (evt.getPropertyName().equals("date")) {
-            Date selectedDate = null;
-            if (BREEDING_DATE.getCalendar() != null) {
-                selectedDate = BREEDING_DATE.getCalendar().getTime();
-            }
-
-            if (selectedDate != null) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(selectedDate);
-                cal.add(Calendar.DAY_OF_MONTH, 114);
-//                cal.add(Calendar.MINUTE, 5);
-                Date expectedFarrowingDate = cal.getTime();
-                String expectedFarrowing = new java.sql.Date(expectedFarrowingDate.getTime()).toString();
-
-                BREEDING_EXPECTED_FARROWING.setText(expectedFarrowing);
-            }
-
-            System.out.println("Reydel");
-
-        }
-    }//GEN-LAST:event_BREEDING_DATEPropertyChange
-
     private void FARROWING_MALEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FARROWING_MALEActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FARROWING_MALEActionPerformed
@@ -1776,26 +1687,6 @@ public class SECRETARY extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_rSButtonHover10ActionPerformed
-
-    private void rSButtonHover11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover11ActionPerformed
-
-        String boarUsed = BREEDING_BOAR_USED.getText().trim();
-        String comments = BREEDING_COMMENTS.getText().trim();
-
-        if (boarUsed.isEmpty() || !boarUsed.matches("\\d+")) {
-            JOptionPane.showMessageDialog(null, "Invalid input for boarUsed. Please make sure it is a number.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (comments.isEmpty() || !comments.matches("[a-zA-Z0-9 ]*")) {
-            JOptionPane.showMessageDialog(null, "Invalid input for comments. Please make sure it contains only alphanumeric characters.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (BREEDING_DATE.getDate() == null || DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            BREEDING_START_BREEDING();
-            BREEDING_RETRIEVE_BREEDING_DETAILS();
-            UPLOAD_NOTIFICATION();
-            FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-        }
-
-    }//GEN-LAST:event_rSButtonHover11ActionPerformed
 
     private void rSButtonHover12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover12ActionPerformed
         String abw = FARROWING_ABW.getText().trim();
@@ -1935,6 +1826,8 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover17ActionPerformed
 
     private void rSButtonHover18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover18ActionPerformed
+        WEANING_TABLE_CONTAINER.setVisible(true);
+        
         try {
             DefaultTableModel model = new DefaultTableModel();
             String query = "SELECT eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records";
@@ -1972,6 +1865,13 @@ public class SECRETARY extends javax.swing.JFrame {
     private void REGSOW_BNUMBERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REGSOW_BNUMBERActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_REGSOW_BNUMBERActionPerformed
+
+    private void rSButtonHover14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover14ActionPerformed
+
+        var isVisible = breedingModal.isVisible();
+        breedingModal.setVisible(!isVisible);
+
+    }//GEN-LAST:event_rSButtonHover14ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2011,19 +1911,13 @@ public class SECRETARY extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BREEDING;
-    private javax.swing.JTextField BREEDING_BOAR_USED;
-    private javax.swing.JTextArea BREEDING_COMMENTS;
-    private com.toedter.calendar.JDateChooser BREEDING_DATE;
-    private javax.swing.JLabel BREEDING_EARTAG;
-    private javax.swing.JLabel BREEDING_EXPECTED_FARROWING;
     private rojeru_san.complementos.RSTableMetro BREEDING_TABLE;
+    private rojeru_san.complementos.RSTableMetro CLOSE_WEANING_TABLE;
     private rojeru_san.complementos.RSTableMetro CULLED_MAIN_TABLE;
     private javax.swing.JPanel CULLED_SOW;
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
     private javax.swing.JLabel CURRENT_REGSOW_EARTAG;
-    private javax.swing.JComboBox<String> DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JPanel EARTAG_CONTAINER;
-    private javax.swing.JPanel EXPECTED_FARROWING_LABEL;
     private javax.swing.JPanel FARROWING;
     private javax.swing.JTextField FARROWING_ABW;
     private com.toedter.calendar.JDateChooser FARROWING_ACTUAL;
@@ -2040,7 +1934,6 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel FARROWING_TOTAL_PIGLETS;
     private javax.swing.JLabel LATEST_REGSOW_EARTAG;
     private rojeru_san.complementos.RSTableMetro LIST_OF_NOT_FARROWED;
-    private rojeru_san.complementos.RSTableMetro LIST_OF_SOW_BY_BATCH;
     private javax.swing.JPanel MAIN_PANEL;
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
@@ -2070,18 +1963,13 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JTextField WEANING_MALE;
     private rojeru_san.complementos.RSButtonHover WEANING_REBREEDING_BTN;
     private javax.swing.JTextField WEANING_SEARCH_FIELD;
+    private javax.swing.JPanel WEANING_TABLE_CONTAINER;
     private javax.swing.JLabel WEANING_TOTAL;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -2118,6 +2006,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2134,8 +2024,6 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -2147,9 +2035,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane16;
+    private javax.swing.JScrollPane jScrollPane17;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -2158,9 +2045,9 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane2;
     private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     private rojeru_san.complementos.RSButtonHover rSButtonHover10;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover11;
     private rojeru_san.complementos.RSButtonHover rSButtonHover12;
     private rojeru_san.complementos.RSButtonHover rSButtonHover13;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover14;
     private rojeru_san.complementos.RSButtonHover rSButtonHover15;
     private rojeru_san.complementos.RSButtonHover rSButtonHover16;
     private rojeru_san.complementos.RSButtonHover rSButtonHover17;
@@ -2198,8 +2085,7 @@ public class SECRETARY extends javax.swing.JFrame {
             pst.execute();
 
 //            JOptionPane.showMessageDialog(null, ADMIN_REGISTRATION_TYPE.getSelectedItem() + " Registered Succesfully");
-            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-
+//            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -2223,8 +2109,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
             pst.execute();
 
-            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-
+//            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -2326,27 +2211,6 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
-    private void BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER() {
-        try {
-            String sql = "SELECT DISTINCT bnumber FROM register_sow";
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-
-            while (rs.next()) {
-                String batchNumber = rs.getString("bnumber");
-                DROPDOWN_FOR_BATCH_NUMBER.addItem(batchNumber);
-            }
-
-            DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-                }
-            });
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
     private void BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER_TO_USE_IN_REG_SOW() {
         try {
             String sql = "SELECT DISTINCT bnumber FROM register_sow";
@@ -2380,126 +2244,7 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
-    private void BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER() {
-        try {
-            DefaultTableModel model = new DefaultTableModel();
-
-            String selectedBatchNumber = (String) DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
-
-            String query = "SELECT id, eartag, date, bnumber, penbuilding, penroom FROM register_sow WHERE bnumber = ?";
-            pst = conn.prepareStatement(query);
-            pst.setString(1, selectedBatchNumber);
-            rs = pst.executeQuery();
-
-            model.addColumn("ID");
-            model.addColumn("Eartag");
-            model.addColumn("Btach");
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                int eartag = rs.getInt("eartag");
-
-                String bnumber = rs.getString("bnumber");
-
-                model.addRow(new Object[]{id, eartag, bnumber});
-
-            }
-
-            if (LIST_OF_SOW_BY_BATCH != null) {
-                LIST_OF_SOW_BY_BATCH.setModel(model);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
 //    BREEDING 
-    private void BREEDING_START_BREEDING() {
-        try {
-            boolean isFarrowed = false;
-            boolean isCulling = false;
-
-            Date selectedDate = BREEDING_DATE.getDate();
-            String dateString = new java.sql.Date(selectedDate.getTime()).toString();
-
-            String checkSql = "SELECT eartag, culled FROM breeding WHERE eartag = ?";
-            pst = conn.prepareStatement(checkSql);
-            pst.setString(1, BREEDING_EARTAG.getText());
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                boolean isCulled = rs.getBoolean("culled");
-                if (isCulled) {
-                    JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table and is marked as culled.");
-                    BREEDING_EARTAG.setText("");
-                    BREEDING_BOAR_USED.setText("");
-                    BREEDING_DATE.setDate(null);
-                    BREEDING_EXPECTED_FARROWING.setText("");
-                    BREEDING_COMMENTS.setText("");
-                    return;
-                } else {
-                    JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table.");
-                    BREEDING_EARTAG.setText("");
-                    BREEDING_BOAR_USED.setText("");
-                    BREEDING_DATE.setDate(null);
-                    BREEDING_EXPECTED_FARROWING.setText("");
-                    BREEDING_COMMENTS.setText("");
-                    return;
-                }
-            }
-
-            String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity, culled, rebreed, breeding_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            String farrowingUpdate = "SELECT farrowed FROM breeding WHERE eartag = ?";
-            String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
-
-            pst = conn.prepareStatement(farrowingUpdate);
-            pst.setString(1, BREEDING_EARTAG.getText());
-            rs = pst.executeQuery();
-
-            if (rs.next() && rs.getBoolean("farrowed")) {
-                JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " has already been marked as farrowed.");
-                BREEDING_EARTAG.setText("");
-                BREEDING_BOAR_USED.setText("");
-                BREEDING_DATE.setDate(null);
-                BREEDING_EXPECTED_FARROWING.setText("");
-                BREEDING_COMMENTS.setText("");
-
-                return;
-            }
-
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, BREEDING_EARTAG.getText());
-            pst.setString(2, BREEDING_BOAR_USED.getText());
-            pst.setString(3, dateString);
-            pst.setString(4, BREEDING_EXPECTED_FARROWING.getText());
-            pst.setString(5, BREEDING_COMMENTS.getText());
-            pst.setBoolean(6, isFarrowed);
-            pst.setInt(7, 0);
-            pst.setBoolean(8, isCulling);
-            pst.setBoolean(9, false);
-            pst.setBoolean(10, true);
-
-            pst.execute();
-
-            pst = conn.prepareStatement(parity);
-            pst.setString(1, BREEDING_EARTAG.getText());
-            int rowsAffected = pst.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " started breeding.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to update parity for " + BREEDING_EARTAG.getText() + ".");
-            }
-
-            BREEDING_EARTAG.setText("");
-            BREEDING_BOAR_USED.setText("");
-            BREEDING_DATE.setDate(null);
-            BREEDING_EXPECTED_FARROWING.setText("");
-            BREEDING_COMMENTS.setText("");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
     private void BREEDING_RETRIEVE_BREEDING_DETAILS() {
 
         try {
