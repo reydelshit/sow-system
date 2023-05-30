@@ -77,12 +77,12 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         BREEDING_EARTAG = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        BREEDING_BREEDING_TYPE = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        BREEDING_ANTI_BIOTIC = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        BREEDING_VITAMINS = new javax.swing.JTextField();
         rSButtonHover12 = new rojeru_san.complementos.RSButtonHover();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -159,7 +159,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 rSButtonHover11ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 570, 170, 40));
+        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 170, 40));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 217, 90));
@@ -189,7 +189,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         BREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         BREEDING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
         BREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 200, 40));
+        jPanel4.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
         BREEDING_CONTAINER.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 220, 40));
 
@@ -199,15 +199,15 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         jLabel14.setText("EAR TAG");
         BREEDING_CONTAINER.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 220, 20));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Al", "Kasta" }));
-        BREEDING_CONTAINER.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 270, 40));
+        BREEDING_BREEDING_TYPE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Al", "Kasta" }));
+        BREEDING_CONTAINER.add(BREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 270, 40));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 217, 90));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("BREEDING DATE");
         BREEDING_CONTAINER.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 220, 20));
-        BREEDING_CONTAINER.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 270, 40));
+        BREEDING_CONTAINER.add(BREEDING_ANTI_BIOTIC, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 270, 40));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 217, 90));
@@ -220,7 +220,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("VITAMINS");
         BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 270, 20));
-        BREEDING_CONTAINER.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 270, 40));
+        BREEDING_CONTAINER.add(BREEDING_VITAMINS, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 270, 40));
 
         rSButtonHover12.setBackground(new java.awt.Color(255, 51, 51));
         rSButtonHover12.setText("CANCEL");
@@ -232,7 +232,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 rSButtonHover12ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 170, 40));
+        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 570, 170, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,16 +332,18 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField BREEDING_ANTI_BIOTIC;
     private javax.swing.JTextField BREEDING_BOAR_USED;
+    private javax.swing.JComboBox<String> BREEDING_BREEDING_TYPE;
     private javax.swing.JTextArea BREEDING_COMMENTS;
     private javax.swing.JPanel BREEDING_CONTAINER;
     private com.toedter.calendar.JDateChooser BREEDING_DATE;
     private javax.swing.JLabel BREEDING_EARTAG;
     private javax.swing.JLabel BREEDING_EXPECTED_FARROWING;
+    private javax.swing.JTextField BREEDING_VITAMINS;
     private javax.swing.JComboBox<String> DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JPanel EXPECTED_FARROWING_LABEL;
     private rojeru_san.complementos.RSTableMetro LIST_OF_SOW_BY_BATCH;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -354,8 +356,6 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private rojeru_san.complementos.RSButtonHover rSButtonHover11;
     private rojeru_san.complementos.RSButtonHover rSButtonHover12;
     // End of variables declaration//GEN-END:variables
@@ -416,19 +416,16 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
     private void BREEDING_START_BREEDING() {
         try {
-            boolean isFarrowed = false;
-            boolean isCulling = false;
-
             Date selectedDate = BREEDING_DATE.getDate();
             String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
-            String checkSql = "SELECT eartag, culled FROM breeding WHERE eartag = ?";
+            String checkSql = "SELECT eartag, sow_status FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(checkSql);
             pst.setString(1, BREEDING_EARTAG.getText());
             rs = pst.executeQuery();
             if (rs.next()) {
-                boolean isCulled = rs.getBoolean("culled");
-                if (isCulled) {
+                int isCulled = rs.getInt("sow_status");
+                if (isCulled == 4) {
                     JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table and is marked as culled.");
                     BREEDING_EARTAG.setText("");
                     BREEDING_BOAR_USED.setText("");
@@ -447,15 +444,15 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 }
             }
 
-            String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity, culled, rebreed, breeding_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            String farrowingUpdate = "SELECT farrowed FROM breeding WHERE eartag = ?";
+            String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, vitamins, anti_biotic, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+            String farrowingUpdate = "SELECT sow_status FROM breeding WHERE eartag = ?";
             String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
 
             pst = conn.prepareStatement(farrowingUpdate);
             pst.setString(1, BREEDING_EARTAG.getText());
             rs = pst.executeQuery();
 
-            if (rs.next() && rs.getBoolean("farrowed")) {
+            if (rs.next() && rs.getInt("farrowed") == 1) {
                 JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " has already been marked as farrowed.");
                 BREEDING_EARTAG.setText("");
                 BREEDING_BOAR_USED.setText("");
@@ -472,11 +469,12 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             pst.setString(3, dateString);
             pst.setString(4, BREEDING_EXPECTED_FARROWING.getText());
             pst.setString(5, BREEDING_COMMENTS.getText());
-            pst.setBoolean(6, isFarrowed);
-            pst.setInt(7, 0);
-            pst.setBoolean(8, isCulling);
-            pst.setBoolean(9, false);
-            pst.setBoolean(10, true);
+            pst.setBoolean(6, false);
+            pst.setString(7, (String) BREEDING_BREEDING_TYPE.getSelectedItem());
+            pst.setString(8, BREEDING_VITAMINS.getText());
+            pst.setString(9, BREEDING_ANTI_BIOTIC.getText());
+            pst.setInt(10, 0);
+            pst.setInt(11, 1);
 
             pst.execute();
 

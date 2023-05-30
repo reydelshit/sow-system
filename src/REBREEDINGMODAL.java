@@ -47,89 +47,158 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        REBREEDING_EXPECTED_DATE = new javax.swing.JLabel();
+        BREEDING_CONTAINER = new javax.swing.JPanel();
         REBREEDING_DATE = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
-        REBREEDING_BOARD_USED = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        REBREEDING_BOAR_USED = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        REBREEDING_COMMENTS = new javax.swing.JTextArea();
+        rSButtonHover11 = new rojeru_san.complementos.RSButtonHover();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        EXPECTED_FARROWING_LABEL = new javax.swing.JPanel();
+        REBREEDING_EXPECTED_FARROWING = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         REBREEDING_EARTAG = new javax.swing.JLabel();
-        REBREEDING_COMMENTS = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
+        jLabel14 = new javax.swing.JLabel();
+        REBREEDING_BREEDING_TYPE = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        REBREEDING_ANTI_BIOTIC = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        REBREEDING_VITAMINS = new javax.swing.JTextField();
+        rSButtonHover12 = new rojeru_san.complementos.RSButtonHover();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(26, 46, 53));
-        jPanel1.setForeground(new java.awt.Color(255, 217, 90));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        REBREEDING_EXPECTED_DATE.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        REBREEDING_EXPECTED_DATE.setForeground(new java.awt.Color(255, 217, 90));
-        REBREEDING_EXPECTED_DATE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        REBREEDING_EXPECTED_DATE.setText("EXPECTED FARROWING");
-        jPanel1.add(REBREEDING_EXPECTED_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 190, 50));
+        BREEDING_CONTAINER.setBackground(new java.awt.Color(26, 46, 53));
+        BREEDING_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         REBREEDING_DATE.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 REBREEDING_DATEPropertyChange(evt);
             }
         });
-        jPanel1.add(REBREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 200, 40));
+        BREEDING_CONTAINER.add(REBREEDING_DATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 220, 40));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel2.setText("COMMENTS");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 110, -1));
-        jPanel1.add(REBREEDING_BOARD_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 200, 40));
+        REBREEDING_BOAR_USED.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        BREEDING_CONTAINER.add(REBREEDING_BOAR_USED, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 220, 40));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel3.setText("DATE");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 110, -1));
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("BOAR USED");
+        BREEDING_CONTAINER.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 220, 20));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("ANTI BIOTIC");
+        BREEDING_CONTAINER.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 270, 20));
+
+        REBREEDING_COMMENTS.setColumns(20);
+        REBREEDING_COMMENTS.setRows(5);
+        jScrollPane4.setViewportView(REBREEDING_COMMENTS);
+
+        BREEDING_CONTAINER.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 520, -1));
+
+        rSButtonHover11.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover11.setText("START BREEDING");
+        rSButtonHover11.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover11.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover11.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover11ActionPerformed(evt);
+            }
+        });
+        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 170, 40));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("EXPECTED FARROWING");
+        BREEDING_CONTAINER.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 220, 20));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("PRE-BREEDING STATUS");
+        BREEDING_CONTAINER.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 220, 20));
+
+        EXPECTED_FARROWING_LABEL.setBackground(new java.awt.Color(153, 153, 153));
+        EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        REBREEDING_EXPECTED_FARROWING.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        REBREEDING_EXPECTED_FARROWING.setForeground(new java.awt.Color(255, 217, 90));
+        REBREEDING_EXPECTED_FARROWING.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        EXPECTED_FARROWING_LABEL.add(REBREEDING_EXPECTED_FARROWING, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
+
+        BREEDING_CONTAINER.add(EXPECTED_FARROWING_LABEL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 220, 40));
+
+        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         REBREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         REBREEDING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
         REBREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        REBREEDING_EARTAG.setText("EARTAG HERE");
-        jPanel1.add(REBREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 190, 50));
-        jPanel1.add(REBREEDING_COMMENTS, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 200, 90));
+        jPanel4.add(REBREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel5.setText("BOAR USED");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 110, -1));
+        BREEDING_CONTAINER.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 220, 40));
 
-        jButton2.setText("CANCEL");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("EAR TAG");
+        BREEDING_CONTAINER.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 220, 20));
+
+        REBREEDING_BREEDING_TYPE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Al", "Kasta" }));
+        BREEDING_CONTAINER.add(REBREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 270, 40));
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("BREEDING DATE");
+        BREEDING_CONTAINER.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 220, 20));
+        BREEDING_CONTAINER.add(REBREEDING_ANTI_BIOTIC, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 270, 40));
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("BREEDING TYPE");
+        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 280, 20));
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("VITAMINS");
+        BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 270, 20));
+        BREEDING_CONTAINER.add(REBREEDING_VITAMINS, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 270, 40));
+
+        rSButtonHover12.setBackground(new java.awt.Color(255, 51, 51));
+        rSButtonHover12.setText("CANCEL");
+        rSButtonHover12.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover12.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover12.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                rSButtonHover12ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 530, -1, -1));
-
-        rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover1.setText("REBREED");
-        rSButtonHover1.setColorHover(new java.awt.Color(255, 217, 90));
-        rSButtonHover1.setColorText(new java.awt.Color(26, 46, 53));
-        rSButtonHover1.setColorTextHover(new java.awt.Color(26, 46, 53));
-        rSButtonHover1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, 160, -1));
+        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, 170, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+            .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
         );
 
         pack();
@@ -137,6 +206,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void REBREEDING_DATEPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_REBREEDING_DATEPropertyChange
+        // TODO add your handling code here:
         if (evt.getPropertyName().equals("date")) {
             Date selectedDate = null;
             if (REBREEDING_DATE.getCalendar() != null) {
@@ -147,11 +217,11 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(selectedDate);
                 cal.add(Calendar.DAY_OF_MONTH, 114);
-//                cal.add(Calendar.MINUTE, 5);
+                //                cal.add(Calendar.MINUTE, 5);
                 Date expectedFarrowingDate = cal.getTime();
                 String expectedFarrowing = new java.sql.Date(expectedFarrowingDate.getTime()).toString();
 
-                REBREEDING_EXPECTED_DATE.setText(expectedFarrowing);
+                REBREEDING_EXPECTED_FARROWING.setText(expectedFarrowing);
             }
 
             System.out.println("Reydel");
@@ -159,13 +229,25 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_REBREEDING_DATEPropertyChange
 
-    private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
-        REBREEDING();
-    }//GEN-LAST:event_rSButtonHover1ActionPerformed
+    private void rSButtonHover11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover11ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String boarUsed = REBREEDING_BOAR_USED.getText().trim();
+        String comments = REBREEDING_COMMENTS.getText().trim();
+
+        if (boarUsed.isEmpty() || !boarUsed.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Invalid input for boarUsed. Please make sure it is a number.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (comments.isEmpty() || !comments.matches("[a-zA-Z0-9 ]*")) {
+            JOptionPane.showMessageDialog(null, "Invalid input for comments. Please make sure it contains only alphanumeric characters.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (REBREEDING_DATE.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            REBREEDING();
+        }
+    }//GEN-LAST:event_rSButtonHover11ActionPerformed
+
+    private void rSButtonHover12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover12ActionPerformed
         setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_rSButtonHover12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,61 +285,70 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField REBREEDING_BOARD_USED;
-    private javax.swing.JTextField REBREEDING_COMMENTS;
+    private javax.swing.JPanel BREEDING_CONTAINER;
+    private javax.swing.JPanel EXPECTED_FARROWING_LABEL;
+    private javax.swing.JTextField REBREEDING_ANTI_BIOTIC;
+    private javax.swing.JTextField REBREEDING_BOAR_USED;
+    private javax.swing.JComboBox<String> REBREEDING_BREEDING_TYPE;
+    private javax.swing.JTextArea REBREEDING_COMMENTS;
     private com.toedter.calendar.JDateChooser REBREEDING_DATE;
     private javax.swing.JLabel REBREEDING_EARTAG;
-    private javax.swing.JLabel REBREEDING_EXPECTED_DATE;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover1;
+    private javax.swing.JLabel REBREEDING_EXPECTED_FARROWING;
+    private javax.swing.JTextField REBREEDING_VITAMINS;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane4;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover11;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover12;
     // End of variables declaration//GEN-END:variables
 
     private void REBREEDING() {
         try {
-            boolean setFarrowedFalse = false;
-            boolean isCulling = false;
-            int parity = 0;
 
             Date selectedDate = REBREEDING_DATE.getDate();
             String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
-            String checkSql = "SELECT eartag, culled, parity, breeding_status, farrowed FROM breeding WHERE eartag = ?";
+            String checkSql = "SELECT eartag, parity, sow_status FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(checkSql);
             pst.setString(1, REBREEDING_EARTAG.getText());
             rs = pst.executeQuery();
             if (rs.next()) {
-                boolean isCulled = rs.getBoolean("culled");
-                boolean isFarrowed = rs.getBoolean("farrowed");
-                boolean isCurrentlyBreeding = rs.getBoolean("breeding_status");
-                parity = rs.getInt("parity");
-                if (!isCulled) {
-                    if (!isFarrowed && !isCurrentlyBreeding) {
-                        String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, farrowed, parity, culled, rebreed, breeding_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                int sow_status = rs.getInt("sow_status");
+                int parity = rs.getInt("parity");
+                if (sow_status != 3) {
+                    if (sow_status != 1 && sow_status != 0) {
+                        String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, vitamins, anti_biotic, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
                         pst = conn.prepareStatement(sql);
+    
                         pst.setString(1, REBREEDING_EARTAG.getText());
-                        pst.setString(2, REBREEDING_BOARD_USED.getText());
+                        pst.setString(2, REBREEDING_BOAR_USED.getText());
                         pst.setString(3, dateString);
-                        pst.setString(4, REBREEDING_EXPECTED_DATE.getText());
+                        pst.setString(4, REBREEDING_EXPECTED_FARROWING.getText());
                         pst.setString(5, REBREEDING_COMMENTS.getText());
-                        pst.setBoolean(6, setFarrowedFalse);
-                        parity++;
-                        pst.setInt(7, parity);
-                        pst.setBoolean(8, isCulling);
-                        pst.setBoolean(9, !isCurrentlyBreeding); // Set rebreed status based on breeding status
-                        pst.setBoolean(10, !isCurrentlyBreeding); // Set breeding status
+                        pst.setBoolean(6, true);
+                        pst.setString(7, (String) REBREEDING_BREEDING_TYPE.getSelectedItem());
+                        pst.setString(8, REBREEDING_VITAMINS.getText());
+                        pst.setString(9, REBREEDING_ANTI_BIOTIC.getText());
+                        pst.setInt(10, 0);
+                        
+                        
+                        pst.setInt(11, parity + 1);
 
                         pst.execute();
 
-                        JOptionPane.showMessageDialog(null, REBREEDING_EARTAG.getText() + " is now breeding!");
+                        JOptionPane.showMessageDialog(null, REBREEDING_EARTAG.getText() + " is now rebreeding!");
 
                         REBREEDING_EARTAG.setText("");
-                        REBREEDING_BOARD_USED.setText("");
+                        REBREEDING_BOAR_USED.setText("");
                         REBREEDING_DATE.setDate(null);
-                        REBREEDING_EXPECTED_DATE.setText("");
+                        REBREEDING_EXPECTED_FARROWING.setText("");
                         REBREEDING_COMMENTS.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, REBREEDING_EARTAG.getText() + " is farrowed or currently breeding");
@@ -265,9 +356,9 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, REBREEDING_EARTAG.getText() + " already exists in the breeding table and is marked as culled.");
                     REBREEDING_EARTAG.setText("");
-                    REBREEDING_BOARD_USED.setText("");
+                    REBREEDING_BOAR_USED.setText("");
                     REBREEDING_DATE.setDate(null);
-                    REBREEDING_EXPECTED_DATE.setText("");
+                    REBREEDING_EXPECTED_FARROWING.setText("");
                     REBREEDING_COMMENTS.setText("");
                 }
             }

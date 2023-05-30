@@ -1,4 +1,5 @@
 
+import com.mysql.cj.result.Row;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -7,6 +8,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.*;
+import javax.swing.table.TableColumnModel;
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.*;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -49,6 +55,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         notificationModal = new NOTIFICATIONMODAL();
         notificationModal.setVisible(false);
 
+        BREEDING_RETRIEVE_BREEDING_DETAILS();
         WARNING_FETCH_EARTAG();
         CULLED_FETCH_EARTAG();
 
@@ -118,12 +125,13 @@ public class OPEMANAGER extends javax.swing.JFrame {
         NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        rSButtonHover5 = new rojeru_san.complementos.RSButtonHover();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         CHART_PANEL_REG_SOW = new javax.swing.JPanel();
         PANEL_PIE_CHART = new javax.swing.JPanel();
         OPEMANAGER_BAR_GRAPH = new javax.swing.JPanel();
-        LIST_OF_SOW = new javax.swing.JPanel();
+        VIEW_RECORDS = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
@@ -138,6 +146,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         rSButtonHover16 = new rojeru_san.complementos.RSButtonHover();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        rSButtonHover17 = new rojeru_san.complementos.RSButtonHover();
         CULLED_SOW = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         CULLED_TOTAL_CULLED = new javax.swing.JLabel();
@@ -155,6 +164,14 @@ public class OPEMANAGER extends javax.swing.JFrame {
         WARNING_SOW_LIST_WARNING_SOW = new rojeru_san.complementos.RSTableMetro();
         jPanel13 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
+        LIST_OF_SOW = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        BREEDING_TABLE = new rojeru_san.complementos.RSTableMetro();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel48 = new javax.swing.JLabel();
+        rSButtonHover20 = new rojeru_san.complementos.RSButtonHover();
+        HAYS = new javax.swing.JLabel();
+        NUMBER_OF_EARTAG = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,7 +180,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover1.setText("HOME");
+        rSButtonHover1.setText("LIST OF SOW");
         rSButtonHover1.setColorHover(new java.awt.Color(255, 217, 90));
         rSButtonHover1.setColorText(new java.awt.Color(26, 46, 53));
         rSButtonHover1.setColorTextHover(new java.awt.Color(26, 46, 53));
@@ -172,10 +189,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 rSButtonHover1ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 170, -1));
+        jPanel1.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 170, -1));
 
         rSButtonHover2.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover2.setText("LIST OF SOW");
+        rSButtonHover2.setText("VIEW RECORDS");
         rSButtonHover2.setColorHover(new java.awt.Color(255, 217, 90));
         rSButtonHover2.setColorText(new java.awt.Color(26, 46, 53));
         rSButtonHover2.setColorTextHover(new java.awt.Color(26, 46, 53));
@@ -184,7 +201,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 rSButtonHover2ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonHover2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 170, -1));
+        jPanel1.add(rSButtonHover2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 170, -1));
 
         rSButtonHover3.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover3.setText("WARNING SOW");
@@ -196,7 +213,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 rSButtonHover3ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonHover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 170, -1));
+        jPanel1.add(rSButtonHover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 170, -1));
 
         rSButtonHover4.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover4.setText("CULLED SOW");
@@ -208,7 +225,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 rSButtonHover4ActionPerformed(evt);
             }
         });
-        jPanel1.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 170, -1));
+        jPanel1.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 170, -1));
 
         NUMBER_OF_NOTIFICATION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
@@ -231,6 +248,18 @@ public class OPEMANAGER extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 50, 40));
+
+        rSButtonHover5.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover5.setText("HOME");
+        rSButtonHover5.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover5.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover5.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rSButtonHover5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 170, -1));
 
         jSplitPane2.setLeftComponent(jPanel1);
 
@@ -280,23 +309,23 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         PAGES.add(MAIN_PANEL, "MAIN_PANEL");
 
-        LIST_OF_SOW.setBackground(new java.awt.Color(255, 217, 90));
-        LIST_OF_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        VIEW_RECORDS.setBackground(new java.awt.Color(255, 217, 90));
+        VIEW_RECORDS.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel38.setText("FARROWING");
-        LIST_OF_SOW.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 430, 40));
+        VIEW_RECORDS.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 160, 40));
 
         jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("BREEDING");
-        LIST_OF_SOW.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 510, 40));
+        VIEW_RECORDS.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 510, 40));
 
         jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel40.setText("WEANING");
-        LIST_OF_SOW.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 540, 40));
+        VIEW_RECORDS.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 540, 40));
 
         PERFORMANCE_FARROWING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -323,10 +352,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
         PERFORMANCE_FARROWING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
         PERFORMANCE_FARROWING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         PERFORMANCE_FARROWING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        PERFORMANCE_FARROWING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        PERFORMANCE_FARROWING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jScrollPane6.setViewportView(PERFORMANCE_FARROWING_TABLE);
 
-        LIST_OF_SOW.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1050, 220));
+        VIEW_RECORDS.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 570, 200));
 
         PERFORMANCE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -356,7 +385,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         PERFORMANCE_WEANING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jScrollPane7.setViewportView(PERFORMANCE_WEANING_TABLE);
 
-        LIST_OF_SOW.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 520, 300));
+        VIEW_RECORDS.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 520, 300));
 
         PERFORMANCE_BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -386,11 +415,11 @@ public class OPEMANAGER extends javax.swing.JFrame {
         PERFORMANCE_BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jScrollPane14.setViewportView(PERFORMANCE_BREEDING_TABLE);
 
-        LIST_OF_SOW.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 510, 300));
-        LIST_OF_SOW.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
+        VIEW_RECORDS.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 510, 300));
+        VIEW_RECORDS.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
 
         jLabel42.setText("SEARCH USING EARTAG");
-        LIST_OF_SOW.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 150, -1));
+        VIEW_RECORDS.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 150, -1));
 
         rSButtonHover16.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover16.setText("SEARCH");
@@ -402,7 +431,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 rSButtonHover16ActionPerformed(evt);
             }
         });
-        LIST_OF_SOW.add(rSButtonHover16, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 130, -1));
+        VIEW_RECORDS.add(rSButtonHover16, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 130, -1));
 
         jPanel4.setBackground(new java.awt.Color(26, 46, 53));
         jPanel4.setForeground(new java.awt.Color(26, 46, 53));
@@ -414,9 +443,21 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel3.setText("LIST OF SOW");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
 
-        LIST_OF_SOW.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 360, 50));
+        VIEW_RECORDS.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 360, 50));
 
-        PAGES.add(LIST_OF_SOW, "PAGE_5");
+        rSButtonHover17.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover17.setText("DOWNLOAD");
+        rSButtonHover17.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover17.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover17.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover17ActionPerformed(evt);
+            }
+        });
+        VIEW_RECORDS.add(rSButtonHover17, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 660, 130, -1));
+
+        PAGES.add(VIEW_RECORDS, "PAGE_5");
 
         CULLED_SOW.setBackground(new java.awt.Color(255, 217, 90));
         CULLED_SOW.setForeground(new java.awt.Color(51, 0, 51));
@@ -557,6 +598,68 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         PAGES.add(WARNING_SOW, "PAGE_6");
 
+        LIST_OF_SOW.setBackground(new java.awt.Color(255, 217, 90));
+        LIST_OF_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Eartag", "Boar Used", "Breeding Date", "Expected", "Comments", "Status", "Culled"
+            }
+        ));
+        BREEDING_TABLE.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
+        BREEDING_TABLE.setColorFilasForeground1(new java.awt.Color(0, 0, 0));
+        BREEDING_TABLE.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
+        BREEDING_TABLE.setColorForegroundHead(new java.awt.Color(255, 217, 90));
+        BREEDING_TABLE.setFuenteFilas(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        BREEDING_TABLE.setFuenteFilasSelect(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jScrollPane1.setViewportView(BREEDING_TABLE);
+
+        LIST_OF_SOW.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 1070, 580));
+
+        jPanel18.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel18.setForeground(new java.awt.Color(26, 46, 53));
+        jPanel18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel48.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel48.setText("BREEDING");
+        jPanel18.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
+
+        LIST_OF_SOW.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 360, 50));
+
+        rSButtonHover20.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover20.setText("REFERESH");
+        rSButtonHover20.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover20.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover20.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover20.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover20ActionPerformed(evt);
+            }
+        });
+        LIST_OF_SOW.add(rSButtonHover20, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 170, 30));
+
+        HAYS.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        HAYS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        HAYS.setText("NUMBER OF SOW :");
+        LIST_OF_SOW.add(HAYS, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 240, 50));
+
+        NUMBER_OF_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        NUMBER_OF_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NUMBER_OF_EARTAG.setText("1000");
+        LIST_OF_SOW.add(NUMBER_OF_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 90, 50));
+
+        PAGES.add(LIST_OF_SOW, "PAGE_2");
+
         jSplitPane2.setRightComponent(PAGES);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -568,7 +671,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jSplitPane2)
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -577,7 +680,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
-        cardLayout.show(PAGES, "MAIN_PANEL");
+        cardLayout.show(PAGES, "PAGE_2");
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
 
     private void rSButtonHover2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover2ActionPerformed
@@ -608,6 +711,19 @@ public class OPEMANAGER extends javax.swing.JFrame {
         PERFORMCE_FARROWING_RETRIEVE_DETAILS();
         PERFORMANCE_WEANING_RETRIEVE_DETAILS();
     }//GEN-LAST:event_rSButtonHover16ActionPerformed
+
+    private void rSButtonHover20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover20ActionPerformed
+        BREEDING_RETRIEVE_BREEDING_DETAILS();
+    }//GEN-LAST:event_rSButtonHover20ActionPerformed
+
+    private void rSButtonHover5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonHover5ActionPerformed
+
+    private void rSButtonHover17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover17ActionPerformed
+        DOWNLOAD();
+
+    }//GEN-LAST:event_rSButtonHover17ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -646,12 +762,15 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.complementos.RSTableMetro BREEDING_TABLE;
     private javax.swing.JPanel CHART_PANEL_REG_SOW;
     private rojeru_san.complementos.RSTableMetro CULLED_MAIN_TABLE;
     private javax.swing.JPanel CULLED_SOW;
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
+    private javax.swing.JLabel HAYS;
     private javax.swing.JPanel LIST_OF_SOW;
     private javax.swing.JPanel MAIN_PANEL;
+    private javax.swing.JLabel NUMBER_OF_EARTAG;
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel OPEMANAGER_BAR_GRAPH;
     private javax.swing.JPanel PAGES;
@@ -660,6 +779,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_FARROWING_TABLE;
     private javax.swing.JTextField PERFORMANCE_SEARCHFIELD;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_WEANING_TABLE;
+    private javax.swing.JPanel VIEW_RECORDS;
     private javax.swing.JLabel WARNING_FORCULLED_LABEL;
     private javax.swing.JPanel WARNING_SOW;
     private rojeru_san.complementos.RSTableMetro WARNING_SOW_DETAILS;
@@ -673,13 +793,16 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
@@ -689,9 +812,12 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane2;
     private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     private rojeru_san.complementos.RSButtonHover rSButtonHover16;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover17;
     private rojeru_san.complementos.RSButtonHover rSButtonHover2;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover20;
     private rojeru_san.complementos.RSButtonHover rSButtonHover3;
     private rojeru_san.complementos.RSButtonHover rSButtonHover4;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover5;
     // End of variables declaration//GEN-END:variables
 
     private void PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS() {
@@ -886,7 +1012,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
             String query = "SELECT rs.bnumber, COUNT(*) AS count "
                     + "FROM register_sow rs "
                     + "JOIN breeding b ON rs.eartag = b.eartag "
-                    + "WHERE b.culled = false "
+                    + "WHERE b.sow_status != 3 "
                     + "GROUP BY rs.bnumber";
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
@@ -927,7 +1053,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
             String query = "SELECT rs.bnumber, COUNT(*) AS count "
                     + "FROM register_sow rs "
                     + "JOIN breeding b ON rs.eartag = b.eartag "
-                    + "WHERE b.culled = true "
+                    + "WHERE b.sow_status = 3 "
                     + "GROUP BY rs.bnumber "
                     + "ORDER BY rs.bnumber";
             pst = conn.prepareStatement(query);
@@ -1014,6 +1140,116 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         pack();
         PANEL_PIE_CHART.setVisible(true);
+    }
+
+    private void BREEDING_RETRIEVE_BREEDING_DETAILS() {
+
+        int numberOfEartag = 0;
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            TableColumnModel columnModel = BREEDING_TABLE.getColumnModel();
+
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.vitamins, b.anti_biotic, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+                    + "FROM breeding b "
+                    + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
+                    + "WHERE (b.eartag, b.parity) IN ( "
+                    + "    SELECT eartag, MAX(parity) "
+                    + "    FROM breeding "
+                    + "    GROUP BY eartag "
+                    + ")";
+
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Boar");
+            model.addColumn("Date");
+            model.addColumn("Expected");
+            model.addColumn("Comments");
+
+            model.addColumn("Type");
+            model.addColumn("Vitamins");
+            model.addColumn("Anti Biotic");
+
+            model.addColumn("Building");
+            model.addColumn("Room");
+            model.addColumn("Employee");
+            model.addColumn("Parity");
+
+            model.addColumn("Rebreed");
+            model.addColumn("Sow Status");
+
+            while (rs.next()) {
+                numberOfEartag++;
+                NUMBER_OF_EARTAG.setText(String.valueOf(numberOfEartag));
+
+                int breedingEartag = rs.getInt("eartag");
+                Date breeding_date = rs.getDate("breeding_date");
+                String boar_used = rs.getString("boar_used");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+                String comments = rs.getString("comments");
+                String breeding_type = rs.getString("breeding_type");
+                String vitamins = rs.getString("vitamins");
+                String anti_biotic = rs.getString("anti_biotic");
+
+                boolean rebreed = rs.getBoolean("rebreed");
+                String setStatusForRebreedStatus = rebreed ? "yes" : "no";
+
+                int parity = rs.getInt("highest_parity");
+                String penbuilding = rs.getString("penbuilding");
+                String penroom = rs.getString("penroom");
+                String assignedEmployee = rs.getString("assigned_employee");
+
+                int sowStatus = rs.getInt("sow_status");
+                String sowStatusString = "";
+                sowStatusString = switch (sowStatus) {
+                    case 0 ->
+                        "Breeding";
+                    case 1 ->
+                        "Farrowed";
+                    case 2 ->
+                        "Weaned";
+                    case 3 ->
+                        "Culled";
+                    default ->
+                        "Unknown";
+                };
+
+                model.addRow(new Object[]{
+                    breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
+                    vitamins, anti_biotic, penbuilding, penroom, assignedEmployee, parity,
+                    setStatusForRebreedStatus, sowStatusString
+                });
+            }
+
+            if (BREEDING_TABLE != null) {
+                BREEDING_TABLE.setModel(model);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void DOWNLOAD() {
+
+        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+
+        PrinterJob job = PrinterJob.getPrinterJob();
+        String eartag = PERFORMANCE_SEARCHFIELD.getText();
+        DOWNLOAD downloader = new DOWNLOAD(eartag, PERFORMANCE_FARROWING_TABLE, PERFORMANCE_BREEDING_TABLE, PERFORMANCE_WEANING_TABLE);
+
+        job.setPrintable(downloader);
+        boolean doPrint = job.printDialog();
+        if (doPrint) {
+            try {
+                job.print();
+            } catch (PrinterException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
     }
 
 }
