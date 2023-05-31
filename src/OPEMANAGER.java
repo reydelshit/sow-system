@@ -315,7 +315,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel38.setText("FARROWING");
-        VIEW_RECORDS.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 160, 40));
+        VIEW_RECORDS.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 160, 40));
 
         jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -355,7 +355,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         PERFORMANCE_FARROWING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jScrollPane6.setViewportView(PERFORMANCE_FARROWING_TABLE);
 
-        VIEW_RECORDS.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 570, 200));
+        VIEW_RECORDS.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1040, 200));
 
         PERFORMANCE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -418,6 +418,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         VIEW_RECORDS.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 510, 300));
         VIEW_RECORDS.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
 
+        jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel42.setText("SEARCH USING EARTAG");
         VIEW_RECORDS.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 150, -1));
 
@@ -721,7 +722,18 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover5ActionPerformed
 
     private void rSButtonHover17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover17ActionPerformed
-        DOWNLOAD();
+//        DOWNLOAD();
+
+//        DOWNLOAD downloader = new DOWNLOAD();
+        List<JTable> tables = new ArrayList<>();
+        tables.add(PERFORMANCE_FARROWING_TABLE);
+        tables.add(PERFORMANCE_BREEDING_TABLE);
+        tables.add(PERFORMANCE_WEANING_TABLE);
+
+        String eartag = PERFORMANCE_SEARCHFIELD.getText();
+        
+        DOWNLOAD downloader = new DOWNLOAD(tables, eartag);
+        downloader.printTablesToPdf(tables, eartag);
 
     }//GEN-LAST:event_rSButtonHover17ActionPerformed
 
@@ -1231,25 +1243,26 @@ public class OPEMANAGER extends javax.swing.JFrame {
         }
     }
 
-    private void DOWNLOAD() {
+//    private void DOWNLOAD() {
+//
+//        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+//        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+//        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+//
+//        PrinterJob job = PrinterJob.getPrinterJob();
+//        String eartag = PERFORMANCE_SEARCHFIELD.getText();
+//        DOWNLOAD downloader = new DOWNLOAD(eartag, PERFORMANCE_FARROWING_TABLE, PERFORMANCE_BREEDING_TABLE, PERFORMANCE_WEANING_TABLE);
+//
+//        job.setPrintable(downloader);
+//        boolean doPrint = job.printDialog();
+//        if (doPrint) {
+//            try {
+//                job.print();
+//            } catch (PrinterException e) {
+//                JOptionPane.showMessageDialog(null, e);
+//            }
+//        }
+//    }
 
-        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
-        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
-
-        PrinterJob job = PrinterJob.getPrinterJob();
-        String eartag = PERFORMANCE_SEARCHFIELD.getText();
-        DOWNLOAD downloader = new DOWNLOAD(eartag, PERFORMANCE_FARROWING_TABLE, PERFORMANCE_BREEDING_TABLE, PERFORMANCE_WEANING_TABLE);
-
-        job.setPrintable(downloader);
-        boolean doPrint = job.printDialog();
-        if (doPrint) {
-            try {
-                job.print();
-            } catch (PrinterException e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-        }
-    }
 
 }
