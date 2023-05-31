@@ -71,20 +71,17 @@ public class SECRETARY extends javax.swing.JFrame {
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER_TO_USE_IN_REG_SOW();
 
         BREEDING_RETRIEVE_BREEDING_DETAILS();
-//
-//        FARROWING_RETRIEVE_DETAILS();
-//        FARROWING_REBREEDING();
+
+        LIST_OF_SOW_DROPDOWN.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION();
+            }
+        });
 
         FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-//
-//        WEANING_RETRIEVE_DETAILS();
 
         WEANING_REBREEDING_BTN.setVisible(false);
         RETRIEVE_NOT_WEANED_EARTAGS();
-//
-//        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
-//        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-//        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
 
         UPLOAD_NOTIFICATION();
 
@@ -92,8 +89,6 @@ public class SECRETARY extends javax.swing.JFrame {
 
         CULLED_FETCH_EARTAG();
 
-//        VISIBILITY
-//        BREEDING_EARTAG.setVisible(false);
         FARROWING_DETAILS_CONTAINER.setVisible(false);
 
         LIST_OF_NOT_FARROWED.addMouseListener(new MouseAdapter() {
@@ -113,7 +108,6 @@ public class SECRETARY extends javax.swing.JFrame {
         });
 
 //          WEANING
-//        WEANING_RETRIEVE_DETAILS();
         WEANING_TABLE_CONTAINER.setVisible(false);
         CLOSE_WEANING_TABLE.addMouseListener(new MouseAdapter() {
             @Override
@@ -234,6 +228,7 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         rSButtonHover14 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover20 = new rojeru_san.complementos.RSButtonHover();
+        LIST_OF_SOW_DROPDOWN = new javax.swing.JComboBox<>();
         FARROWING = new javax.swing.JPanel();
         FARROWING_SEARCH_FIELD = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
@@ -302,7 +297,7 @@ public class SECRETARY extends javax.swing.JFrame {
         WEANING_REBREEDING_BTN = new rojeru_san.complementos.RSButtonHover();
         jScrollPane5 = new javax.swing.JScrollPane();
         WEANING_MAIN_TABLE = new rojeru_san.complementos.RSTableMetro();
-        PERFORMANCE = new javax.swing.JPanel();
+        VIEW_RECORDS = new javax.swing.JPanel();
         PERFORMANCE_SEARCHFIELD = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
@@ -406,7 +401,7 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel1.add(rSButtonHover5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 160, -1));
 
         rSButtonHover6.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover6.setText("PERFORMANCE");
+        rSButtonHover6.setText("VIEW RECORDS");
         rSButtonHover6.setColorHover(new java.awt.Color(255, 217, 90));
         rSButtonHover6.setColorText(new java.awt.Color(26, 46, 53));
         rSButtonHover6.addActionListener(new java.awt.event.ActionListener() {
@@ -681,7 +676,7 @@ public class SECRETARY extends javax.swing.JFrame {
         BREEDING.add(rSButtonHover14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 170, 30));
 
         rSButtonHover20.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover20.setText("SHOW BREEDING MODAL");
+        rSButtonHover20.setText("REFRESH");
         rSButtonHover20.setColorHover(new java.awt.Color(26, 46, 53));
         rSButtonHover20.setColorText(new java.awt.Color(26, 46, 53));
         rSButtonHover20.setColorTextHover(new java.awt.Color(255, 217, 90));
@@ -691,7 +686,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover20ActionPerformed(evt);
             }
         });
-        BREEDING.add(rSButtonHover20, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 170, 30));
+        BREEDING.add(rSButtonHover20, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 70, 120, 30));
+
+        LIST_OF_SOW_DROPDOWN.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Breeding", "Farrowing", "Weaning", "Culled" }));
+        BREEDING.add(LIST_OF_SOW_DROPDOWN, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, 110, 30));
 
         PAGES.add(BREEDING, "PAGE_2");
 
@@ -1186,24 +1184,24 @@ public class SECRETARY extends javax.swing.JFrame {
 
         PAGES.add(WEANING, "PAGE_4");
 
-        PERFORMANCE.setBackground(new java.awt.Color(255, 217, 90));
-        PERFORMANCE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        PERFORMANCE.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
+        VIEW_RECORDS.setBackground(new java.awt.Color(255, 217, 90));
+        VIEW_RECORDS.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        VIEW_RECORDS.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel35.setText("FARROWING");
-        PERFORMANCE.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 520, 40));
+        VIEW_RECORDS.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 520, 40));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("BREEDING");
-        PERFORMANCE.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 510, 40));
+        VIEW_RECORDS.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 510, 40));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("WEANING");
-        PERFORMANCE.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 540, 40));
+        VIEW_RECORDS.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 540, 40));
 
         PERFORMANCE_FARROWING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1243,7 +1241,7 @@ public class SECRETARY extends javax.swing.JFrame {
             PERFORMANCE_FARROWING_TABLE.getColumnModel().getColumn(7).setResizable(false);
         }
 
-        PERFORMANCE.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1050, 220));
+        VIEW_RECORDS.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1050, 220));
 
         PERFORMANCE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1280,7 +1278,7 @@ public class SECRETARY extends javax.swing.JFrame {
             PERFORMANCE_WEANING_TABLE.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        PERFORMANCE.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 520, 300));
+        VIEW_RECORDS.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 520, 300));
 
         PERFORMANCE_BREEDING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1317,7 +1315,7 @@ public class SECRETARY extends javax.swing.JFrame {
             PERFORMANCE_BREEDING_TABLE.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        PERFORMANCE.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 510, 300));
+        VIEW_RECORDS.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 510, 300));
 
         rSButtonHover16.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover16.setText("SEARCH");
@@ -1329,10 +1327,11 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover16ActionPerformed(evt);
             }
         });
-        PERFORMANCE.add(rSButtonHover16, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 130, -1));
+        VIEW_RECORDS.add(rSButtonHover16, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, 130, -1));
 
+        jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel42.setText("SEARCH USING EARTAG");
-        PERFORMANCE.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 150, -1));
+        VIEW_RECORDS.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 150, -1));
 
         jPanel15.setBackground(new java.awt.Color(26, 46, 53));
         jPanel15.setForeground(new java.awt.Color(26, 46, 53));
@@ -1341,12 +1340,12 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel45.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel45.setForeground(new java.awt.Color(255, 217, 90));
         jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel45.setText("PERFORMANCE");
+        jLabel45.setText("VIEW RECORDS");
         jPanel15.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
 
-        PERFORMANCE.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 360, 50));
+        VIEW_RECORDS.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 360, 50));
 
-        PAGES.add(PERFORMANCE, "PAGE_5");
+        PAGES.add(VIEW_RECORDS, "PAGE_5");
 
         WARNING_SOW.setBackground(new java.awt.Color(255, 217, 90));
         WARNING_SOW.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1913,10 +1912,10 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel FARROWING_TOTAL_PIGLETS;
     private javax.swing.JLabel LATEST_REGSOW_EARTAG;
     private rojeru_san.complementos.RSTableMetro LIST_OF_NOT_FARROWED;
+    private javax.swing.JComboBox<String> LIST_OF_SOW_DROPDOWN;
     private javax.swing.JPanel MAIN_PANEL;
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
-    private javax.swing.JPanel PERFORMANCE;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_BREEDING_TABLE;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_FARROWING_TABLE;
     private javax.swing.JTextField PERFORMANCE_SEARCHFIELD;
@@ -1928,6 +1927,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser REGSOW_DATE;
     private javax.swing.JTextField REGSOW_PEN;
     private rojeru_san.complementos.RSTableMetro REGSOW_TABLE;
+    private javax.swing.JPanel VIEW_RECORDS;
     private rojeru_san.complementos.RSButtonHover WARNING_CULL_BUTTON;
     private javax.swing.JLabel WARNING_FORCULLED_LABEL;
     private javax.swing.JPanel WARNING_SOW;
@@ -2229,7 +2229,7 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
             TableColumnModel columnModel = BREEDING_TABLE.getColumnModel();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.vitamins, b.anti_biotic, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -2245,11 +2245,11 @@ public class SECRETARY extends javax.swing.JFrame {
             model.addColumn("Boar");
             model.addColumn("Date");
             model.addColumn("Expected");
-            model.addColumn("Comments");
+            model.addColumn("Status");
 
             model.addColumn("Type");
-            model.addColumn("Vitamins");
-            model.addColumn("Anti Biotic");
+            model.addColumn("Lactate");
+            model.addColumn("Medicine");
 
             model.addColumn("Building");
             model.addColumn("Room");
@@ -2266,8 +2266,8 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 String comments = rs.getString("comments");
                 String breeding_type = rs.getString("breeding_type");
-                String vitamins = rs.getString("vitamins");
-                String anti_biotic = rs.getString("anti_biotic");
+                String lactate = rs.getString("lactate");
+                String medicine = rs.getString("medicine");
 
                 boolean rebreed = rs.getBoolean("rebreed");
                 String setStatusForRebreedStatus = rebreed ? "yes" : "no";
@@ -2294,7 +2294,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
                 model.addRow(new Object[]{
                     breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
-                    vitamins, anti_biotic, penbuilding, penroom, assignedEmployee, parity,
+                    lactate, medicine, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
             }
@@ -3003,6 +3003,105 @@ public class SECRETARY extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    private void BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+//            String selected = (String) LIST_OF_SOW_DROPDOWN.getSelectedItem();
+
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+                    + "FROM breeding b "
+                    + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
+                    + "WHERE (b.eartag, b.parity) IN ( "
+                    + "    SELECT eartag, MAX(parity) "
+                    + "    FROM breeding "
+                    + "    GROUP BY eartag "
+                    + ") "
+                    + "AND b.sow_status = ?";
+
+            pst = conn.prepareStatement(query);
+
+            if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Breeding") {
+                pst.setInt(1, 0);
+            } else if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Farrowing") {
+                pst.setInt(1, 1);
+            } else if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Weaning") {
+                pst.setInt(1, 2);
+            } else if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Culled") {
+                pst.setInt(1, 3);
+            } else {
+                BREEDING_RETRIEVE_BREEDING_DETAILS();
+            }
+
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Boar");
+            model.addColumn("Date");
+            model.addColumn("Expected");
+            model.addColumn("Comments");
+
+            model.addColumn("Type");
+            model.addColumn("Lactate");
+            model.addColumn("Medicine");
+
+            model.addColumn("Building");
+            model.addColumn("Room");
+            model.addColumn("Employee");
+            model.addColumn("Parity");
+
+            model.addColumn("Rebreed");
+            model.addColumn("Sow Status");
+
+            while (rs.next()) {
+
+                int breedingEartag = rs.getInt("eartag");
+                Date breeding_date = rs.getDate("breeding_date");
+                String boar_used = rs.getString("boar_used");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+                String comments = rs.getString("comments");
+                String breeding_type = rs.getString("breeding_type");
+                String lactate = rs.getString("lactate");
+                String medicine = rs.getString("medicine");
+
+                boolean rebreed = rs.getBoolean("rebreed");
+                String setStatusForRebreedStatus = rebreed ? "yes" : "no";
+
+                int parity = rs.getInt("highest_parity");
+                String penbuilding = rs.getString("penbuilding");
+                String penroom = rs.getString("penroom");
+                String assignedEmployee = rs.getString("assigned_employee");
+
+                int sowStatus = rs.getInt("sow_status");
+                String sowStatusString = "";
+                sowStatusString = switch (sowStatus) {
+                    case 0 ->
+                        "Breeding";
+                    case 1 ->
+                        "Farrowed";
+                    case 2 ->
+                        "Weaned";
+                    case 3 ->
+                        "Culled";
+                    default ->
+                        "Unknown";
+                };
+
+                model.addRow(new Object[]{
+                    breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
+                    lactate, medicine, penbuilding, penroom, assignedEmployee, parity,
+                    setStatusForRebreedStatus, sowStatusString
+                });
+            }
+
+            if (BREEDING_TABLE != null) {
+                BREEDING_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 

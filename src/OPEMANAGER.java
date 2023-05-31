@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
@@ -105,6 +107,12 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 }
             }
         });
+        
+        LIST_OF_SOW_DROPDOWN.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION();
+                }
+            });
     }
 
     /**
@@ -172,6 +180,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         rSButtonHover20 = new rojeru_san.complementos.RSButtonHover();
         HAYS = new javax.swing.JLabel();
         NUMBER_OF_EARTAG = new javax.swing.JLabel();
+        LIST_OF_SOW_DROPDOWN = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -622,7 +631,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane1.setViewportView(BREEDING_TABLE);
 
-        LIST_OF_SOW.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 1070, 580));
+        LIST_OF_SOW.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 1070, 580));
 
         jPanel18.setBackground(new java.awt.Color(26, 46, 53));
         jPanel18.setForeground(new java.awt.Color(26, 46, 53));
@@ -631,7 +640,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel48.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel48.setForeground(new java.awt.Color(255, 217, 90));
         jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel48.setText("BREEDING");
+        jLabel48.setText("LIST OF SOW");
         jPanel18.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
 
         LIST_OF_SOW.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 360, 50));
@@ -647,7 +656,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 rSButtonHover20ActionPerformed(evt);
             }
         });
-        LIST_OF_SOW.add(rSButtonHover20, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 170, 30));
+        LIST_OF_SOW.add(rSButtonHover20, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 80, 90, 30));
 
         HAYS.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         HAYS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -657,7 +666,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
         NUMBER_OF_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         NUMBER_OF_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NUMBER_OF_EARTAG.setText("1000");
-        LIST_OF_SOW.add(NUMBER_OF_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 90, 50));
+        LIST_OF_SOW.add(NUMBER_OF_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 90, 50));
+
+        LIST_OF_SOW_DROPDOWN.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Breeding", "Farrowing", "Weaning", "Culled" }));
+        LIST_OF_SOW.add(LIST_OF_SOW_DROPDOWN, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 80, 110, 30));
 
         PAGES.add(LIST_OF_SOW, "PAGE_2");
 
@@ -718,7 +730,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover20ActionPerformed
 
     private void rSButtonHover5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover5ActionPerformed
-        // TODO add your handling code here:
+        cardLayout.show(PAGES, "MAIN_PANEL");
     }//GEN-LAST:event_rSButtonHover5ActionPerformed
 
     private void rSButtonHover17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover17ActionPerformed
@@ -731,7 +743,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         tables.add(PERFORMANCE_WEANING_TABLE);
 
         String eartag = PERFORMANCE_SEARCHFIELD.getText();
-        
+
         DOWNLOAD downloader = new DOWNLOAD(tables, eartag);
         downloader.printTablesToPdf(tables, eartag);
 
@@ -781,6 +793,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
     private javax.swing.JLabel HAYS;
     private javax.swing.JPanel LIST_OF_SOW;
+    private javax.swing.JComboBox<String> LIST_OF_SOW_DROPDOWN;
     private javax.swing.JPanel MAIN_PANEL;
     private javax.swing.JLabel NUMBER_OF_EARTAG;
     private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
@@ -1112,7 +1125,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 chartForPie.addSeries("Culled (" + culledCount + ")", culledCount);
             }
 
-            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM farrowing_records WHERE culled = 0";
+            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM farrowing_records WHERE culled = 1";
             pst = conn.prepareStatement(farrowedQuery);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -1159,9 +1172,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
         int numberOfEartag = 0;
         try {
             DefaultTableModel model = new DefaultTableModel();
-            TableColumnModel columnModel = BREEDING_TABLE.getColumnModel();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.vitamins, b.anti_biotic, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -1180,8 +1192,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
             model.addColumn("Comments");
 
             model.addColumn("Type");
-            model.addColumn("Vitamins");
-            model.addColumn("Anti Biotic");
+            model.addColumn("Lactate");
+            model.addColumn("Medicine");
 
             model.addColumn("Building");
             model.addColumn("Room");
@@ -1201,8 +1213,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 String comments = rs.getString("comments");
                 String breeding_type = rs.getString("breeding_type");
-                String vitamins = rs.getString("vitamins");
-                String anti_biotic = rs.getString("anti_biotic");
+                String lactate = rs.getString("lactate");
+                String medicine = rs.getString("medicine");
 
                 boolean rebreed = rs.getBoolean("rebreed");
                 String setStatusForRebreedStatus = rebreed ? "yes" : "no";
@@ -1229,7 +1241,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
                 model.addRow(new Object[]{
                     breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
-                    vitamins, anti_biotic, penbuilding, penroom, assignedEmployee, parity,
+                    lactate, medicine, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
             }
@@ -1243,26 +1255,106 @@ public class OPEMANAGER extends javax.swing.JFrame {
         }
     }
 
-//    private void DOWNLOAD() {
-//
-//        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
-//        PERFORMCE_FARROWING_RETRIEVE_DETAILS();
-//        PERFORMANCE_WEANING_RETRIEVE_DETAILS();
-//
-//        PrinterJob job = PrinterJob.getPrinterJob();
-//        String eartag = PERFORMANCE_SEARCHFIELD.getText();
-//        DOWNLOAD downloader = new DOWNLOAD(eartag, PERFORMANCE_FARROWING_TABLE, PERFORMANCE_BREEDING_TABLE, PERFORMANCE_WEANING_TABLE);
-//
-//        job.setPrintable(downloader);
-//        boolean doPrint = job.printDialog();
-//        if (doPrint) {
-//            try {
-//                job.print();
-//            } catch (PrinterException e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//        }
-//    }
+    private void BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION() {
 
+        int numberOfEartag = 0;
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+//            String selected = (String) LIST_OF_SOW_DROPDOWN.getSelectedItem();
+
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+                    + "FROM breeding b "
+                    + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
+                    + "WHERE (b.eartag, b.parity) IN ( "
+                    + "    SELECT eartag, MAX(parity) "
+                    + "    FROM breeding "
+                    + "    GROUP BY eartag "
+                    + ") "
+                    + "AND b.sow_status = ?";
+
+            pst = conn.prepareStatement(query);
+
+            if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Breeding") {
+                pst.setInt(1, 0);
+            } else if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Farrowing") {
+                pst.setInt(1, 1);
+            } else if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Weaning") {
+                pst.setInt(1, 2);
+            } else if (LIST_OF_SOW_DROPDOWN.getSelectedItem() == "Culled") {
+                pst.setInt(1, 3);
+            } else {
+                BREEDING_RETRIEVE_BREEDING_DETAILS();
+            }
+
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Boar");
+            model.addColumn("Date");
+            model.addColumn("Expected");
+            model.addColumn("Comments");
+
+            model.addColumn("Type");
+            model.addColumn("Lactate");
+            model.addColumn("Medicine");
+
+            model.addColumn("Building");
+            model.addColumn("Room");
+            model.addColumn("Employee");
+            model.addColumn("Parity");
+
+            model.addColumn("Rebreed");
+            model.addColumn("Sow Status");
+
+            while (rs.next()) {
+                numberOfEartag++;
+                NUMBER_OF_EARTAG.setText(String.valueOf(numberOfEartag));
+
+                int breedingEartag = rs.getInt("eartag");
+                Date breeding_date = rs.getDate("breeding_date");
+                String boar_used = rs.getString("boar_used");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+                String comments = rs.getString("comments");
+                String breeding_type = rs.getString("breeding_type");
+                String lactate = rs.getString("lactate");
+                String medicine = rs.getString("medicine");
+
+                boolean rebreed = rs.getBoolean("rebreed");
+                String setStatusForRebreedStatus = rebreed ? "yes" : "no";
+
+                int parity = rs.getInt("highest_parity");
+                String penbuilding = rs.getString("penbuilding");
+                String penroom = rs.getString("penroom");
+                String assignedEmployee = rs.getString("assigned_employee");
+
+                int sowStatus = rs.getInt("sow_status");
+                String sowStatusString = "";
+                sowStatusString = switch (sowStatus) {
+                    case 0 ->
+                        "Breeding";
+                    case 1 ->
+                        "Farrowed";
+                    case 2 ->
+                        "Weaned";
+                    case 3 ->
+                        "Culled";
+                    default ->
+                        "Unknown";
+                };
+
+                model.addRow(new Object[]{
+                    breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
+                    lactate, medicine, penbuilding, penroom, assignedEmployee, parity,
+                    setStatusForRebreedStatus, sowStatusString
+                });
+            }
+
+            if (BREEDING_TABLE != null) {
+                BREEDING_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
 }
