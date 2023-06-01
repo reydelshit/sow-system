@@ -2405,7 +2405,8 @@ public class SECRETARY extends javax.swing.JFrame {
                     + "    SELECT eartag, MAX(parity) "
                     + "    FROM breeding "
                     + "    GROUP BY eartag "
-                    + ")";
+                    + ")"
+                    + "ORDER BY b.eartag, b.parity DESC";
 
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
@@ -3020,7 +3021,16 @@ public class SECRETARY extends javax.swing.JFrame {
     private void WEANING_RETRIEVE_DETAILS_ALL_DETAILS() {
         try {
             DefaultTableModel model = new DefaultTableModel();
-            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE culled = false";
+            String query = "SELECT w.eartag, w.batch_number, w.weaning_actualdate, w.male_piglets, w.female_piglets, w.total_piglets, w.aw "
+                    + "FROM weaning_records w "
+                    + "JOIN breeding b ON w.eartag = b.eartag "
+                    + "WHERE w.culled = false AND b.sow_status <> 0 "
+                    + "AND b.sow_status = 0 "
+                    + "AND (w.eartag, w.id) IN ( "
+                    + "    SELECT eartag, MAX(id) "
+                    + "    FROM weaning_records "
+                    + "    GROUP BY eartag "
+                    + ")";
 
             pst = conn.prepareStatement(query);
 
@@ -3057,7 +3067,16 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
             String selectedBatchNumber = (String) WEANING_DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
-            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE batch_number = ? AND culled = false";
+            String query = "SELECT w.eartag, w.batch_number, w.weaning_actualdate, w.male_piglets, w.female_piglets, w.total_piglets, w.aw "
+                    + "FROM weaning_records w "
+                    + "JOIN breeding b ON w.eartag = b.eartag "
+                    + "WHERE w.batch_number = ? AND w.culled = false AND b.sow_status <> 0 "
+                    + "AND b.sow_status = 0 "
+                    + "AND (w.eartag, w.id) IN ( "
+                    + "    SELECT eartag, MAX(id) "
+                    + "    FROM weaning_records "
+                    + "    GROUP BY eartag "
+                    + ")";
             pst = conn.prepareStatement(query);
             pst.setString(1, selectedBatchNumber);
             rs = pst.executeQuery();
