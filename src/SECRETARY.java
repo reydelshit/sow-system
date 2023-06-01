@@ -46,8 +46,6 @@ public class SECRETARY extends javax.swing.JFrame {
     private JPanel chartPanel;
     private JPanel pieChartPanel;
 
-    int newNotificationCount = 0;
-
     public SECRETARY() {
         conn = DBConnection.getConnection();
         initComponents();
@@ -63,15 +61,11 @@ public class SECRETARY extends javax.swing.JFrame {
 
         FETCH_CURRENT_EARTAG();
         REGISTER_RETRIEVE_REGISTERED_SOW();
-
         REGISTER_FETCH_ASSIGNED_EMPLOYEE();
-//
-//        BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
-//        BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
+        BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
+
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER_TO_USE_IN_REG_SOW();
-
         BREEDING_RETRIEVE_BREEDING_DETAILS();
-
         LIST_OF_SOW_DROPDOWN.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION();
@@ -79,6 +73,7 @@ public class SECRETARY extends javax.swing.JFrame {
         });
 
         FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+        FARROWING_DETAILS_CONTAINER.setVisible(false);
 
         WEANING_REBREEDING_BTN.setVisible(false);
         RETRIEVE_NOT_WEANED_EARTAGS();
@@ -88,8 +83,6 @@ public class SECRETARY extends javax.swing.JFrame {
         WARNING_FETCH_EARTAG();
 
         CULLED_FETCH_EARTAG();
-
-        FARROWING_DETAILS_CONTAINER.setVisible(false);
 
         LIST_OF_NOT_FARROWED.addMouseListener(new MouseAdapter() {
             @Override
@@ -182,7 +175,6 @@ public class SECRETARY extends javax.swing.JFrame {
 
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
-        NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover2 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover3 = new rojeru_san.complementos.RSButtonHover();
@@ -202,6 +194,7 @@ public class SECRETARY extends javax.swing.JFrame {
         REGISTER_OF_SOW = new javax.swing.JPanel();
         jScrollPane16 = new javax.swing.JScrollPane();
         REGSOW_TABLE = new rojeru_san.complementos.RSTableMetro();
+        DROPDOWN_FOR_BATCH_NUMBER = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         REGSOW_DATE = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
@@ -336,12 +329,6 @@ public class SECRETARY extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(26, 46, 53));
         jPanel1.setMinimumSize(new java.awt.Dimension(250, 330));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        NUMBER_OF_NOTIFICATION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
-        NUMBER_OF_NOTIFICATION.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        NUMBER_OF_NOTIFICATION.setText("0");
-        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 650, 30, 40));
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover1.setForeground(new java.awt.Color(0, 0, 0));
@@ -523,6 +510,9 @@ public class SECRETARY extends javax.swing.JFrame {
         }
 
         REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 850, 610));
+
+        DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Batch" }));
+        REGISTER_OF_SOW.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, 150, 30));
 
         jPanel2.setBackground(new java.awt.Color(26, 46, 53));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1520,9 +1510,7 @@ public class SECRETARY extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jSplitPane2)
-                .addContainerGap())
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
         );
 
         pack();
@@ -1896,6 +1884,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JPanel CULLED_SOW;
     private javax.swing.JLabel CULLED_TOTAL_CULLED;
     private javax.swing.JLabel CURRENT_REGSOW_EARTAG;
+    private javax.swing.JComboBox<String> DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JPanel EARTAG_CONTAINER;
     private javax.swing.JPanel FARROWING;
     private javax.swing.JTextField FARROWING_ABW;
@@ -1914,7 +1903,6 @@ public class SECRETARY extends javax.swing.JFrame {
     private rojeru_san.complementos.RSTableMetro LIST_OF_NOT_FARROWED;
     private javax.swing.JComboBox<String> LIST_OF_SOW_DROPDOWN;
     private javax.swing.JPanel MAIN_PANEL;
-    private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel PAGES;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_BREEDING_TABLE;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_FARROWING_TABLE;
@@ -2156,6 +2144,76 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
+    private void BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER() {
+        try {
+            String sql = "SELECT DISTINCT bnumber FROM register_sow";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String batchNumber = rs.getString("bnumber");
+                DROPDOWN_FOR_BATCH_NUMBER.addItem(batchNumber);
+            }
+
+            DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    REGISTER_RETRIEVE_REGISTERED_SOW_BY_BATCH();
+
+                    Object selectedBatch = DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
+                    if (selectedBatch.equals("All Batch")) {
+                        REGISTER_RETRIEVE_REGISTERED_SOW();
+                    } else {
+                        REGISTER_RETRIEVE_REGISTERED_SOW_BY_BATCH();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void REGISTER_RETRIEVE_REGISTERED_SOW_BY_BATCH() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+
+            String selectedBatchNumber = (String) DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
+
+            String query = "SELECT eartag, date, bnumber, penbuilding, penroom, assigned_employee FROM register_sow WHERE bnumber = ?";
+
+            pst = conn.prepareStatement(query);
+            pst.setString(1, selectedBatchNumber);
+            rs = pst.executeQuery();
+
+//            model.addColumn("ID");
+            model.addColumn("Eartag");
+            model.addColumn("Date");
+            model.addColumn("Batch");
+            model.addColumn("Building");
+            model.addColumn("Pen");
+            model.addColumn("Employee");
+
+            while (rs.next()) {
+//            int id = rs.getInt("id");
+                int eartag = rs.getInt("eartag");
+                Date date = rs.getDate("date");
+                String bnumber = rs.getString("bnumber");
+                String penbuilding = rs.getString("penbuilding");
+                String penroom = rs.getString("penroom");
+                String assignedEmployee = rs.getString("assigned_employee");
+
+                model.addRow(new Object[]{eartag, date, bnumber, penbuilding, penroom, assignedEmployee});
+            }
+
+            if (REGSOW_TABLE != null) {
+                REGSOW_TABLE.setModel(model);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void REGISTER_FETCH_ASSIGNED_EMPLOYEE() {
         try {
             String sql = "SELECT DISTINCT assigned_employee FROM register_sow";
@@ -2227,7 +2285,6 @@ public class SECRETARY extends javax.swing.JFrame {
 
         try {
             DefaultTableModel model = new DefaultTableModel();
-            TableColumnModel columnModel = BREEDING_TABLE.getColumnModel();
 
             String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
@@ -2636,6 +2693,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
             WEANING_REBREEDING_BTN.setVisible(true);
             WEANING_TABLE_CONTAINER.setVisible(true);
+            
             WEANING_RETRIEVE_DETAILS();
 //            BREEDING_RETRIEVE_BREEDING_DETAILS();
 
@@ -2902,8 +2960,6 @@ public class SECRETARY extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
 
-        newNotificationCount++;
-        NUMBER_OF_NOTIFICATION.setText(String.valueOf(newNotificationCount));
     }
 
     private void checkAndStoreNotification(String eartag, String notificationMessage) throws SQLException {
@@ -2912,7 +2968,6 @@ public class SECRETARY extends javax.swing.JFrame {
         if (!uploadedNotifications.contains(notificationKey)) {
             storeNotification(eartag, notificationMessage);
             uploadedNotifications.add(notificationKey);
-            newNotificationCount++;
         }
     }
 

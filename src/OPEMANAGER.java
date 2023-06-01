@@ -1,18 +1,13 @@
 
-import com.mysql.cj.result.Row;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,7 +125,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
         rSButtonHover2 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover3 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover4 = new rojeru_san.complementos.RSButtonHover();
-        NUMBER_OF_NOTIFICATION = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         rSButtonHover5 = new rojeru_san.complementos.RSButtonHover();
@@ -235,12 +229,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
             }
         });
         jPanel1.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 170, -1));
-
-        NUMBER_OF_NOTIFICATION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        NUMBER_OF_NOTIFICATION.setForeground(new java.awt.Color(255, 255, 255));
-        NUMBER_OF_NOTIFICATION.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        NUMBER_OF_NOTIFICATION.setText("0");
-        jPanel1.add(NUMBER_OF_NOTIFICATION, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 640, 30, 40));
 
         jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/notification.png"))); // NOI18N
         jLabel41.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -450,7 +438,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 217, 90));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("LIST OF SOW");
+        jLabel3.setText("VIEW RECORDS");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
 
         VIEW_RECORDS.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 360, 50));
@@ -641,7 +629,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jLabel48.setForeground(new java.awt.Color(255, 217, 90));
         jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel48.setText("LIST OF SOW");
-        jPanel18.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 280, 50));
+        jPanel18.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 280, 50));
 
         LIST_OF_SOW.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 360, 50));
 
@@ -683,9 +671,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         pack();
@@ -796,7 +782,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> LIST_OF_SOW_DROPDOWN;
     private javax.swing.JPanel MAIN_PANEL;
     private javax.swing.JLabel NUMBER_OF_EARTAG;
-    private javax.swing.JLabel NUMBER_OF_NOTIFICATION;
     private javax.swing.JPanel OPEMANAGER_BAR_GRAPH;
     private javax.swing.JPanel PAGES;
     private javax.swing.JPanel PANEL_PIE_CHART;

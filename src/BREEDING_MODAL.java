@@ -36,9 +36,9 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
         initComponents();
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
-        
+
         BREEDING_LACTATE.setVisible(false);
-        
+
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(LACTATE_YES);
         buttonGroup.add(LACTATE_NO);
@@ -222,7 +222,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(255, 217, 90));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("BREEDING TYPE");
-        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 280, 20));
+        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 230, 20));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 217, 90));
@@ -330,7 +330,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover12ActionPerformed
 
     private void LACTATE_YESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LACTATE_YESActionPerformed
-       BREEDING_LACTATE.setText("yes");
+        BREEDING_LACTATE.setText("yes");
     }//GEN-LAST:event_LACTATE_YESActionPerformed
 
     private void LACTATE_NOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LACTATE_NOActionPerformed
@@ -348,7 +348,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -475,6 +475,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                     BREEDING_DATE.setDate(null);
                     BREEDING_EXPECTED_FARROWING.setText("");
                     BREEDING_COMMENTS.setText("");
+                    BREEDING_MEDICINE.setText("");
                     return;
                 } else {
                     JOptionPane.showMessageDialog(null, BREEDING_EARTAG.getText() + " already exists in the breeding table.");
@@ -483,6 +484,8 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                     BREEDING_DATE.setDate(null);
                     BREEDING_EXPECTED_FARROWING.setText("");
                     BREEDING_COMMENTS.setText("");
+                    BREEDING_MEDICINE.setText("");
+
                     return;
                 }
             }
@@ -536,6 +539,8 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             BREEDING_DATE.setDate(null);
             BREEDING_EXPECTED_FARROWING.setText("");
             BREEDING_COMMENTS.setText("");
+            BREEDING_MEDICINE.setText("");
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }

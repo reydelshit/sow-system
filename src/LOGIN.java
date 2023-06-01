@@ -73,10 +73,12 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel1.setText("LOGIN");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 120, 30));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 217, 90));
         jLabel2.setText("EMAIL");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 80, 20));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 217, 90));
         jLabel3.setText("PASSWORD");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 80, 20));
