@@ -38,6 +38,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
 
         BREEDING_LACTATE.setVisible(false);
+//        BREEDING_BATCH_NUMBER.setVisible(false);
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(LACTATE_YES);
@@ -48,12 +49,13 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent evt) {
                 JTable table = (JTable) evt.getSource();
                 int row = table.getSelectedRow();
-                int eartag = Integer.parseInt(table.getValueAt(row, 1).toString());
-
+                int eartag = Integer.parseInt(table.getValueAt(row, 0).toString());
+                BREEDING_BATCH_NUMBER.setText(table.getValueAt(row, 1).toString());
                 BREEDING_EARTAG.setText(Integer.toString(eartag));
 
             }
         });
+
     }
 
     /**
@@ -93,6 +95,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         LACTATE_NO = new javax.swing.JRadioButton();
         LACTATE_YES = new javax.swing.JRadioButton();
         BREEDING_LACTATE = new javax.swing.JLabel();
+        BREEDING_BATCH_NUMBER = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,13 +114,13 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
         LIST_OF_SOW_BY_BATCH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "ID", "Eartag", "Batch"
+                "Eartag", "Batch"
             }
         ));
         LIST_OF_SOW_BY_BATCH.setColorBackgoundHead(new java.awt.Color(26, 46, 53));
@@ -267,6 +270,9 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         BREEDING_LACTATE.setText("yes");
         BREEDING_CONTAINER.add(BREEDING_LACTATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 60, 30));
 
+        BREEDING_BATCH_NUMBER.setText("batch_here");
+        BREEDING_CONTAINER.add(BREEDING_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 60, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -373,6 +379,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BREEDING_BATCH_NUMBER;
     private javax.swing.JTextField BREEDING_BOAR_USED;
     private javax.swing.JComboBox<String> BREEDING_BREEDING_TYPE;
     private javax.swing.JTextArea BREEDING_COMMENTS;
@@ -430,22 +437,20 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
             String selectedBatchNumber = (String) DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
 
-            String query = "SELECT id, eartag, date, bnumber, penbuilding, penroom FROM register_sow WHERE bnumber = ?";
+            String query = "SELECT eartag, date, bnumber, penbuilding, penroom FROM register_sow WHERE bnumber = ?";
             pst = conn.prepareStatement(query);
             pst.setString(1, selectedBatchNumber);
             rs = pst.executeQuery();
 
-            model.addColumn("ID");
             model.addColumn("Eartag");
             model.addColumn("Btach");
 
             while (rs.next()) {
-                int id = rs.getInt("id");
                 int eartag = rs.getInt("eartag");
 
                 String bnumber = rs.getString("bnumber");
 
-                model.addRow(new Object[]{id, eartag, bnumber});
+                model.addRow(new Object[]{eartag, bnumber});
 
             }
 
@@ -490,7 +495,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 }
             }
 
-            String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, lactate, medicine, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, lactate, medicine, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
             String farrowingUpdate = "SELECT sow_status FROM breeding WHERE eartag = ?";
             String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
 
@@ -511,16 +516,17 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
             pst = conn.prepareStatement(sql);
             pst.setString(1, BREEDING_EARTAG.getText());
-            pst.setString(2, BREEDING_BOAR_USED.getText());
-            pst.setString(3, dateString);
-            pst.setString(4, BREEDING_EXPECTED_FARROWING.getText());
-            pst.setString(5, BREEDING_COMMENTS.getText());
-            pst.setBoolean(6, false);
-            pst.setString(7, (String) BREEDING_BREEDING_TYPE.getSelectedItem());
-            pst.setString(8, BREEDING_LACTATE.getText());
-            pst.setString(9, BREEDING_MEDICINE.getText());
-            pst.setInt(10, 0);
-            pst.setInt(11, 1);
+            pst.setString(2, BREEDING_BATCH_NUMBER.getText());
+            pst.setString(3, BREEDING_BOAR_USED.getText());
+            pst.setString(4, dateString);
+            pst.setString(5, BREEDING_EXPECTED_FARROWING.getText());
+            pst.setString(6, BREEDING_COMMENTS.getText());
+            pst.setBoolean(7, false);
+            pst.setString(8, (String) BREEDING_BREEDING_TYPE.getSelectedItem());
+            pst.setString(9, BREEDING_LACTATE.getText());
+            pst.setString(10, BREEDING_MEDICINE.getText());
+            pst.setInt(11, 0);
+            pst.setInt(12, 1);
 
             pst.execute();
 

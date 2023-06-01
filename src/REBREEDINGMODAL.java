@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 
 /*
@@ -17,6 +18,8 @@ import javax.swing.JOptionPane;
 public class REBREEDINGMODAL extends javax.swing.JFrame {
 
     private String eartag;
+    private String batch;
+
 
     Connection conn = null;
     PreparedStatement pst = null;
@@ -31,11 +34,17 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         conn = DBConnection.getConnection();
         initComponents();
 
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(LACTATE_YES);
+        buttonGroup.add(LACTATE_NO);
+
     }
 
-    public void setEartag(String eartag) {
+    public void setEartag(String eartag, String batch) {
         this.eartag = eartag;
+        this.batch = batch;
         REBREEDING_EARTAG.setText(eartag);
+        REBREEDING_BATCH_NUMBER.setText(batch);
     }
 
     /**
@@ -51,7 +60,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         REBREEDING_DATE = new com.toedter.calendar.JDateChooser();
         REBREEDING_BOAR_USED = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         REBREEDING_COMMENTS = new javax.swing.JTextArea();
         rSButtonHover11 = new rojeru_san.complementos.RSButtonHover();
@@ -64,11 +72,15 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         REBREEDING_BREEDING_TYPE = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
-        REBREEDING_ANTI_BIOTIC = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        REBREEDING_VITAMINS = new javax.swing.JTextField();
         rSButtonHover12 = new rojeru_san.complementos.RSButtonHover();
+        jLabel20 = new javax.swing.JLabel();
+        LACTATE_YES = new javax.swing.JRadioButton();
+        LACTATE_NO = new javax.swing.JRadioButton();
+        REBREEDING_LACTATE = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        REBREEDING_MEDICINE = new javax.swing.JTextField();
+        REBREEDING_BATCH_NUMBER = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,17 +103,11 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         jLabel17.setText("BOAR USED");
         BREEDING_CONTAINER.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 220, 20));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("ANTI BIOTIC");
-        BREEDING_CONTAINER.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 270, 20));
-
         REBREEDING_COMMENTS.setColumns(20);
         REBREEDING_COMMENTS.setRows(5);
         jScrollPane4.setViewportView(REBREEDING_COMMENTS);
 
-        BREEDING_CONTAINER.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 520, -1));
+        BREEDING_CONTAINER.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 520, -1));
 
         rSButtonHover11.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover11.setText("START BREEDING");
@@ -113,7 +119,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 rSButtonHover11ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 170, 40));
+        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 490, 170, 40));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 217, 90));
@@ -125,7 +131,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 217, 90));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("PRE-BREEDING STATUS");
-        BREEDING_CONTAINER.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 220, 20));
+        BREEDING_CONTAINER.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 220, 20));
 
         EXPECTED_FARROWING_LABEL.setBackground(new java.awt.Color(153, 153, 153));
         EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -154,27 +160,19 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         BREEDING_CONTAINER.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 220, 20));
 
         REBREEDING_BREEDING_TYPE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Al", "Kasta" }));
-        BREEDING_CONTAINER.add(REBREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 270, 40));
+        BREEDING_CONTAINER.add(REBREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 220, 40));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 217, 90));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("BREEDING DATE");
         BREEDING_CONTAINER.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 220, 20));
-        BREEDING_CONTAINER.add(REBREEDING_ANTI_BIOTIC, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 270, 40));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 217, 90));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("BREEDING TYPE");
         BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 280, 20));
-
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("VITAMINS");
-        BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 270, 20));
-        BREEDING_CONTAINER.add(REBREEDING_VITAMINS, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 270, 40));
 
         rSButtonHover12.setBackground(new java.awt.Color(255, 51, 51));
         rSButtonHover12.setText("CANCEL");
@@ -186,15 +184,54 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 rSButtonHover12ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, 170, 40));
+        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 170, 40));
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("LACTATE");
+        BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 270, 20));
+
+        LACTATE_YES.setBackground(new java.awt.Color(26, 46, 53));
+        LACTATE_YES.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LACTATE_YES.setForeground(new java.awt.Color(255, 217, 90));
+        LACTATE_YES.setText("YES");
+        LACTATE_YES.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LACTATE_YESActionPerformed(evt);
+            }
+        });
+        BREEDING_CONTAINER.add(LACTATE_YES, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, -1, -1));
+
+        LACTATE_NO.setBackground(new java.awt.Color(26, 46, 53));
+        LACTATE_NO.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LACTATE_NO.setForeground(new java.awt.Color(255, 217, 90));
+        LACTATE_NO.setText("NO");
+        LACTATE_NO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LACTATE_NOActionPerformed(evt);
+            }
+        });
+        BREEDING_CONTAINER.add(LACTATE_NO, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, -1, -1));
+
+        REBREEDING_LACTATE.setText("yes");
+        BREEDING_CONTAINER.add(REBREEDING_LACTATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 230, 60, 30));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("MEDICINE");
+        BREEDING_CONTAINER.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 270, 20));
+        BREEDING_CONTAINER.add(REBREEDING_MEDICINE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 210, 40));
+
+        REBREEDING_BATCH_NUMBER.setText("batch here");
+        BREEDING_CONTAINER.add(REBREEDING_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 60, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,6 +286,14 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_rSButtonHover12ActionPerformed
 
+    private void LACTATE_YESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LACTATE_YESActionPerformed
+        REBREEDING_LACTATE.setText("yes");
+    }//GEN-LAST:event_LACTATE_YESActionPerformed
+
+    private void LACTATE_NOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LACTATE_NOActionPerformed
+        REBREEDING_LACTATE.setText("no");
+    }//GEN-LAST:event_LACTATE_NOActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -287,14 +332,17 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BREEDING_CONTAINER;
     private javax.swing.JPanel EXPECTED_FARROWING_LABEL;
-    private javax.swing.JTextField REBREEDING_ANTI_BIOTIC;
+    private javax.swing.JRadioButton LACTATE_NO;
+    private javax.swing.JRadioButton LACTATE_YES;
+    private javax.swing.JLabel REBREEDING_BATCH_NUMBER;
     private javax.swing.JTextField REBREEDING_BOAR_USED;
     private javax.swing.JComboBox<String> REBREEDING_BREEDING_TYPE;
     private javax.swing.JTextArea REBREEDING_COMMENTS;
     private com.toedter.calendar.JDateChooser REBREEDING_DATE;
     private javax.swing.JLabel REBREEDING_EARTAG;
     private javax.swing.JLabel REBREEDING_EXPECTED_FARROWING;
-    private javax.swing.JTextField REBREEDING_VITAMINS;
+    private javax.swing.JLabel REBREEDING_LACTATE;
+    private javax.swing.JTextField REBREEDING_MEDICINE;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -324,9 +372,9 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 int parity = rs.getInt("parity");
                 if (sow_status != 3) {
                     if (sow_status != 1 && sow_status != 0) {
-                        String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, vitamins, anti_biotic, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+                        String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, lactate, medicine, sow_status, parity, batch_number) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
                         pst = conn.prepareStatement(sql);
-    
+
                         pst.setString(1, REBREEDING_EARTAG.getText());
                         pst.setString(2, REBREEDING_BOAR_USED.getText());
                         pst.setString(3, dateString);
@@ -334,12 +382,12 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                         pst.setString(5, REBREEDING_COMMENTS.getText());
                         pst.setBoolean(6, true);
                         pst.setString(7, (String) REBREEDING_BREEDING_TYPE.getSelectedItem());
-                        pst.setString(8, REBREEDING_VITAMINS.getText());
-                        pst.setString(9, REBREEDING_ANTI_BIOTIC.getText());
+                        pst.setString(8, REBREEDING_LACTATE.getText());
+                        pst.setString(9, REBREEDING_MEDICINE.getText());
                         pst.setInt(10, 0);
-                        
-                        
+
                         pst.setInt(11, parity + 1);
+                        pst.setString(12, REBREEDING_BATCH_NUMBER.getText());
 
                         pst.execute();
 
@@ -347,20 +395,25 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
 
                         REBREEDING_EARTAG.setText("");
                         REBREEDING_BOAR_USED.setText("");
-                        REBREEDING_DATE.setDate(null);
                         REBREEDING_EXPECTED_FARROWING.setText("");
                         REBREEDING_COMMENTS.setText("");
+                        REBREEDING_BREEDING_TYPE.setSelectedIndex(0);
+                        REBREEDING_LACTATE.setText("");
+                        REBREEDING_MEDICINE.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, REBREEDING_EARTAG.getText() + " is farrowed or currently breeding");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, REBREEDING_EARTAG.getText() + " already exists in the breeding table and is marked as culled.");
-                    REBREEDING_EARTAG.setText("");
-                    REBREEDING_BOAR_USED.setText("");
-                    REBREEDING_DATE.setDate(null);
-                    REBREEDING_EXPECTED_FARROWING.setText("");
-                    REBREEDING_COMMENTS.setText("");
                 }
+
+                REBREEDING_EARTAG.setText("");
+                REBREEDING_BOAR_USED.setText("");
+                REBREEDING_EXPECTED_FARROWING.setText("");
+                REBREEDING_COMMENTS.setText("");
+                REBREEDING_BREEDING_TYPE.setSelectedIndex(0);
+                REBREEDING_LACTATE.setText("");
+                REBREEDING_MEDICINE.setText("");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);

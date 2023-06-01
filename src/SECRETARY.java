@@ -42,6 +42,10 @@ public class SECRETARY extends javax.swing.JFrame {
     private final NOTIFICATIONMODAL notificationModal;
     private final REBREEDINGMODAL rebreedingModal;
     private final BREEDING_MODAL breedingModal;
+    private final REGISTER_UPDATEMODAL regsowUpdateModal;
+    private final BREEDING_UPDATEMODAL breedingUpdateModal;
+    private final FARROWING_UPDATEMODAL farrowingUpdateModal;
+    private final WEANING_UPDATEMODAL weaningUpdateModal;
 
     private JPanel chartPanel;
     private JPanel pieChartPanel;
@@ -49,6 +53,7 @@ public class SECRETARY extends javax.swing.JFrame {
     public SECRETARY() {
         conn = DBConnection.getConnection();
         initComponents();
+        cardLayout = (CardLayout) (PAGES.getLayout());
 
         notificationModal = new NOTIFICATIONMODAL();
         notificationModal.setVisible(false);
@@ -58,6 +63,19 @@ public class SECRETARY extends javax.swing.JFrame {
 
         rebreedingModal = new REBREEDINGMODAL();
         rebreedingModal.setVisible(false);
+
+        //FOR UPDATE 
+        regsowUpdateModal = new REGISTER_UPDATEMODAL();
+        regsowUpdateModal.setVisible(false);
+
+        breedingUpdateModal = new BREEDING_UPDATEMODAL();
+        breedingUpdateModal.setVisible(false);
+
+        farrowingUpdateModal = new FARROWING_UPDATEMODAL();
+        farrowingUpdateModal.setVisible(false);
+
+        weaningUpdateModal = new WEANING_UPDATEMODAL();
+        weaningUpdateModal.setVisible(false);
 
         FETCH_CURRENT_EARTAG();
         REGISTER_RETRIEVE_REGISTERED_SOW();
@@ -73,16 +91,15 @@ public class SECRETARY extends javax.swing.JFrame {
         });
 
         FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-        FARROWING_DETAILS_CONTAINER.setVisible(false);
+        FARROWING_RETRIEVE_ALL_FARROWED();
+        FARROWING_FETCH_VALUE_FROM_BATCH_NUMBER();
 
-        WEANING_REBREEDING_BTN.setVisible(false);
+        FARROWING_BATCH_NUMBER.setVisible(false);
+
+//        FARROWING_DETAILS_CONTAINER.setVisible(false);
         RETRIEVE_NOT_WEANED_EARTAGS();
 
         UPLOAD_NOTIFICATION();
-
-        WARNING_FETCH_EARTAG();
-
-        CULLED_FETCH_EARTAG();
 
         LIST_OF_NOT_FARROWED.addMouseListener(new MouseAdapter() {
             @Override
@@ -91,17 +108,22 @@ public class SECRETARY extends javax.swing.JFrame {
                 int row = table.getSelectedRow();
 
                 int eartag = Integer.parseInt(table.getValueAt(row, 0).toString());
-                String farrowingDue = table.getValueAt(row, 1).toString();
+                String batch = table.getValueAt(row, 1).toString();
+
+                String farrowingDue = table.getValueAt(row, 2).toString();
 
                 FARROWING_EARTAG.setText(Integer.toString(eartag));
                 FARROWING_DUE.setText(farrowingDue);
                 FARROWING_SEARCH_FIELD.setText(Integer.toString(eartag));
+                FARROWING_BATCH_NUMBER.setText(batch);
 
             }
         });
 
 //          WEANING
-        WEANING_TABLE_CONTAINER.setVisible(false);
+        WEANING_RETRIEVE_DETAILS_ALL_DETAILS();
+        WEANING_FETCH_VALUE_FROM_BATCH_NUMBER();
+
         CLOSE_WEANING_TABLE.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -109,13 +131,17 @@ public class SECRETARY extends javax.swing.JFrame {
                 int row = table.getSelectedRow();
 
                 int eartag = Integer.parseInt(table.getValueAt(row, 0).toString());
+                int batch = Integer.parseInt(table.getValueAt(row, 1).toString());
 
                 WEANING_EARTAG.setText(Integer.toString(eartag));
+                WEANING_BATCH_NUMBER_CLOSE.setText(String.valueOf(batch));
 
             }
         });
 
 //        warning 
+        WARNING_FETCH_EARTAG();
+
         WARNING_SOW_LIST_WARNING_SOW.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -161,7 +187,6 @@ public class SECRETARY extends javax.swing.JFrame {
 //        CULLED 
         CULLED_FETCH_EARTAG();
 
-        cardLayout = (CardLayout) (PAGES.getLayout());
     }
 
     /**
@@ -214,6 +239,8 @@ public class SECRETARY extends javax.swing.JFrame {
         REGSOW_ASSIGNED_EMPLOYEE = new javax.swing.JComboBox<>();
         jPanel19 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
+        rSButtonHover21 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover22 = new rojeru_san.complementos.RSButtonHover();
         BREEDING = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BREEDING_TABLE = new rojeru_san.complementos.RSTableMetro();
@@ -222,33 +249,33 @@ public class SECRETARY extends javax.swing.JFrame {
         rSButtonHover14 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover20 = new rojeru_san.complementos.RSButtonHover();
         LIST_OF_SOW_DROPDOWN = new javax.swing.JComboBox<>();
+        rSButtonHover26 = new rojeru_san.complementos.RSButtonHover();
         FARROWING = new javax.swing.JPanel();
         FARROWING_SEARCH_FIELD = new javax.swing.JTextField();
-        jPanel5 = new javax.swing.JPanel();
-        FARROWING_DUE = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        FARROWING_FEMALE = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        FARROWING_MALE = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        FARROWING_TOTAL_PIGLETS = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        rSButtonHover12 = new rojeru_san.complementos.RSButtonHover();
         jLabel25 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        FARROWING_EARTAG = new javax.swing.JLabel();
         FARROWING_ABW = new javax.swing.JTextField();
         FARROWING_MORT = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         FARROWING_REMARKS = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         FARROWING_ACTUAL = new com.toedter.calendar.JDateChooser();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        FARROWING_MALE = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        FARROWING_FEMALE = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
-        FARROWING_EARTAG = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        FARROWING_TOTAL_PIGLETS = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        rSButtonHover12 = new rojeru_san.complementos.RSButtonHover();
-        FARROWING_DETAILS_CONTAINER = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        FARROWING_DUE = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jScrollPane14 = new javax.swing.JScrollPane();
         FARROWING_MAIN_TABLE = new rojeru_san.complementos.RSTableMetro();
         jLabel38 = new javax.swing.JLabel();
@@ -257,29 +284,32 @@ public class SECRETARY extends javax.swing.JFrame {
         rSButtonHover13 = new rojeru_san.complementos.RSButtonHover();
         jPanel17 = new javax.swing.JPanel();
         jLabel47 = new javax.swing.JLabel();
-        rSButtonHover17 = new rojeru_san.complementos.RSButtonHover();
         jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        FARROWING_DROPDOWN_FOR_BATCH_NUMBER = new javax.swing.JComboBox<>();
+        FARROWING_BATCH_NUMBER = new javax.swing.JLabel();
+        rSButtonHover24 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover25 = new rojeru_san.complementos.RSButtonHover();
         WEANING = new javax.swing.JPanel();
-        WEANING_CALENDAR = new com.toedter.calendar.JDateChooser();
-        WEANING_MALE = new javax.swing.JTextField();
-        WEANING_FEMALE = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        rSButtonHover18 = new rojeru_san.complementos.RSButtonHover();
         WEANING_SEARCH_FIELD = new javax.swing.JTextField();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        WEANING_EARTAG = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        WEANING_TOTAL = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         rSButtonHover15 = new rojeru_san.complementos.RSButtonHover();
         WEANING_AW = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        WEANING_TOTAL = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        WEANING_EARTAG = new javax.swing.JLabel();
+        WEANING_MALE = new javax.swing.JTextField();
+        WEANING_FEMALE = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+        WEANING_CALENDAR = new com.toedter.calendar.JDateChooser();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel46 = new javax.swing.JLabel();
         rSButtonHover19 = new rojeru_san.complementos.RSButtonHover();
@@ -287,9 +317,14 @@ public class SECRETARY extends javax.swing.JFrame {
         CLOSE_WEANING_TABLE = new rojeru_san.complementos.RSTableMetro();
         jLabel50 = new javax.swing.JLabel();
         WEANING_TABLE_CONTAINER = new javax.swing.JPanel();
-        WEANING_REBREEDING_BTN = new rojeru_san.complementos.RSButtonHover();
         jScrollPane5 = new javax.swing.JScrollPane();
         WEANING_MAIN_TABLE = new rojeru_san.complementos.RSTableMetro();
+        WEANING_REBREEDING_BTN = new rojeru_san.complementos.RSButtonHover();
+        WEANING_DROPDOWN_FOR_BATCH_NUMBER = new javax.swing.JComboBox<>();
+        jLabel53 = new javax.swing.JLabel();
+        rSButtonHover23 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover27 = new rojeru_san.complementos.RSButtonHover();
+        WEANING_BATCH_NUMBER_CLOSE = new javax.swing.JLabel();
         VIEW_RECORDS = new javax.swing.JPanel();
         PERFORMANCE_SEARCHFIELD = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
@@ -509,7 +544,7 @@ public class SECRETARY extends javax.swing.JFrame {
             REGSOW_TABLE.getColumnModel().getColumn(4).setHeaderValue("Employee");
         }
 
-        REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 850, 610));
+        REGISTER_OF_SOW.add(jScrollPane16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 850, 550));
 
         DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Batch" }));
         REGISTER_OF_SOW.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, 150, 30));
@@ -613,6 +648,32 @@ public class SECRETARY extends javax.swing.JFrame {
 
         REGISTER_OF_SOW.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 350, 50));
 
+        rSButtonHover21.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover21.setText("DELETE");
+        rSButtonHover21.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover21.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover21.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover21.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover21ActionPerformed(evt);
+            }
+        });
+        REGISTER_OF_SOW.add(rSButtonHover21, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 640, 80, 30));
+
+        rSButtonHover22.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover22.setText("UPDATE");
+        rSButtonHover22.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover22.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover22.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover22.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover22ActionPerformed(evt);
+            }
+        });
+        REGISTER_OF_SOW.add(rSButtonHover22, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 640, 80, 30));
+
         PAGES.add(REGISTER_OF_SOW, "PAGE_1");
 
         BREEDING.setBackground(new java.awt.Color(255, 217, 90));
@@ -638,7 +699,7 @@ public class SECRETARY extends javax.swing.JFrame {
         BREEDING_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane1.setViewportView(BREEDING_TABLE);
 
-        BREEDING.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 1070, 580));
+        BREEDING.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 1070, 520));
 
         jPanel18.setBackground(new java.awt.Color(26, 46, 53));
         jPanel18.setForeground(new java.awt.Color(26, 46, 53));
@@ -681,6 +742,19 @@ public class SECRETARY extends javax.swing.JFrame {
         LIST_OF_SOW_DROPDOWN.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Breeding", "Farrowing", "Weaning", "Culled" }));
         BREEDING.add(LIST_OF_SOW_DROPDOWN, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, 110, 30));
 
+        rSButtonHover26.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover26.setText("UPDATE");
+        rSButtonHover26.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover26.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover26.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover26.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover26ActionPerformed(evt);
+            }
+        });
+        BREEDING.add(rSButtonHover26, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 640, 80, 30));
+
         PAGES.add(BREEDING, "PAGE_2");
 
         FARROWING.setBackground(new java.awt.Color(255, 217, 90));
@@ -694,54 +768,70 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         FARROWING.add(FARROWING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 290, 40));
 
-        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel11.setBackground(new java.awt.Color(26, 46, 53));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        FARROWING_DUE.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FARROWING_DUE.setForeground(new java.awt.Color(255, 217, 90));
-        FARROWING_DUE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel5.add(FARROWING_DUE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
-
-        FARROWING.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, 40));
-
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("F");
-        FARROWING.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 60, -1));
-
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("EAR TAG");
-        FARROWING.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 200, -1));
-
-        FARROWING_FEMALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        FARROWING_FEMALE.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                FARROWING_FEMALEInputMethodTextChanged(evt);
+        rSButtonHover12.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover12.setText("FARROW");
+        rSButtonHover12.setColorHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover12.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover12.setColorTextHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover12ActionPerformed(evt);
             }
         });
-        FARROWING_FEMALE.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                FARROWING_FEMALEPropertyChange(evt);
-            }
-        });
-        FARROWING.add(FARROWING_FEMALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, 60, 30));
+        jPanel11.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 589, 190, -1));
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("ABW");
+        jPanel11.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 190, -1));
+
+        jPanel7.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        FARROWING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FARROWING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
+        FARROWING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel7.add(FARROWING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
+
+        jPanel11.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 200, 40));
+
+        FARROWING_ABW.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel11.add(FARROWING_ABW, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 190, 40));
+
+        FARROWING_MORT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel11.add(FARROWING_MORT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 190, 40));
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("MORT");
+        jPanel11.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 190, -1));
+
+        FARROWING_REMARKS.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel11.add(FARROWING_REMARKS, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 190, 40));
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("REMARKS");
+        jPanel11.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 190, -1));
+        jPanel11.add(FARROWING_ACTUAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 200, 40));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 217, 90));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("ACTUAL DATE");
-        FARROWING.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 200, -1));
+        jPanel11.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 200, -1));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 217, 90));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("M");
-        FARROWING.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 60, -1));
+        jPanel11.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 60, -1));
 
         FARROWING_MALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FARROWING_MALE.addInputMethodListener(new java.awt.event.InputMethodListener() {
@@ -761,13 +851,36 @@ public class SECRETARY extends javax.swing.JFrame {
                 FARROWING_MALEPropertyChange(evt);
             }
         });
-        FARROWING.add(FARROWING_MALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 60, 30));
+        jPanel11.add(FARROWING_MALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 60, 30));
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("TOTAL BORN");
-        FARROWING.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 120, -1));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("F");
+        jPanel11.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 60, -1));
+
+        FARROWING_FEMALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FARROWING_FEMALE.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                FARROWING_FEMALEInputMethodTextChanged(evt);
+            }
+        });
+        FARROWING_FEMALE.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                FARROWING_FEMALEPropertyChange(evt);
+            }
+        });
+        jPanel11.add(FARROWING_FEMALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 60, 30));
+
+        jButton9.setText("=");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 50, 30));
 
         jPanel6.setBackground(new java.awt.Color(153, 153, 153));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -777,79 +890,37 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_TOTAL_PIGLETS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel6.add(FARROWING_TOTAL_PIGLETS, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 40));
 
-        FARROWING.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 190, 40));
+        jPanel11.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 190, 40));
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("ABW");
-        FARROWING.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 190, -1));
-
-        FARROWING_ABW.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        FARROWING.add(FARROWING_ABW, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 190, 40));
-
-        FARROWING_MORT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        FARROWING.add(FARROWING_MORT, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 190, 40));
-
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("MORT");
-        FARROWING.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 190, -1));
-
-        FARROWING_REMARKS.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        FARROWING.add(FARROWING_REMARKS, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 190, 40));
-
-        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("REMARKS");
-        FARROWING.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, 190, -1));
-        FARROWING.add(FARROWING_ACTUAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, 40));
-
-        jButton9.setText("=");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        FARROWING.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 50, 30));
-
-        jPanel7.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        FARROWING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FARROWING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
-        FARROWING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel7.add(FARROWING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
-
-        FARROWING.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 200, 40));
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("TOTAL BORN");
+        jPanel11.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 120, -1));
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 217, 90));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("DUE DATE");
-        FARROWING.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 200, -1));
+        jPanel11.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 200, -1));
 
-        jPanel11.setBackground(new java.awt.Color(26, 46, 53));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        rSButtonHover12.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover12.setText("FARROW");
-        rSButtonHover12.setColorHover(new java.awt.Color(255, 217, 90));
-        rSButtonHover12.setColorText(new java.awt.Color(26, 46, 53));
-        rSButtonHover12.setColorTextHover(new java.awt.Color(26, 46, 53));
-        rSButtonHover12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover12ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 589, 190, -1));
+        FARROWING_DUE.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FARROWING_DUE.setForeground(new java.awt.Color(255, 217, 90));
+        FARROWING_DUE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel5.add(FARROWING_DUE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 40));
+
+        jPanel11.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 200, 40));
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("EAR TAG");
+        jPanel11.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
 
         FARROWING.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, 680));
-
-        FARROWING_DETAILS_CONTAINER.setBackground(new java.awt.Color(153, 153, 153));
-        FARROWING_DETAILS_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         FARROWING_MAIN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -871,9 +942,7 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane14.setViewportView(FARROWING_MAIN_TABLE);
 
-        FARROWING_DETAILS_CONTAINER.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 350));
-
-        FARROWING.add(FARROWING_DETAILS_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 820, 350));
+        FARROWING.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 820, 310));
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel38.setText("SEARCH EARTAG IF FARROWED AND VIEW RECORDS");
@@ -884,11 +953,11 @@ public class SECRETARY extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Eartag", "Expected", "Days before expected farrowing"
+                "Eartag", "Batch", "Expected", "Days before expected farrowing"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -906,9 +975,11 @@ public class SECRETARY extends javax.swing.JFrame {
         if (LIST_OF_NOT_FARROWED.getColumnModel().getColumnCount() > 0) {
             LIST_OF_NOT_FARROWED.getColumnModel().getColumn(0).setResizable(false);
             LIST_OF_NOT_FARROWED.getColumnModel().getColumn(1).setResizable(false);
+            LIST_OF_NOT_FARROWED.getColumnModel().getColumn(2).setResizable(false);
+            LIST_OF_NOT_FARROWED.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        FARROWING.add(jScrollPane15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 580, 120));
+        FARROWING.add(jScrollPane15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 820, 140));
 
         rSButtonHover13.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover13.setText("SEARCH");
@@ -935,111 +1006,61 @@ public class SECRETARY extends javax.swing.JFrame {
 
         FARROWING.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 360, 50));
 
-        rSButtonHover17.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover17.setText("SHOW LIST OF FARROWED");
-        rSButtonHover17.setColorHover(new java.awt.Color(26, 46, 53));
-        rSButtonHover17.setColorText(new java.awt.Color(26, 46, 53));
-        rSButtonHover17.setColorTextHover(new java.awt.Color(255, 217, 90));
-        rSButtonHover17.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        rSButtonHover17.addActionListener(new java.awt.event.ActionListener() {
+        jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel51.setText("LIST OF ALL FARROWED EARTAGS");
+        FARROWING.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 230, 30));
+
+        jLabel52.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel52.setText("LIST OF EARTAG THAT ARE CURRENTLY NOT FARROWED");
+        FARROWING.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 360, 30));
+
+        FARROWING_DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Batch" }));
+        FARROWING_DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover17ActionPerformed(evt);
+                FARROWING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed(evt);
             }
         });
-        FARROWING.add(rSButtonHover17, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 290, -1, -1));
+        FARROWING.add(FARROWING_DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 300, 150, 30));
 
-        jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel51.setText("LIST OF EARTAG THAT ARE CURRENTLY NOT FARROWED");
-        FARROWING.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 360, 30));
+        FARROWING_BATCH_NUMBER.setText("batch here");
+        FARROWING.add(FARROWING_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 90, 30));
+
+        rSButtonHover24.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover24.setText("REFRESH");
+        rSButtonHover24.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover24.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover24.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover24.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover24ActionPerformed(evt);
+            }
+        });
+        FARROWING.add(rSButtonHover24, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 100, 120, 30));
+
+        rSButtonHover25.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover25.setText("UPDATE");
+        rSButtonHover25.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover25.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover25.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover25.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover25ActionPerformed(evt);
+            }
+        });
+        FARROWING.add(rSButtonHover25, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 660, 80, 30));
 
         PAGES.add(FARROWING, "PAGE_3");
 
         WEANING.setBackground(new java.awt.Color(255, 217, 90));
         WEANING.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        WEANING.add(WEANING_CALENDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 210, 40));
-
-        WEANING_MALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        WEANING.add(WEANING_MALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 70, 40));
-
-        WEANING_FEMALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        WEANING.add(WEANING_FEMALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 70, 40));
-
-        jButton6.setText("=");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        WEANING.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 40, -1));
-
-        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel28.setText("EARTAG");
-        WEANING.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 80, 30));
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel30.setText("TOTAL");
-        WEANING.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 210, 30));
-
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("M");
-        WEANING.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 50, 30));
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("CLOSE TO WEANING");
-        WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 130, 30));
-
-        rSButtonHover18.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonHover18.setText("SHOW LIST OF WEANING");
-        rSButtonHover18.setColorHover(new java.awt.Color(26, 46, 53));
-        rSButtonHover18.setColorText(new java.awt.Color(26, 46, 53));
-        rSButtonHover18.setColorTextHover(new java.awt.Color(255, 217, 90));
-        rSButtonHover18.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        rSButtonHover18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover18ActionPerformed(evt);
-            }
-        });
-        WEANING.add(rSButtonHover18, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 290, -1, -1));
-        WEANING.add(WEANING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 250, 40));
-
-        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("F");
-        WEANING.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 50, 30));
-
-        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel34.setText("DATE");
-        WEANING.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 50, 30));
-
-        jPanel8.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        WEANING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        WEANING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
-        WEANING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel8.add(WEANING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
-
-        WEANING.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 210, 40));
-
-        jPanel9.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        WEANING_TOTAL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        WEANING_TOTAL.setForeground(new java.awt.Color(255, 217, 90));
-        WEANING_TOTAL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel9.add(WEANING_TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
-
-        WEANING.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 210, 40));
+        jLabel32.setText("LIST OF ALL WEANED");
+        WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 130, 30));
+        WEANING.add(WEANING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 250, 40));
 
         jPanel12.setBackground(new java.awt.Color(26, 46, 53));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1054,18 +1075,83 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover15ActionPerformed(evt);
             }
         });
-        jPanel12.add(rSButtonHover15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 210, -1));
+        jPanel12.add(rSButtonHover15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 210, -1));
 
         WEANING_AW.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel12.add(WEANING_AW, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 210, 40));
+        jPanel12.add(WEANING_AW, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 210, 40));
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 217, 90));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel29.setText("AVERAGE WEIGHT");
-        jPanel12.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 210, 30));
+        jPanel12.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 210, 30));
 
-        WEANING.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 270, 610));
+        jPanel9.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WEANING_TOTAL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        WEANING_TOTAL.setForeground(new java.awt.Color(255, 217, 90));
+        WEANING_TOTAL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel9.add(WEANING_TOTAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 190, 40));
+
+        jPanel12.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 210, 40));
+
+        jPanel8.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        WEANING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        WEANING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
+        WEANING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel8.add(WEANING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 170, 40));
+
+        jPanel12.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 210, 40));
+
+        WEANING_MALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel12.add(WEANING_MALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 70, 40));
+
+        WEANING_FEMALE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel12.add(WEANING_FEMALE, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 70, 40));
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("F");
+        jPanel12.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 50, 30));
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("M");
+        jPanel12.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 50, 30));
+
+        jButton6.setText("=");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 40, -1));
+        jPanel12.add(WEANING_CALENDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 210, 40));
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel30.setText("TOTAL");
+        jPanel12.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 210, 30));
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel28.setText("EARTAG");
+        jPanel12.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 80, 30));
+
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel34.setText("DATE");
+        jPanel12.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 50, 30));
+
+        WEANING.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 270, 560));
 
         jPanel16.setBackground(new java.awt.Color(26, 46, 53));
         jPanel16.setForeground(new java.awt.Color(26, 46, 53));
@@ -1089,21 +1175,21 @@ public class SECRETARY extends javax.swing.JFrame {
                 rSButtonHover19ActionPerformed(evt);
             }
         });
-        WEANING.add(rSButtonHover19, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 80, 40));
+        WEANING.add(rSButtonHover19, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 80, 40));
 
         CLOSE_WEANING_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Eartag", "Date", "days"
+                "Eartag", "Batch", "Actual Farrowing", "Expected Weaning", "Days Before Weaning"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1123,30 +1209,21 @@ public class SECRETARY extends javax.swing.JFrame {
             CLOSE_WEANING_TABLE.getColumnModel().getColumn(0).setResizable(false);
             CLOSE_WEANING_TABLE.getColumnModel().getColumn(0).setPreferredWidth(20);
             CLOSE_WEANING_TABLE.getColumnModel().getColumn(1).setResizable(false);
-            CLOSE_WEANING_TABLE.getColumnModel().getColumn(1).setPreferredWidth(30);
             CLOSE_WEANING_TABLE.getColumnModel().getColumn(2).setResizable(false);
-            CLOSE_WEANING_TABLE.getColumnModel().getColumn(2).setPreferredWidth(20);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(2).setPreferredWidth(30);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(3).setResizable(false);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(3).setPreferredWidth(20);
+            CLOSE_WEANING_TABLE.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        WEANING.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 540, 130));
+        WEANING.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 760, 130));
 
         jLabel50.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel50.setText("CHECK EARTAG AND VIEW WEANING RECORD");
-        WEANING.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 270, 30));
+        WEANING.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 270, 30));
 
         WEANING_TABLE_CONTAINER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        WEANING_REBREEDING_BTN.setBackground(new java.awt.Color(255, 217, 90));
-        WEANING_REBREEDING_BTN.setText("START REBREEDING");
-        WEANING_REBREEDING_BTN.setColorHover(new java.awt.Color(26, 46, 53));
-        WEANING_REBREEDING_BTN.setColorText(new java.awt.Color(26, 46, 53));
-        WEANING_REBREEDING_BTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WEANING_REBREEDING_BTNActionPerformed(evt);
-            }
-        });
-        WEANING_TABLE_CONTAINER.add(WEANING_REBREEDING_BTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
 
         WEANING_MAIN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1168,9 +1245,63 @@ public class SECRETARY extends javax.swing.JFrame {
         WEANING_MAIN_TABLE.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jScrollPane5.setViewportView(WEANING_MAIN_TABLE);
 
-        WEANING_TABLE_CONTAINER.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 340));
+        WEANING_TABLE_CONTAINER.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 290));
 
-        WEANING.add(WEANING_TABLE_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 760, 340));
+        WEANING.add(WEANING_TABLE_CONTAINER, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 760, 290));
+
+        WEANING_REBREEDING_BTN.setBackground(new java.awt.Color(26, 46, 53));
+        WEANING_REBREEDING_BTN.setForeground(new java.awt.Color(255, 217, 90));
+        WEANING_REBREEDING_BTN.setText("START REBREEDING");
+        WEANING_REBREEDING_BTN.setColorHover(new java.awt.Color(26, 46, 53));
+        WEANING_REBREEDING_BTN.setColorText(new java.awt.Color(255, 217, 90));
+        WEANING_REBREEDING_BTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WEANING_REBREEDING_BTNActionPerformed(evt);
+            }
+        });
+        WEANING.add(WEANING_REBREEDING_BTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 640, -1, 40));
+
+        WEANING_DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Batch" }));
+        WEANING_DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WEANING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed(evt);
+            }
+        });
+        WEANING.add(WEANING_DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 300, 150, 30));
+
+        jLabel53.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel53.setText("CLOSE TO WEANING");
+        WEANING.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 130, 30));
+
+        rSButtonHover23.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover23.setText("REFRESH");
+        rSButtonHover23.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover23.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover23.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover23.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover23ActionPerformed(evt);
+            }
+        });
+        WEANING.add(rSButtonHover23, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 90, 120, 30));
+
+        rSButtonHover27.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover27.setText("UPDATE");
+        rSButtonHover27.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover27.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover27.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover27.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover27ActionPerformed(evt);
+            }
+        });
+        WEANING.add(rSButtonHover27, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 640, 80, 30));
+
+        WEANING_BATCH_NUMBER_CLOSE.setText("batch diria tol");
+        WEANING.add(WEANING_BATCH_NUMBER_CLOSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 100, -1));
 
         PAGES.add(WEANING, "PAGE_4");
 
@@ -1675,14 +1806,8 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING_SEARCH_EARTAG();
 
         FARROWING_RETRIEVE_DETAILS();
-        FARROWING_DETAILS_CONTAINER.setVisible(true);
-    }//GEN-LAST:event_rSButtonHover13ActionPerformed
 
-    private void WEANING_REBREEDING_BTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WEANING_REBREEDING_BTNActionPerformed
-        String eartag = WEANING_MAIN_TABLE.getValueAt(0, 0).toString();
-        rebreedingModal.setEartag(eartag);
-        rebreedingModal.setVisible(true);
-    }//GEN-LAST:event_WEANING_REBREEDING_BTNActionPerformed
+    }//GEN-LAST:event_rSButtonHover13ActionPerformed
 
     private void rSButtonHover15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover15ActionPerformed
         WEANING_SUBMIT();
@@ -1722,6 +1847,12 @@ public class SECRETARY extends javax.swing.JFrame {
             farrowingUpdateStmt.setInt(2, culledIntEartag);
             farrowingUpdateStmt.executeUpdate();
 
+            String weaningUpdateQuery = "UPDATE weaning_records SET culled = ? WHERE eartag = ?";
+            PreparedStatement weaningUpdateStmt = conn.prepareStatement(weaningUpdateQuery);
+            weaningUpdateStmt.setBoolean(1, true);
+            weaningUpdateStmt.setInt(2, culledIntEartag);
+            weaningUpdateStmt.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Culling status for sow with eartag number " + culledValue + " has been updated to culled.");
 
             WARNING_FETCH_EARTAG();
@@ -1732,96 +1863,8 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_WARNING_CULL_BUTTONActionPerformed
 
-    private void rSButtonHover17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover17ActionPerformed
-
-        try {
-            DefaultTableModel model = new DefaultTableModel();
-
-            String query = "SELECT fr.eartag, fr.farrowing_actualdate, fr.farrowing_duedate, fr.female_piglets, fr.male_piglets, fr.total_piglets, fr.abw, fr.mortality, fr.remarks, fr.culled, rs.penbuilding, rs.penroom, rs.assigned_employee "
-                    + "FROM farrowing_records fr "
-                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag";
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
-
-            model.addColumn("Eartag");
-            model.addColumn("Actual");
-            model.addColumn("Due");
-            model.addColumn("Female");
-            model.addColumn("Male");
-            model.addColumn("Total");
-            model.addColumn("ABW");
-            model.addColumn("Mortality");
-            model.addColumn("Remarks");
-            model.addColumn("Culled");
-            model.addColumn("Building");
-            model.addColumn("Room");
-            model.addColumn("Employee");
-
-            while (rs.next()) {
-                int eartag = rs.getInt("eartag");
-                Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
-                Date farrowing_duedate = rs.getDate("farrowing_duedate");
-                int female_piglets = rs.getInt("female_piglets");
-                int male_piglets = rs.getInt("male_piglets");
-                int total_piglets = rs.getInt("total_piglets");
-                double abw = rs.getDouble("abw");
-                int mortality = rs.getInt("mortality");
-                String remarks = rs.getString("remarks");
-
-                int isCulled = rs.getInt("culled");
-                String status = isCulled == 1 ? "culled" : "not";
-
-                String penbuilding = rs.getString("penbuilding");
-                String penroom = rs.getString("penroom");
-                String assignedEmployee = rs.getString("assigned_employee");
-
-                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, status, penbuilding, penroom, assignedEmployee});
-            }
-
-            if (FARROWING_MAIN_TABLE != null) {
-                FARROWING_MAIN_TABLE.setModel(model);
-                FARROWING_DETAILS_CONTAINER.setVisible(true);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }//GEN-LAST:event_rSButtonHover17ActionPerformed
-
-    private void rSButtonHover18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover18ActionPerformed
-        WEANING_TABLE_CONTAINER.setVisible(true);
-
-        try {
-            DefaultTableModel model = new DefaultTableModel();
-            String query = "SELECT eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records";
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
-
-            model.addColumn("Eartag");
-            model.addColumn("Actual");
-            model.addColumn("Male");
-            model.addColumn("Female");
-            model.addColumn("Total");
-            model.addColumn("AW");
-
-            while (rs.next()) {
-                int eartag = rs.getInt("eartag");
-                Date weaning_actualdate = rs.getDate("weaning_actualdate");
-                int male_piglets = rs.getInt("male_piglets");
-                int female_piglets = rs.getInt("female_piglets");
-                int total_piglets = rs.getInt("total_piglets");
-                double aw = rs.getDouble("aw");
-
-                model.addRow(new Object[]{eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
-            }
-
-            WEANING_MAIN_TABLE.setModel(model);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }//GEN-LAST:event_rSButtonHover18ActionPerformed
-
     private void rSButtonHover19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover19ActionPerformed
-        WEANING_TABLE_CONTAINER.setVisible(true);
+
         WEANING_SEARCH_EARTAG();
     }//GEN-LAST:event_rSButtonHover19ActionPerformed
 
@@ -1839,6 +1882,89 @@ public class SECRETARY extends javax.swing.JFrame {
     private void rSButtonHover20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover20ActionPerformed
         BREEDING_RETRIEVE_BREEDING_DETAILS();
     }//GEN-LAST:event_rSButtonHover20ActionPerformed
+
+    private void rSButtonHover21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover21ActionPerformed
+
+        int selectedRow = REGSOW_TABLE.getSelectedRow();
+        String eartag = REGSOW_TABLE.getValueAt(selectedRow, 0).toString();
+
+        try {
+            String query = "DELETE FROM register_sow WHERE eartag = ?";
+            pst = conn.prepareStatement(query);
+            pst.setString(1, eartag);
+
+            int rowsDeleted = pst.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Sow registration deleted successfully!");
+                REGISTER_RETRIEVE_REGISTERED_SOW();
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to delete sow registration.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_rSButtonHover21ActionPerformed
+
+    private void rSButtonHover22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover22ActionPerformed
+        int selectedRow = REGSOW_TABLE.getSelectedRow();
+        String eartag = REGSOW_TABLE.getValueAt(selectedRow, 0).toString();
+
+        regsowUpdateModal.REGISTER_RETRIEVE_REGISTERED_SOW(eartag);
+        regsowUpdateModal.setVisible(true);
+    }//GEN-LAST:event_rSButtonHover22ActionPerformed
+
+    private void FARROWING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FARROWING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FARROWING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed
+
+    private void WEANING_REBREEDING_BTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WEANING_REBREEDING_BTNActionPerformed
+        int selectedRow = WEANING_MAIN_TABLE.getSelectedRow();
+        String eartag = WEANING_MAIN_TABLE.getValueAt(selectedRow, 0).toString();
+        String batch = WEANING_MAIN_TABLE.getValueAt(selectedRow, 1).toString();
+
+        rebreedingModal.setEartag(eartag, batch);
+        rebreedingModal.setVisible(true);
+    }//GEN-LAST:event_WEANING_REBREEDING_BTNActionPerformed
+
+    private void WEANING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WEANING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_WEANING_DROPDOWN_FOR_BATCH_NUMBERActionPerformed
+
+    private void rSButtonHover23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover23ActionPerformed
+        WEANING_RETRIEVE_DETAILS_ALL_DETAILS();
+        RETRIEVE_NOT_WEANED_EARTAGS();
+    }//GEN-LAST:event_rSButtonHover23ActionPerformed
+
+    private void rSButtonHover24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover24ActionPerformed
+        FARROWING_RETRIEVE_ALL_FARROWED();
+        FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+    }//GEN-LAST:event_rSButtonHover24ActionPerformed
+
+    private void rSButtonHover25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover25ActionPerformed
+        int selectedRow = FARROWING_MAIN_TABLE.getSelectedRow();
+        String eartag = FARROWING_MAIN_TABLE.getValueAt(selectedRow, 0).toString();
+
+        farrowingUpdateModal.FARROWING_RETRIEVE_RECORD(eartag);
+        farrowingUpdateModal.setVisible(true);
+    }//GEN-LAST:event_rSButtonHover25ActionPerformed
+
+    private void rSButtonHover26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover26ActionPerformed
+        int selectedRow = BREEDING_TABLE.getSelectedRow();
+        String eartag = BREEDING_TABLE.getValueAt(selectedRow, 0).toString();
+
+        breedingUpdateModal.BREEDING_RETRIEVE_BREEDING_SOW(eartag);
+        breedingUpdateModal.setVisible(true);
+    }//GEN-LAST:event_rSButtonHover26ActionPerformed
+
+    private void rSButtonHover27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover27ActionPerformed
+        int selectedRow = WEANING_MAIN_TABLE.getSelectedRow();
+        String eartag = WEANING_MAIN_TABLE.getValueAt(selectedRow, 0).toString();
+
+        weaningUpdateModal.WEANING_RETRIEVE_RECORD(eartag);
+        weaningUpdateModal.setVisible(true);
+
+
+    }//GEN-LAST:event_rSButtonHover27ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1889,7 +2015,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JPanel FARROWING;
     private javax.swing.JTextField FARROWING_ABW;
     private com.toedter.calendar.JDateChooser FARROWING_ACTUAL;
-    private javax.swing.JPanel FARROWING_DETAILS_CONTAINER;
+    private javax.swing.JLabel FARROWING_BATCH_NUMBER;
+    private javax.swing.JComboBox<String> FARROWING_DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JLabel FARROWING_DUE;
     private javax.swing.JLabel FARROWING_EARTAG;
     private javax.swing.JTextField FARROWING_FEMALE;
@@ -1923,7 +2050,9 @@ public class SECRETARY extends javax.swing.JFrame {
     private rojeru_san.complementos.RSTableMetro WARNING_SOW_LIST_WARNING_SOW;
     private javax.swing.JPanel WEANING;
     private javax.swing.JTextField WEANING_AW;
+    private javax.swing.JLabel WEANING_BATCH_NUMBER_CLOSE;
     private com.toedter.calendar.JDateChooser WEANING_CALENDAR;
+    private javax.swing.JComboBox<String> WEANING_DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JLabel WEANING_EARTAG;
     private javax.swing.JTextField WEANING_FEMALE;
     private rojeru_san.complementos.RSTableMetro WEANING_MAIN_TABLE;
@@ -1974,6 +2103,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2015,11 +2146,16 @@ public class SECRETARY extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover rSButtonHover14;
     private rojeru_san.complementos.RSButtonHover rSButtonHover15;
     private rojeru_san.complementos.RSButtonHover rSButtonHover16;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover17;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover18;
     private rojeru_san.complementos.RSButtonHover rSButtonHover19;
     private rojeru_san.complementos.RSButtonHover rSButtonHover2;
     private rojeru_san.complementos.RSButtonHover rSButtonHover20;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover21;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover22;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover23;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover24;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover25;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover26;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover27;
     private rojeru_san.complementos.RSButtonHover rSButtonHover3;
     private rojeru_san.complementos.RSButtonHover rSButtonHover4;
     private rojeru_san.complementos.RSButtonHover rSButtonHover5;
@@ -2051,30 +2187,6 @@ public class SECRETARY extends javax.swing.JFrame {
             pst.execute();
 
 //            JOptionPane.showMessageDialog(null, ADMIN_REGISTRATION_TYPE.getSelectedItem() + " Registered Succesfully");
-//            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    private void SOW_REGISTRATION_UPDATE() {
-
-        try {
-            Date selectedDate = REGSOW_DATE.getDate();
-            String dateString = new java.sql.Date(selectedDate.getTime()).toString();
-
-            String sql = "UPDATE register_sow SET date = ?, bnumber = ?, penbuilding = ?, penroom = ?, assigned_employee = ? WHERE eartag = ?";
-
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, dateString);
-            pst.setString(2, (String) REGSOW_BNUMBER.getSelectedItem());
-            pst.setString(3, (String) REGSOW_BUILDING.getSelectedItem());
-            pst.setString(4, REGSOW_PEN.getText());
-            pst.setString(5, (String) REGSOW_ASSIGNED_EMPLOYEE.getSelectedItem());
-            pst.setString(6, LATEST_REGSOW_EARTAG.getText());
-
-            pst.execute();
-
 //            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2178,7 +2290,7 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 
             String selectedBatchNumber = (String) DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
-
+            pst.setString(1, selectedBatchNumber);
             String query = "SELECT eartag, date, bnumber, penbuilding, penroom, assigned_employee FROM register_sow WHERE bnumber = ?";
 
             pst = conn.prepareStatement(query);
@@ -2389,12 +2501,10 @@ public class SECRETARY extends javax.swing.JFrame {
                     case 1:
                         JOptionPane.showMessageDialog(null, "This sow has already farrowed on " + expected_farrowing);
                         FARROWING_RETRIEVE_DETAILS();
-                        FARROWING_DETAILS_CONTAINER.setVisible(true);
                         break;
                     default:
                         JOptionPane.showMessageDialog(null, "The sow is not yer farrowed and its expected farrowing date for this sow is " + expected_farrowing);
                         FARROWING_RETRIEVE_DETAILS();
-                        FARROWING_DETAILS_CONTAINER.setVisible(false);
                         break;
                 }
             } else {
@@ -2410,7 +2520,7 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String notFarrowed = "SELECT b.eartag, MAX(b.parity) AS highest_parity, b.expected_farrowing "
+            String notFarrowed = "SELECT b.eartag, MAX(b.parity) AS highest_parity, b.expected_farrowing, b.batch_number "
                     + "FROM breeding b "
                     + "WHERE b.sow_status = 0 "
                     + "GROUP BY b.eartag";
@@ -2419,18 +2529,20 @@ public class SECRETARY extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
+            model.addColumn("Batch");
             model.addColumn("Expected");
             model.addColumn("Pre-farrowing interval");
 
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
+                String bnumber = rs.getString("batch_number");
 
                 long currentTime = System.currentTimeMillis();
                 long expectedTime = expected_farrowing.getTime();
                 long daysBefore = TimeUnit.DAYS.convert(expectedTime - currentTime, TimeUnit.MILLISECONDS);
 
-                model.addRow(new Object[]{eartag, expected_farrowing, daysBefore});
+                model.addRow(new Object[]{eartag, bnumber, expected_farrowing, daysBefore});
             }
 
             if (LIST_OF_NOT_FARROWED != null) {
@@ -2504,7 +2616,6 @@ public class SECRETARY extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " eartag is now farrowed!");
 
                         FARROWING_RETRIEVE_DETAILS();
-                        FARROWING_DETAILS_CONTAINER.setVisible(true);
                         BREEDING_RETRIEVE_BREEDING_DETAILS();
                         FARROWING_EARTAG.setText("");
                         FARROWING_DUE.setText("");
@@ -2580,6 +2691,142 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
+    private void FARROWING_FETCH_VALUE_FROM_BATCH_NUMBER() {
+        try {
+            String sql = "SELECT DISTINCT bnumber FROM register_sow";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String batchNumber = rs.getString("bnumber");
+                FARROWING_DROPDOWN_FOR_BATCH_NUMBER.addItem(batchNumber);
+            }
+
+            FARROWING_DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                    Object selectedBatch = FARROWING_DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
+                    if (selectedBatch.equals("All Batch")) {
+                        FARROWING_RETRIEVE_ALL_FARROWED();
+                    } else {
+                        FARROWING_RETRIEVE_BY_BATCH();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void FARROWING_RETRIEVE_BY_BATCH() {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String selectedBatchNumber = (String) FARROWING_DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
+
+            String query = "SELECT fr.eartag, fr.farrowing_actualdate, fr.farrowing_duedate, fr.female_piglets, fr.male_piglets, fr.total_piglets, fr.abw, fr.mortality, fr.remarks, fr.culled, rs.penbuilding, rs.penroom, rs.assigned_employee "
+                    + "FROM farrowing_records fr "
+                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag WHERE fr.batch_number = ? and culled = false";
+
+            pst = conn.prepareStatement(query);
+            pst.setString(1, selectedBatchNumber);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Due");
+            model.addColumn("Female");
+            model.addColumn("Male");
+            model.addColumn("Total");
+            model.addColumn("ABW");
+            model.addColumn("Mortality");
+            model.addColumn("Remarks");
+            model.addColumn("Culled");
+            model.addColumn("Building");
+            model.addColumn("Room");
+            model.addColumn("Employee");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
+                Date farrowing_duedate = rs.getDate("farrowing_duedate");
+                int female_piglets = rs.getInt("female_piglets");
+                int male_piglets = rs.getInt("male_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double abw = rs.getDouble("abw");
+                int mortality = rs.getInt("mortality");
+                String remarks = rs.getString("remarks");
+
+                int isCulled = rs.getInt("culled");
+                String status = isCulled == 1 ? "culled" : "not";
+
+                String penbuilding = rs.getString("penbuilding");
+                String penroom = rs.getString("penroom");
+                String assignedEmployee = rs.getString("assigned_employee");
+
+                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, status, penbuilding, penroom, assignedEmployee});
+            }
+
+            if (FARROWING_MAIN_TABLE != null) {
+                FARROWING_MAIN_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void FARROWING_RETRIEVE_ALL_FARROWED() {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+
+            String query = "SELECT fr.eartag, fr.farrowing_actualdate, fr.farrowing_duedate, fr.female_piglets, fr.male_piglets, fr.total_piglets, fr.abw, fr.mortality, fr.remarks, fr.culled, rs.penbuilding, rs.penroom, rs.assigned_employee "
+                    + "FROM farrowing_records fr "
+                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag WHERE culled = false";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Due");
+            model.addColumn("Female");
+            model.addColumn("Male");
+            model.addColumn("Total");
+            model.addColumn("ABW");
+            model.addColumn("Mortality");
+            model.addColumn("Remarks");
+            model.addColumn("Culled");
+            model.addColumn("Building");
+            model.addColumn("Room");
+            model.addColumn("Employee");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
+                Date farrowing_duedate = rs.getDate("farrowing_duedate");
+                int female_piglets = rs.getInt("female_piglets");
+                int male_piglets = rs.getInt("male_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double abw = rs.getDouble("abw");
+                int mortality = rs.getInt("mortality");
+                String remarks = rs.getString("remarks");
+
+                int isCulled = rs.getInt("culled");
+                String status = isCulled == 1 ? "culled" : "not";
+
+                String penbuilding = rs.getString("penbuilding");
+                String penroom = rs.getString("penroom");
+                String assignedEmployee = rs.getString("assigned_employee");
+
+                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, status, penbuilding, penroom, assignedEmployee});
+            }
+
+            if (FARROWING_MAIN_TABLE != null) {
+                FARROWING_MAIN_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     //    WEANING 
     private void WEANING_SEARCH_EARTAG() {
         try {
@@ -2607,10 +2854,8 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date currentDate = new Date();
                 if (currentDate.after(actualWeaningDate)) {
                     JOptionPane.showMessageDialog(null, "This sow has reached the weaning period.");
-                    WEANING_REBREEDING_BTN.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "This sow has not reached the weaning period yet.");
-//                    WEANING_REBREEDING_BTN.setVisible(true);
                 }
 
                 WEANING_RETRIEVE_DETAILS();
@@ -2627,7 +2872,7 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT fr.eartag, fr.farrowing_actualdate "
+            String query = "SELECT fr.eartag, fr.batch_number, fr.farrowing_actualdate "
                     + "FROM farrowing_records fr "
                     + "LEFT JOIN weaning_records wr ON fr.eartag = wr.eartag "
                     + "WHERE wr.eartag IS NULL";
@@ -2635,6 +2880,7 @@ public class SECRETARY extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
+            model.addColumn("Batch");
             model.addColumn("Actual Farrowing");
             model.addColumn("Expected Weaning");
             model.addColumn("Days Before Weaning");
@@ -2644,7 +2890,7 @@ public class SECRETARY extends javax.swing.JFrame {
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");
                 Date actualFarrowing = rs.getDate("farrowing_actualdate");
-
+                String batch_number = rs.getString("batch_number");
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(actualFarrowing);
                 cal.add(Calendar.DAY_OF_MONTH, 28);
@@ -2654,7 +2900,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 long weaningTime = expectedWeaning.getTime();
                 long daysBeforeWeaning = TimeUnit.DAYS.convert(weaningTime - currentTime, TimeUnit.MILLISECONDS);
 
-                model.addRow(new Object[]{eartag, actualFarrowing, dateFormat.format(expectedWeaning), daysBeforeWeaning});
+                model.addRow(new Object[]{eartag, batch_number, actualFarrowing, dateFormat.format(expectedWeaning), daysBeforeWeaning});
             }
 
             if (CLOSE_WEANING_TABLE != null) {
@@ -2671,15 +2917,17 @@ public class SECRETARY extends javax.swing.JFrame {
             Date selectedDate = WEANING_CALENDAR.getDate();
             String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
-            String sql = "INSERT INTO weaning_records (eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO weaning_records (eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             pst = conn.prepareStatement(sql);
             pst.setString(1, WEANING_EARTAG.getText());
-            pst.setString(2, dateString);
-            pst.setString(3, WEANING_MALE.getText());
-            pst.setString(4, WEANING_FEMALE.getText());
-            pst.setString(5, WEANING_TOTAL.getText());
-            pst.setDouble(6, Double.parseDouble(WEANING_AW.getText()));
+            pst.setString(2, WEANING_BATCH_NUMBER_CLOSE.getText());
+
+            pst.setString(3, dateString);
+            pst.setString(4, WEANING_MALE.getText());
+            pst.setString(5, WEANING_FEMALE.getText());
+            pst.setString(6, WEANING_TOTAL.getText());
+            pst.setDouble(7, Double.parseDouble(WEANING_AW.getText()));
 
             pst.execute();
 
@@ -2691,9 +2939,6 @@ public class SECRETARY extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " EARTAG WEANING DETAILS ARE RECORDED");
 
-            WEANING_REBREEDING_BTN.setVisible(true);
-            WEANING_TABLE_CONTAINER.setVisible(true);
-            
             WEANING_RETRIEVE_DETAILS();
 //            BREEDING_RETRIEVE_BREEDING_DETAILS();
 
@@ -2709,15 +2954,44 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
+    private void WEANING_FETCH_VALUE_FROM_BATCH_NUMBER() {
+        try {
+            String sql = "SELECT DISTINCT bnumber FROM register_sow";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String batchNumber = rs.getString("bnumber");
+                WEANING_DROPDOWN_FOR_BATCH_NUMBER.addItem(batchNumber);
+            }
+
+            WEANING_DROPDOWN_FOR_BATCH_NUMBER.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                    Object selectedBatch = WEANING_DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
+                    if (selectedBatch.equals("All Batch")) {
+                        WEANING_RETRIEVE_DETAILS_ALL_DETAILS();
+                    } else {
+                        WEANING_RETRIEVE_BY_BATCH();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void WEANING_RETRIEVE_DETAILS() {
         try {
             DefaultTableModel model = new DefaultTableModel();
-            String query = "SELECT eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE eartag = ?";
+            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(WEANING_EARTAG.getText()));
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
+            model.addColumn("Batch");
+
             model.addColumn("Actual");
             model.addColumn("Male");
             model.addColumn("Female");
@@ -2726,13 +3000,87 @@ public class SECRETARY extends javax.swing.JFrame {
 
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");
+                String batch_number = rs.getString("batch_number");
+
                 Date weaning_actualdate = rs.getDate("weaning_actualdate");
                 int male_piglets = rs.getInt("male_piglets");
                 int female_piglets = rs.getInt("female_piglets");
                 int total_piglets = rs.getInt("total_piglets");
                 double aw = rs.getDouble("aw");
 
-                model.addRow(new Object[]{eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+                model.addRow(new Object[]{eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+            }
+
+            WEANING_MAIN_TABLE.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void WEANING_RETRIEVE_DETAILS_ALL_DETAILS() {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE culled = false";
+
+            pst = conn.prepareStatement(query);
+
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Batch");
+
+            model.addColumn("Actual");
+            model.addColumn("Male");
+            model.addColumn("Female");
+            model.addColumn("Total");
+            model.addColumn("AW");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                String batch_number = rs.getString("batch_number");
+                Date weaning_actualdate = rs.getDate("weaning_actualdate");
+                int male_piglets = rs.getInt("male_piglets");
+                int female_piglets = rs.getInt("female_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double aw = rs.getDouble("aw");
+
+                model.addRow(new Object[]{eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+            }
+
+            WEANING_MAIN_TABLE.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void WEANING_RETRIEVE_BY_BATCH() {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String selectedBatchNumber = (String) WEANING_DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
+            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE batch_number = ? AND culled = false";
+            pst = conn.prepareStatement(query);
+            pst.setString(1, selectedBatchNumber);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Batch");
+
+            model.addColumn("Actual");
+            model.addColumn("Male");
+            model.addColumn("Female");
+            model.addColumn("Total");
+            model.addColumn("AW");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                String batch_number = rs.getString("batch_number");
+                Date weaning_actualdate = rs.getDate("weaning_actualdate");
+                int male_piglets = rs.getInt("male_piglets");
+                int female_piglets = rs.getInt("female_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double aw = rs.getDouble("aw");
+
+                model.addRow(new Object[]{eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
             }
 
             WEANING_MAIN_TABLE.setModel(model);

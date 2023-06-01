@@ -720,9 +720,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover5ActionPerformed
 
     private void rSButtonHover17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover17ActionPerformed
-//        DOWNLOAD();
 
-//        DOWNLOAD downloader = new DOWNLOAD();
         List<JTable> tables = new ArrayList<>();
         tables.add(PERFORMANCE_FARROWING_TABLE);
         tables.add(PERFORMANCE_BREEDING_TABLE);
