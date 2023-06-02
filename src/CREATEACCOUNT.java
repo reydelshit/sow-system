@@ -86,7 +86,7 @@ public class CREATEACCOUNT extends javax.swing.JFrame {
                 rSButtonHover1ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 90, -1));
+        jPanel3.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 80, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/eyes.png"))); // NOI18N
         jLabel5.setText("jLabel5");
@@ -151,7 +151,7 @@ public class CREATEACCOUNT extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
