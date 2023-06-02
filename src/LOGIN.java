@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Reydel
@@ -14,12 +13,17 @@ import javax.swing.JOptionPane;
 public class LOGIN extends javax.swing.JFrame {
 
     Connection conn = null;
-        
+
+    private final CREATEACCOUNT createAccountModal;
+
     /**
      * Creates new form LOGIN
      */
     public LOGIN() {
         initComponents();
+
+        createAccountModal = new CREATEACCOUNT();
+        createAccountModal.setVisible(false);
     }
 
     /**
@@ -32,16 +36,17 @@ public class LOGIN extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        EMAIL_FIELD = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        EMAIL_FIELD = new javax.swing.JTextField();
         rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
         PASSWORD_FIELD = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -52,9 +57,6 @@ public class LOGIN extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        EMAIL_FIELD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel1.add(EMAIL_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 250, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 217, 90));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -75,13 +77,16 @@ public class LOGIN extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel2.setText("EMAIL");
+        jLabel2.setText("USERNAME");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 80, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 217, 90));
         jLabel3.setText("PASSWORD");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 80, 20));
+
+        EMAIL_FIELD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel3.add(EMAIL_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 250, 40));
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover1.setText("LOGIN");
@@ -93,7 +98,7 @@ public class LOGIN extends javax.swing.JFrame {
                 rSButtonHover1ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
+        jPanel3.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, -1));
 
         PASSWORD_FIELD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel3.add(PASSWORD_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 250, 40));
@@ -109,6 +114,15 @@ public class LOGIN extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 50, 40));
+
+        jLabel6.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel6.setText("Create an account");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+        });
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 110, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 440, 490));
 
@@ -134,16 +148,21 @@ public class LOGIN extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
-         LOGIN_FUNCTION();
+        LOGIN_FUNCTION();
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-       PASSWORD_FIELD.setEchoChar((char) 0);
+        PASSWORD_FIELD.setEchoChar((char) 0);
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jLabel5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseReleased
         PASSWORD_FIELD.setEchoChar('*');
     }//GEN-LAST:event_jLabel5MouseReleased
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+
+        createAccountModal.setVisible(true);
+    }//GEN-LAST:event_jLabel6MousePressed
 
     /**
      * @param args the command line arguments
@@ -188,65 +207,59 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     // End of variables declaration//GEN-END:variables
-    
-    private void LOGIN_FUNCTION(){
-            
-            try{
-                
-                String email = EMAIL_FIELD.getText();           
-                String password = PASSWORD_FIELD.getText();
-               
-                
-                java.sql.Statement Stm;
-                
-                Stm = conn.createStatement();
-                java.sql.ResultSet rs;
-                rs = Stm.executeQuery("SELECT * FROM accounts WHERE BINARY email = '"+email+"' AND BINARY password = '"+password+"'");
-                
 
-                if(rs.next()){
-                  String accountType = rs.getString("account_type");
+    private void LOGIN_FUNCTION() {
+
+        try {
+
+            String username = EMAIL_FIELD.getText();
+            String password = PASSWORD_FIELD.getText();
+
+            java.sql.Statement Stm;
+
+            Stm = conn.createStatement();
+            java.sql.ResultSet rs;
+            rs = Stm.executeQuery("SELECT * FROM accounts WHERE BINARY username = '" + username + "' AND BINARY password = '" + password + "'");
+
+            if (rs.next()) {
+                String accountType = rs.getString("account_type");
 //                  String accountName = rs.getString("account_name");
 //                  int accountID = rs.getInt("account_id");
 
-
-                switch(accountType) {
-                    case "secretary":
-                        SECRETARY s= new SECRETARY();
-
+                switch (accountType) {
+                    case "Secretary":
+                        SECRETARY s = new SECRETARY();
 
                         s.setVisible(true);
                         setVisible(false);
                         break;
-                    case "om":
-                        OPEMANAGER n= new OPEMANAGER();
-                        
-                    
+                    case "Operation Manager":
+                        OPEMANAGER n = new OPEMANAGER();
+
                         n.setVisible(true);
                         dispose();
-                        
+
                         break;
-                    default :
+                    default:
                         JOptionPane.showMessageDialog(null, "Invalid User");
-                        
-                    
-                } 
 
-                  } else {
-                    JOptionPane.showMessageDialog(null, "Invalid Credentials");
                 }
-                    
-                
-            } catch(Exception e){
-                JOptionPane.showMessageDialog(null, e);
-                JOptionPane.showMessageDialog(null, "Error");
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Credentials");
             }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, "Error");
+
+        }
 
     }
 }
