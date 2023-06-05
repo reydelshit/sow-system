@@ -151,7 +151,7 @@ public class NOTIFICATIONMODAL extends JFrame implements Runnable {
             DefaultListModel<String> warningListModel = new DefaultListModel<>();
 
             try {
-                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY id DESC";
+                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY notification_id DESC";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
 
@@ -175,7 +175,7 @@ public class NOTIFICATIONMODAL extends JFrame implements Runnable {
             DefaultListModel<String> farrowingListModel = new DefaultListModel<>();
 
             try {
-                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY id DESC";
+                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY notification_id DESC";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
 
@@ -199,7 +199,7 @@ public class NOTIFICATIONMODAL extends JFrame implements Runnable {
             DefaultListModel<String> weaningListModel = new DefaultListModel<>();
 
             try {
-                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY id DESC";
+                String sql = "SELECT eartag, notification_message FROM notifications ORDER BY notification_id DESC";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
 
