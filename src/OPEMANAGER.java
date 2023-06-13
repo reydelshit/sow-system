@@ -1156,7 +1156,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -1176,7 +1176,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
             model.addColumn("Type");
             model.addColumn("Lactate");
-            model.addColumn("Medicine");
 
             model.addColumn("Building");
             model.addColumn("Room");
@@ -1197,7 +1196,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 String comments = rs.getString("comments");
                 String breeding_type = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
-                String medicine = rs.getString("medicine");
 
                 boolean rebreed = rs.getBoolean("rebreed");
                 String setStatusForRebreedStatus = rebreed ? "yes" : "no";
@@ -1224,7 +1222,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
                 model.addRow(new Object[]{
                     breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
-                    lactate, medicine, penbuilding, penroom, assignedEmployee, parity,
+                    lactate, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
             }
@@ -1245,7 +1243,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 //            String selected = (String) LIST_OF_SOW_DROPDOWN.getSelectedItem();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.medicine, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -1279,7 +1277,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
             model.addColumn("Type");
             model.addColumn("Lactate");
-            model.addColumn("Medicine");
 
             model.addColumn("Building");
             model.addColumn("Room");
@@ -1300,7 +1297,6 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 String comments = rs.getString("comments");
                 String breeding_type = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
-                String medicine = rs.getString("medicine");
 
                 boolean rebreed = rs.getBoolean("rebreed");
                 String setStatusForRebreedStatus = rebreed ? "yes" : "no";
@@ -1327,7 +1323,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
                 model.addRow(new Object[]{
                     breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
-                    lactate, medicine, penbuilding, penroom, assignedEmployee, parity,
+                    lactate, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
             }
