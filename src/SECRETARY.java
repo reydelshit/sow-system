@@ -2396,7 +2396,7 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -2413,7 +2413,6 @@ public class SECRETARY extends javax.swing.JFrame {
             model.addColumn("Boar");
             model.addColumn("Date");
             model.addColumn("Expected");
-            model.addColumn("Status");
 
             model.addColumn("Type");
             model.addColumn("Lactate");
@@ -2431,7 +2430,6 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date breeding_date = rs.getDate("breeding_date");
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
-                String comments = rs.getString("comments");
                 String breeding_type = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
 
@@ -2459,7 +2457,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 };
 
                 model.addRow(new Object[]{
-                    breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
+                    breedingEartag, boar_used, breeding_date, expected_farrowing, breeding_type,
                     lactate, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
@@ -3120,7 +3118,7 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT boar_used, breeding_date, expected_farrowing, comments, rebreed FROM breeding WHERE eartag = ?";
+            String query = "SELECT boar_used, breeding_date, expected_farrowing, rebreed FROM breeding WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
             rs = pst.executeQuery();
@@ -3129,7 +3127,6 @@ public class SECRETARY extends javax.swing.JFrame {
             model.addColumn("Boar Used");
             model.addColumn("Breeding Date");
             model.addColumn("Expected");
-            model.addColumn("Comments");
             model.addColumn("Rebreed");
 
             while (rs.next()) {
@@ -3137,11 +3134,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date breeding_date = rs.getDate("breeding_date");
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
-                String comments = rs.getString("comments");
                 int isFarrowed = rs.getInt("rebreed");
                 String status = isFarrowed == 1 ? "rebreed" : "no";
 
-                model.addRow(new Object[]{boar_used, breeding_date, expected_farrowing, comments, status});
+                model.addRow(new Object[]{boar_used, breeding_date, expected_farrowing, status});
             }
 
             if (PERFORMANCE_BREEDING_TABLE != null) {
@@ -3440,7 +3436,7 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 //            String selected = (String) LIST_OF_SOW_DROPDOWN.getSelectedItem();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.comments, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -3470,7 +3466,6 @@ public class SECRETARY extends javax.swing.JFrame {
             model.addColumn("Boar");
             model.addColumn("Date");
             model.addColumn("Expected");
-            model.addColumn("Comments");
 
             model.addColumn("Type");
             model.addColumn("Lactate");
@@ -3489,7 +3484,6 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date breeding_date = rs.getDate("breeding_date");
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
-                String comments = rs.getString("comments");
                 String breeding_type = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
 
@@ -3517,7 +3511,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 };
 
                 model.addRow(new Object[]{
-                    breedingEartag, boar_used, breeding_date, expected_farrowing, comments, breeding_type,
+                    breedingEartag, boar_used, breeding_date, expected_farrowing, breeding_type,
                     lactate, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });

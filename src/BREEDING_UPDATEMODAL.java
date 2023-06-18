@@ -49,10 +49,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         BREEDING_BOAR_USED = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        BREEDING_COMMENTS = new javax.swing.JTextArea();
         rSButtonHover11 = new rojeru_san.complementos.RSButtonHover();
-        jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         BREEDING_BREEDING_TYPE = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
@@ -92,12 +89,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         jLabel15.setText("MEDICINE");
         BREEDING_CONTAINER.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 270, 20));
 
-        BREEDING_COMMENTS.setColumns(20);
-        BREEDING_COMMENTS.setRows(5);
-        jScrollPane4.setViewportView(BREEDING_COMMENTS);
-
-        BREEDING_CONTAINER.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 520, -1));
-
         rSButtonHover11.setBackground(new java.awt.Color(255, 217, 90));
         rSButtonHover11.setText("UPDATE");
         rSButtonHover11.setColorHover(new java.awt.Color(255, 217, 90));
@@ -108,13 +99,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
                 rSButtonHover11ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 170, 40));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("PRE-BREEDING STATUS");
-        BREEDING_CONTAINER.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 220, 20));
+        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 170, 40));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 217, 90));
@@ -154,7 +139,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
                 rSButtonHover12ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, 120, 40));
+        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 390, 120, 40));
 
         LACTATE_NO.setBackground(new java.awt.Color(26, 46, 53));
         LACTATE_NO.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -195,7 +180,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+            .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -209,12 +194,9 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
     private void rSButtonHover11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover11ActionPerformed
 
         String boarUsed = BREEDING_BOAR_USED.getText().trim();
-        String comments = BREEDING_COMMENTS.getText().trim();
 
         if (boarUsed.isEmpty() || !boarUsed.matches("\\d+")) {
             JOptionPane.showMessageDialog(null, "Invalid input for boarUsed. Please make sure it is a number.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (comments.isEmpty() || !comments.matches("[a-zA-Z0-9 ]*")) {
-            JOptionPane.showMessageDialog(null, "Invalid input for comments. Please make sure it contains only alphanumeric characters.", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (BREEDING_DATE.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -275,7 +257,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BREEDING_BOAR_USED;
     private javax.swing.JComboBox<String> BREEDING_BREEDING_TYPE;
-    private javax.swing.JTextArea BREEDING_COMMENTS;
     private javax.swing.JPanel BREEDING_CONTAINER;
     private com.toedter.calendar.JDateChooser BREEDING_DATE;
     private javax.swing.JLabel BREEDING_EARTAG;
@@ -283,14 +264,12 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
     private javax.swing.JTextField BREEDING_MEDICINE;
     private javax.swing.JRadioButton LACTATE_NO;
     private javax.swing.JRadioButton LACTATE_YES;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JScrollPane jScrollPane4;
     private rojeru_san.complementos.RSButtonHover rSButtonHover11;
     private rojeru_san.complementos.RSButtonHover rSButtonHover12;
     // End of variables declaration//GEN-END:variables
@@ -314,7 +293,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
 
                 BREEDING_BOAR_USED.setText(boarUsed);
                 BREEDING_DATE.setDate(breedingDate);
-                BREEDING_COMMENTS.setText(comments);
                 BREEDING_BREEDING_TYPE.setSelectedItem(breedingType);
 
                 if (lactate.equals("Yes")) {
@@ -342,11 +320,10 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
             pst.setString(1, BREEDING_BOAR_USED.getText());
             pst.setString(2, dateString);
-            pst.setString(3, BREEDING_COMMENTS.getText());
-            pst.setString(4, (String) BREEDING_BREEDING_TYPE.getSelectedItem());
-            pst.setString(5, BREEDING_LACTATE.getText());
-            pst.setString(6, BREEDING_MEDICINE.getText());
-            pst.setString(7, BREEDING_EARTAG.getText());
+            pst.setString(3, (String) BREEDING_BREEDING_TYPE.getSelectedItem());
+            pst.setString(4, BREEDING_LACTATE.getText());
+            pst.setString(5, BREEDING_MEDICINE.getText());
+            pst.setString(6, BREEDING_EARTAG.getText());
 
             int rowsUpdated = pst.executeUpdate();
 
@@ -359,7 +336,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
 
             BREEDING_BOAR_USED.setText("");
             BREEDING_DATE.setDate(null);
-            BREEDING_COMMENTS.setText("");
             BREEDING_BREEDING_TYPE.setSelectedIndex(0);
             LACTATE_YES.setSelected(true);
             BREEDING_MEDICINE.setText("");
