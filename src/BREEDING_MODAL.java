@@ -462,7 +462,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 }
             }
 
-            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, lactate, medicine, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, rebreed, breeding_type, lactate, medicine, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
             String farrowingUpdate = "SELECT sow_status FROM breeding WHERE eartag = ?";
             String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
 

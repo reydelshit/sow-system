@@ -20,7 +20,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     private String eartag;
     private String batch;
 
-
     Connection conn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -60,11 +59,8 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         REBREEDING_DATE = new com.toedter.calendar.JDateChooser();
         REBREEDING_BOAR_USED = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        REBREEDING_COMMENTS = new javax.swing.JTextArea();
         rSButtonHover11 = new rojeru_san.complementos.RSButtonHover();
         jLabel16 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         EXPECTED_FARROWING_LABEL = new javax.swing.JPanel();
         REBREEDING_EXPECTED_FARROWING = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -103,12 +99,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         jLabel17.setText("BOAR USED");
         BREEDING_CONTAINER.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 220, 20));
 
-        REBREEDING_COMMENTS.setColumns(20);
-        REBREEDING_COMMENTS.setRows(5);
-        jScrollPane4.setViewportView(REBREEDING_COMMENTS);
-
-        BREEDING_CONTAINER.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 520, -1));
-
         rSButtonHover11.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonHover11.setText("START BREEDING");
         rSButtonHover11.setColorHover(new java.awt.Color(255, 217, 90));
@@ -119,19 +109,13 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 rSButtonHover11ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 490, 170, 40));
+        BREEDING_CONTAINER.add(rSButtonHover11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 170, 40));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 217, 90));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("EXPECTED FARROWING");
         BREEDING_CONTAINER.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 220, 20));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("PRE-BREEDING STATUS");
-        BREEDING_CONTAINER.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 220, 20));
 
         EXPECTED_FARROWING_LABEL.setBackground(new java.awt.Color(153, 153, 153));
         EXPECTED_FARROWING_LABEL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -184,7 +168,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 rSButtonHover12ActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 170, 40));
+        BREEDING_CONTAINER.add(rSButtonHover12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 380, 170, 40));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 217, 90));
@@ -235,7 +219,7 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
+            .addComponent(BREEDING_CONTAINER, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -269,12 +253,9 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     private void rSButtonHover11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover11ActionPerformed
 
         String boarUsed = REBREEDING_BOAR_USED.getText().trim();
-        String comments = REBREEDING_COMMENTS.getText().trim();
 
         if (boarUsed.isEmpty() || !boarUsed.matches("\\d+")) {
             JOptionPane.showMessageDialog(null, "Invalid input for boarUsed. Please make sure it is a number.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (comments.isEmpty() || !comments.matches("[a-zA-Z0-9 ]*")) {
-            JOptionPane.showMessageDialog(null, "Invalid input for comments. Please make sure it contains only alphanumeric characters.", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (REBREEDING_DATE.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -337,13 +318,11 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     private javax.swing.JLabel REBREEDING_BATCH_NUMBER;
     private javax.swing.JTextField REBREEDING_BOAR_USED;
     private javax.swing.JComboBox<String> REBREEDING_BREEDING_TYPE;
-    private javax.swing.JTextArea REBREEDING_COMMENTS;
     private com.toedter.calendar.JDateChooser REBREEDING_DATE;
     private javax.swing.JLabel REBREEDING_EARTAG;
     private javax.swing.JLabel REBREEDING_EXPECTED_FARROWING;
     private javax.swing.JLabel REBREEDING_LACTATE;
     private javax.swing.JTextField REBREEDING_MEDICINE;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -352,7 +331,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane4;
     private rojeru_san.complementos.RSButtonHover rSButtonHover11;
     private rojeru_san.complementos.RSButtonHover rSButtonHover12;
     // End of variables declaration//GEN-END:variables
@@ -372,22 +350,22 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 int parity = rs.getInt("parity");
                 if (sow_status != 3) {
                     if (sow_status != 1 && sow_status != 0) {
-                        String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, comments, rebreed, breeding_type, lactate, medicine, sow_status, parity, batch_number) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+                        String sql = "INSERT INTO breeding (eartag, boar_used, breeding_date, expected_farrowing, rebreed, breeding_type, lactate, medicine, sow_status, parity, batch_number) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
                         pst = conn.prepareStatement(sql);
 
                         pst.setString(1, REBREEDING_EARTAG.getText());
                         pst.setString(2, REBREEDING_BOAR_USED.getText());
                         pst.setString(3, dateString);
                         pst.setString(4, REBREEDING_EXPECTED_FARROWING.getText());
-                        pst.setString(5, REBREEDING_COMMENTS.getText());
-                        pst.setBoolean(6, true);
-                        pst.setString(7, (String) REBREEDING_BREEDING_TYPE.getSelectedItem());
-                        pst.setString(8, REBREEDING_LACTATE.getText());
-                        pst.setString(9, REBREEDING_MEDICINE.getText());
-                        pst.setInt(10, 0);
 
-                        pst.setInt(11, parity + 1);
-                        pst.setString(12, REBREEDING_BATCH_NUMBER.getText());
+                        pst.setBoolean(5, true);
+                        pst.setString(6, (String) REBREEDING_BREEDING_TYPE.getSelectedItem());
+                        pst.setString(7, REBREEDING_LACTATE.getText());
+                        pst.setString(8, REBREEDING_MEDICINE.getText());
+                        pst.setInt(9, 0);
+
+                        pst.setInt(10, parity + 1);
+                        pst.setString(11, REBREEDING_BATCH_NUMBER.getText());
 
                         pst.execute();
 
@@ -396,7 +374,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                         REBREEDING_EARTAG.setText("");
                         REBREEDING_BOAR_USED.setText("");
                         REBREEDING_EXPECTED_FARROWING.setText("");
-                        REBREEDING_COMMENTS.setText("");
                         REBREEDING_BREEDING_TYPE.setSelectedIndex(0);
                         REBREEDING_LACTATE.setText("");
                         REBREEDING_MEDICINE.setText("");
@@ -410,7 +387,6 @@ public class REBREEDINGMODAL extends javax.swing.JFrame {
                 REBREEDING_EARTAG.setText("");
                 REBREEDING_BOAR_USED.setText("");
                 REBREEDING_EXPECTED_FARROWING.setText("");
-                REBREEDING_COMMENTS.setText("");
                 REBREEDING_BREEDING_TYPE.setSelectedIndex(0);
                 REBREEDING_LACTATE.setText("");
                 REBREEDING_MEDICINE.setText("");

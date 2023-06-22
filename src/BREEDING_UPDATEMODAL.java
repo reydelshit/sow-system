@@ -277,7 +277,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
     public void BREEDING_RETRIEVE_BREEDING_SOW(String eartag) {
         BREEDING_EARTAG.setText(eartag);
         try {
-            String query = "SELECT boar_used, breeding_date, comments, breeding_type, lactate, medicine FROM breeding WHERE eartag = ?";
+            String query = "SELECT boar_used, breeding_date, breeding_type, lactate, medicine FROM breeding WHERE eartag = ?";
 
             pst = conn.prepareStatement(query);
             pst.setString(1, eartag);
@@ -286,7 +286,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
             while (rs.next()) {
                 String boarUsed = rs.getString("boar_used");
                 Date breedingDate = rs.getDate("breeding_date");
-                String comments = rs.getString("comments");
                 String breedingType = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
                 String medicine = rs.getString("medicine");
@@ -313,7 +312,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
         try {
-            String sql = "UPDATE breeding SET boar_used = ?, breeding_date = ?, comments = ?, breeding_type = ?, lactate = ?, medicine = ? WHERE eartag = ?";
+            String sql = "UPDATE breeding SET boar_used = ?, breeding_date = ?, breeding_type = ?, lactate = ?, medicine = ? WHERE eartag = ?";
 
             pst = conn.prepareStatement(sql);
 
