@@ -905,27 +905,27 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
         try {
             DefaultTableModel model = new DefaultTableModel();
-            String query = "SELECT weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records  WHERE eartag = ?";
+            String query = "SELECT eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
             rs = pst.executeQuery();
 
-            if (rs.next()) {
-//                int eartag = rs.getInt("eartag");
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Male");
+            model.addColumn("Female");
+            model.addColumn("Total");
+            model.addColumn("AW");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
                 Date weaning_actualdate = rs.getDate("weaning_actualdate");
                 int male_piglets = rs.getInt("male_piglets");
                 int female_piglets = rs.getInt("female_piglets");
                 int total_piglets = rs.getInt("total_piglets");
                 double aw = rs.getDouble("aw");
 
-//                model.addColumn("eartag");
-                model.addColumn("Actual");
-                model.addColumn("Male");
-                model.addColumn("Female");
-                model.addColumn("Total");
-                model.addColumn("AW");
-
-                model.addRow(new Object[]{weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+                model.addRow(new Object[]{eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
             }
 
             PERFORMANCE_WEANING_TABLE.setModel(model);
