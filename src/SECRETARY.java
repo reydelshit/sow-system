@@ -242,6 +242,7 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel49 = new javax.swing.JLabel();
         rSButtonHover21 = new rojeru_san.complementos.RSButtonHover();
         rSButtonHover22 = new rojeru_san.complementos.RSButtonHover();
+        rSButtonHover28 = new rojeru_san.complementos.RSButtonHover();
         BREEDING = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BREEDING_TABLE = new rojeru_san.complementos.RSTableMetro();
@@ -351,6 +352,7 @@ public class SECRETARY extends javax.swing.JFrame {
         WARNING_SOW_LIST_WARNING_SOW = new rojeru_san.complementos.RSTableMetro();
         jPanel13 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
+        rSButtonHover29 = new rojeru_san.complementos.RSButtonHover();
         CULLED_SOW = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         CULLED_TOTAL_CULLED = new javax.swing.JLabel();
@@ -675,6 +677,19 @@ public class SECRETARY extends javax.swing.JFrame {
         });
         REGISTER_OF_SOW.add(rSButtonHover22, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 640, 80, 30));
 
+        rSButtonHover28.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover28.setText("REFRESH");
+        rSButtonHover28.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover28.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover28.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover28.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover28ActionPerformed(evt);
+            }
+        });
+        REGISTER_OF_SOW.add(rSButtonHover28, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 40, 120, 30));
+
         PAGES.add(REGISTER_OF_SOW, "PAGE_1");
 
         BREEDING.setBackground(new java.awt.Color(255, 217, 90));
@@ -946,7 +961,7 @@ public class SECRETARY extends javax.swing.JFrame {
         FARROWING.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 820, 310));
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel38.setText("SEARCH EARTAG IF FARROWED AND VIEW RECORDS");
+        jLabel38.setText("SEARCH THE EARTAG AND VIEW DETAILS");
         FARROWING.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 300, 30));
 
         LIST_OF_NOT_FARROWED.setModel(new javax.swing.table.DefaultTableModel(
@@ -1575,6 +1590,19 @@ public class SECRETARY extends javax.swing.JFrame {
 
         WARNING_SOW.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, 360, 50));
 
+        rSButtonHover29.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonHover29.setText("REFRESH");
+        rSButtonHover29.setColorHover(new java.awt.Color(26, 46, 53));
+        rSButtonHover29.setColorText(new java.awt.Color(26, 46, 53));
+        rSButtonHover29.setColorTextHover(new java.awt.Color(255, 217, 90));
+        rSButtonHover29.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        rSButtonHover29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonHover29ActionPerformed(evt);
+            }
+        });
+        WARNING_SOW.add(rSButtonHover29, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 90, 30));
+
         PAGES.add(WARNING_SOW, "PAGE_6");
 
         CULLED_SOW.setBackground(new java.awt.Color(255, 217, 90));
@@ -1642,7 +1670,7 @@ public class SECRETARY extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
+            .addComponent(jSplitPane2)
         );
 
         pack();
@@ -1794,8 +1822,8 @@ public class SECRETARY extends javax.swing.JFrame {
             FARROWING_RETRIEVE_DETAILS();
             BREEDING_RETRIEVE_BREEDING_DETAILS();
             FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
-            // Perform other actions as needed
 
+            RETRIEVE_NOT_WEANED_EARTAGS();
             WARNING_FETCH_EARTAG();
             CULLED_FETCH_EARTAG();
 
@@ -1812,6 +1840,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
     private void rSButtonHover15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover15ActionPerformed
         WEANING_SUBMIT();
+        RETRIEVE_NOT_WEANED_EARTAGS();
     }//GEN-LAST:event_rSButtonHover15ActionPerformed
 
     private void rSButtonHover16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover16ActionPerformed
@@ -1957,15 +1986,24 @@ public class SECRETARY extends javax.swing.JFrame {
 
             int rowsDeleted = pst.executeUpdate();
             if (rowsDeleted > 0) {
-                JOptionPane.showMessageDialog(null, "Sow registration deleted successfully!");
+                JOptionPane.showMessageDialog(null, "Registered sow deleted successfully!");
                 REGISTER_RETRIEVE_REGISTERED_SOW();
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to delete sow registration.");
+                JOptionPane.showMessageDialog(null, "Failed to delete sow.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_rSButtonHover21ActionPerformed
+
+    private void rSButtonHover28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover28ActionPerformed
+        REGISTER_RETRIEVE_REGISTERED_SOW_BY_BATCH();
+        REGISTER_RETRIEVE_REGISTERED_SOW();
+    }//GEN-LAST:event_rSButtonHover28ActionPerformed
+
+    private void rSButtonHover29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover29ActionPerformed
+        WARNING_FETCH_EARTAG();
+    }//GEN-LAST:event_rSButtonHover29ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2157,6 +2195,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover rSButtonHover25;
     private rojeru_san.complementos.RSButtonHover rSButtonHover26;
     private rojeru_san.complementos.RSButtonHover rSButtonHover27;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover28;
+    private rojeru_san.complementos.RSButtonHover rSButtonHover29;
     private rojeru_san.complementos.RSButtonHover rSButtonHover3;
     private rojeru_san.complementos.RSButtonHover rSButtonHover4;
     private rojeru_san.complementos.RSButtonHover rSButtonHover5;
@@ -2503,7 +2543,6 @@ public class SECRETARY extends javax.swing.JFrame {
                         break;
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No result found");
                 FARROWING_RETRIEVE_DETAILS();
             }
         } catch (Exception e) {
@@ -2588,7 +2627,7 @@ public class SECRETARY extends javax.swing.JFrame {
                         boolean isCulling = false;
                         Date selectedDate = FARROWING_ACTUAL.getDate();
                         String dateString = new java.sql.Date(selectedDate.getTime()).toString();
-                        String sql = "INSERT INTO farrowing_records (eartag, batch_number, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, culled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        String sql = "INSERT INTO farrowing_records (eartag, batch_number, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks, culled, farrowing_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         pst = conn.prepareStatement(sql);
                         pst.setString(1, FARROWING_EARTAG.getText());
                         pst.setString(2, FARROWING_BATCH_NUMBER.getText());
@@ -2601,10 +2640,12 @@ public class SECRETARY extends javax.swing.JFrame {
                         pst.setString(9, FARROWING_MORT.getText());
                         pst.setString(10, FARROWING_REMARKS.getText());
                         pst.setBoolean(11, isCulling);
+                        pst.setBoolean(12, true);
+
                         pst.execute();
 
                         // Update breeding record
-                        String updateSql = "UPDATE breeding SET sow_status = 1 WHERE eartag = ?";
+                        String updateSql = "UPDATE breeding SET farrowing_status = true, weaning_status = false, sow_status = 1 WHERE eartag = ?";
                         pst = conn.prepareStatement(updateSql);
                         pst.setString(1, FARROWING_EARTAG.getText());
                         pst.execute();
@@ -2838,21 +2879,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
             if (rs.next()) {
                 int eartag = rs.getInt("eartag");
-                Date expectedFarrowingDate = rs.getDate("expected_farrowing");
 
                 WEANING_EARTAG.setText(String.valueOf(eartag));
-
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(expectedFarrowingDate);
-                cal.add(Calendar.DAY_OF_MONTH, 28);
-                Date actualWeaningDate = cal.getTime();
-
-                Date currentDate = new Date();
-                if (currentDate.after(actualWeaningDate)) {
-                    JOptionPane.showMessageDialog(null, "This sow has reached the weaning period.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "This sow has not reached the weaning period yet.");
-                }
 
                 WEANING_RETRIEVE_DETAILS();
             } else {
@@ -2870,8 +2898,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
             String query = "SELECT fr.eartag, fr.batch_number, fr.farrowing_actualdate "
                     + "FROM farrowing_records fr "
-                    + "LEFT JOIN weaning_records wr ON fr.eartag = wr.eartag "
-                    + "WHERE wr.eartag IS NULL";
+                    + "WHERE fr.farrowing_status = 1";
+
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
 
@@ -2928,9 +2956,15 @@ public class SECRETARY extends javax.swing.JFrame {
 
             pst.execute();
 
-            String farrowingUpdate = "UPDATE breeding SET sow_status = 2 WHERE eartag = ?";
+            String farrowingUpdate = "UPDATE breeding SET farrowing_status = false, weaning_status = true, sow_status = 2 WHERE eartag = ?";
 
             pst = conn.prepareStatement(farrowingUpdate);
+            pst.setString(1, WEANING_EARTAG.getText());
+            pst.executeUpdate();
+
+            String farrowingUpdateToFalse = "UPDATE farrowing_records SET farrowing_status = false WHERE eartag = ?";
+
+            pst = conn.prepareStatement(farrowingUpdateToFalse);
             pst.setString(1, WEANING_EARTAG.getText());
             pst.executeUpdate();
 
@@ -3017,27 +3051,25 @@ public class SECRETARY extends javax.swing.JFrame {
     private void WEANING_RETRIEVE_DETAILS_ALL_DETAILS() {
         try {
             DefaultTableModel model = new DefaultTableModel();
-            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw "
-                    + "FROM weaning_records "
-                    + "WHERE culled = false "
-                    + "AND (eartag, weaning_id) IN ("
-                    + "   SELECT eartag, MAX(weaning_id) "
-                    + "   FROM weaning_records "
-                    + "   GROUP BY eartag "
-                    + ") "
+            String query = "SELECT wr.eartag, wr.batch_number, wr.weaning_actualdate, wr.male_piglets, wr.female_piglets, wr.total_piglets, wr.aw, wr.culled "
+                    + "FROM weaning_records wr "
+                    + "WHERE wr.culled = false "
                     + "AND NOT EXISTS ("
                     + "   SELECT 1 "
-                    + "   FROM breeding "
-                    + "   WHERE weaning_records.eartag = breeding.eartag"
+                    + "   FROM breeding b "
+                    + "   WHERE wr.eartag = b.eartag AND (b.sow_status = 0 OR b.sow_status = 1)"
+                    + ")"
+                    + "AND wr.weaning_id = ("
+                    + "   SELECT MAX(weaning_id) "
+                    + "   FROM weaning_records "
+                    + "   WHERE eartag = wr.eartag"
                     + ")";
 
             pst = conn.prepareStatement(query);
-
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
             model.addColumn("Batch");
-
             model.addColumn("Actual");
             model.addColumn("Male");
             model.addColumn("Female");
@@ -3046,14 +3078,14 @@ public class SECRETARY extends javax.swing.JFrame {
 
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");
-                String batch_number = rs.getString("batch_number");
-                Date weaning_actualdate = rs.getDate("weaning_actualdate");
-                int male_piglets = rs.getInt("male_piglets");
-                int female_piglets = rs.getInt("female_piglets");
-                int total_piglets = rs.getInt("total_piglets");
+                String batchNumber = rs.getString("batch_number");
+                Date weaningActualDate = rs.getDate("weaning_actualdate");
+                int malePiglets = rs.getInt("male_piglets");
+                int femalePiglets = rs.getInt("female_piglets");
+                int totalPiglets = rs.getInt("total_piglets");
                 double aw = rs.getDouble("aw");
 
-                model.addRow(new Object[]{eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+                model.addRow(new Object[]{eartag, batchNumber, weaningActualDate, malePiglets, femalePiglets, totalPiglets, aw});
             }
 
             WEANING_MAIN_TABLE.setModel(model);
@@ -3066,19 +3098,19 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
             String selectedBatchNumber = (String) WEANING_DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
-            String query = "SELECT eartag, batch_number, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw "
-                    + "FROM weaning_records "
-                    + "WHERE culled = false "
-                    + "AND batch_number = ? "
-                    + "AND (eartag, weaning_id) IN ("
-                    + "   SELECT eartag, MAX(weaning_id) "
-                    + "   FROM weaning_records "
-                    + "   GROUP BY eartag "
-                    + ") "
+            String query = "SELECT wr.eartag, wr.batch_number, wr.weaning_actualdate, wr.male_piglets, wr.female_piglets, wr.total_piglets, wr.aw, wr.culled "
+                    + "FROM weaning_records wr "
+                    + "WHERE wr.culled = false "
+                    + "AND wr.batch_number = ? "
                     + "AND NOT EXISTS ("
                     + "   SELECT 1 "
-                    + "   FROM breeding "
-                    + "   WHERE weaning_records.eartag = breeding.eartag"
+                    + "   FROM breeding b "
+                    + "   WHERE wr.eartag = b.eartag AND (b.sow_status = 0 OR b.sow_status = 1)"
+                    + ")"
+                    + "AND wr.weaning_id = ("
+                    + "   SELECT MAX(weaning_id) "
+                    + "   FROM weaning_records "
+                    + "   WHERE eartag = wr.eartag"
                     + ")";
 
             pst = conn.prepareStatement(query);
@@ -3359,21 +3391,26 @@ public class SECRETARY extends javax.swing.JFrame {
     private void WARNING_FETCH_EARTAG() {
         try {
             DefaultTableModel model = new DefaultTableModel();
-            String warningSowsQuery = "SELECT DISTINCT eartag, "
+            String warningSowsQuery = "SELECT DISTINCT fr.eartag, "
                     + "CASE "
-                    + "    WHEN total_piglets < 7 THEN 'Total piglets less than 7' "
-                    + "    WHEN mortality > 0 THEN 'Mortality greater than 0' "
-                    + "    WHEN remarks IS NOT NULL AND remarks <> '' THEN 'Remarks not empty' "
-                    + "    WHEN (farrowing_actualdate < farrowing_duedate - INTERVAL 3 DAY "
-                    + "          OR farrowing_actualdate > farrowing_duedate + INTERVAL 3 DAY) THEN 'Actual date outside the 3-day marking' "
+                    + "    WHEN fr.total_piglets < 7 THEN 'Total piglets less than 7' "
+                    + "    WHEN fr.mortality > 0 THEN 'Mortality greater than 0' "
+                    + "    WHEN fr.remarks IS NOT NULL AND fr.remarks <> '' THEN 'Remarks not empty' "
+                    + "    WHEN (fr.farrowing_actualdate < fr.farrowing_duedate - INTERVAL 3 DAY "
+                    + "          OR fr.farrowing_actualdate > fr.farrowing_duedate + INTERVAL 3 DAY) THEN 'Actual date outside the 3-day marking' "
                     + "END AS criteria "
-                    + "FROM farrowing_records "
-                    + "WHERE (total_piglets < 7 "
-                    + "    OR mortality > 0 "
-                    + "    OR (remarks IS NOT NULL AND remarks <> '') "
-                    + "    OR (farrowing_actualdate < farrowing_duedate - INTERVAL 3 DAY "
-                    + "        OR farrowing_actualdate > farrowing_duedate + INTERVAL 3 DAY)) "
-                    + "    AND culled = 0";
+                    + "FROM farrowing_records fr "
+                    + "WHERE (fr.total_piglets < 7 "
+                    + "    OR fr.mortality > 0 "
+                    + "    OR (fr.remarks IS NOT NULL AND fr.remarks <> '') "
+                    + "    OR (fr.farrowing_actualdate < fr.farrowing_duedate - INTERVAL 3 DAY "
+                    + "        OR fr.farrowing_actualdate > fr.farrowing_duedate + INTERVAL 3 DAY)) "
+                    + "    AND fr.culled = 0 "
+                    + "    AND NOT EXISTS ("
+                    + "        SELECT 1 "
+                    + "        FROM breeding b "
+                    + "        WHERE fr.eartag = b.eartag AND b.sow_status = 0"
+                    + "    )";
 
             pst = conn.prepareStatement(warningSowsQuery);
             rs = pst.executeQuery();

@@ -48,12 +48,10 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         BREEDING_DATE = new com.toedter.calendar.JDateChooser();
         BREEDING_BOAR_USED = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         rSButtonHover11 = new rojeru_san.complementos.RSButtonHover();
         jLabel14 = new javax.swing.JLabel();
         BREEDING_BREEDING_TYPE = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
-        BREEDING_MEDICINE = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         rSButtonHover12 = new rojeru_san.complementos.RSButtonHover();
@@ -83,12 +81,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         jLabel17.setText("BOAR USED");
         BREEDING_CONTAINER.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 220, 20));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 217, 90));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("MEDICINE");
-        BREEDING_CONTAINER.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 270, 20));
-
         rSButtonHover11.setBackground(new java.awt.Color(255, 217, 90));
         rSButtonHover11.setText("UPDATE");
         rSButtonHover11.setColorHover(new java.awt.Color(255, 217, 90));
@@ -105,29 +97,28 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(255, 217, 90));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("EAR TAG");
-        BREEDING_CONTAINER.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 220, 20));
+        BREEDING_CONTAINER.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 220, 20));
 
         BREEDING_BREEDING_TYPE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Al", "Kasta" }));
-        BREEDING_CONTAINER.add(BREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 200, 40));
+        BREEDING_CONTAINER.add(BREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 200, 40));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 217, 90));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("BREEDING DATE");
         BREEDING_CONTAINER.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 220, 20));
-        BREEDING_CONTAINER.add(BREEDING_MEDICINE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 200, 40));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 217, 90));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("BREEDING TYPE");
-        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 230, 20));
+        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 230, 20));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 217, 90));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("LACTATE");
-        BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 270, 20));
+        BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 270, 20));
 
         rSButtonHover12.setBackground(new java.awt.Color(204, 204, 204));
         rSButtonHover12.setText("CANCEL");
@@ -150,7 +141,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
                 LACTATE_NOActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(LACTATE_NO, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, -1, -1));
+        BREEDING_CONTAINER.add(LACTATE_NO, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, -1, -1));
 
         LACTATE_YES.setBackground(new java.awt.Color(26, 46, 53));
         LACTATE_YES.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -161,16 +152,16 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
                 LACTATE_YESActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(LACTATE_YES, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, -1, -1));
+        BREEDING_CONTAINER.add(LACTATE_YES, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, -1, -1));
 
         BREEDING_LACTATE.setText("yes");
-        BREEDING_CONTAINER.add(BREEDING_LACTATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, 60, 30));
+        BREEDING_CONTAINER.add(BREEDING_LACTATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 240, 60, 30));
 
         BREEDING_EARTAG.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         BREEDING_EARTAG.setForeground(new java.awt.Color(255, 217, 90));
         BREEDING_EARTAG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         BREEDING_EARTAG.setText("120312");
-        BREEDING_CONTAINER.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 280, 50));
+        BREEDING_CONTAINER.add(BREEDING_EARTAG, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 280, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -261,11 +252,9 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser BREEDING_DATE;
     private javax.swing.JLabel BREEDING_EARTAG;
     private javax.swing.JLabel BREEDING_LACTATE;
-    private javax.swing.JTextField BREEDING_MEDICINE;
     private javax.swing.JRadioButton LACTATE_NO;
     private javax.swing.JRadioButton LACTATE_YES;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -288,7 +277,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
                 Date breedingDate = rs.getDate("breeding_date");
                 String breedingType = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
-                String medicine = rs.getString("medicine");
 
                 BREEDING_BOAR_USED.setText(boarUsed);
                 BREEDING_DATE.setDate(breedingDate);
@@ -299,7 +287,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
                 } else {
                     LACTATE_NO.setSelected(true);
                 }
-                BREEDING_MEDICINE.setText(medicine);
             }
 
         } catch (Exception e) {
@@ -312,7 +299,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
         String dateString = new java.sql.Date(selectedDate.getTime()).toString();
 
         try {
-            String sql = "UPDATE breeding SET boar_used = ?, breeding_date = ?, breeding_type = ?, lactate = ?, medicine = ? WHERE eartag = ?";
+            String sql = "UPDATE breeding SET boar_used = ?, breeding_date = ?, breeding_type = ?, lactate = ? WHERE eartag = ?";
 
             pst = conn.prepareStatement(sql);
 
@@ -321,8 +308,7 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
             pst.setString(2, dateString);
             pst.setString(3, (String) BREEDING_BREEDING_TYPE.getSelectedItem());
             pst.setString(4, BREEDING_LACTATE.getText());
-            pst.setString(5, BREEDING_MEDICINE.getText());
-            pst.setString(6, BREEDING_EARTAG.getText());
+            pst.setString(5, BREEDING_EARTAG.getText());
 
             int rowsUpdated = pst.executeUpdate();
 
@@ -337,7 +323,6 @@ public class BREEDING_UPDATEMODAL extends javax.swing.JFrame {
             BREEDING_DATE.setDate(null);
             BREEDING_BREEDING_TYPE.setSelectedIndex(0);
             LACTATE_YES.setSelected(true);
-            BREEDING_MEDICINE.setText("");
             BREEDING_EARTAG.setText("");
 
             pst.execute();

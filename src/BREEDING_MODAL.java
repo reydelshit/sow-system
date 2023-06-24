@@ -38,7 +38,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         BREEDING_FETCH_VALUE_FROM_BATCH_NUMBER();
 
         BREEDING_LACTATE.setVisible(false);
-        
+
         BREEDING_BATCH_NUMBER.setVisible(false);
 
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -408,7 +408,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
             String selectedBatchNumber = (String) DROPDOWN_FOR_BATCH_NUMBER.getSelectedItem();
 
-            String query = "SELECT eartag, date, bnumber, penbuilding, penroom FROM register_sow WHERE bnumber = ?";
+            String query = "SELECT rs.eartag, rs.bnumber FROM register_sow rs LEFT JOIN breeding b ON rs.eartag = b.eartag WHERE rs.bnumber = ? AND b.eartag IS NULL";
             pst = conn.prepareStatement(query);
             pst.setString(1, selectedBatchNumber);
             rs = pst.executeQuery();
@@ -418,11 +418,9 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
 
             while (rs.next()) {
                 int eartag = rs.getInt("eartag");
-
                 String bnumber = rs.getString("bnumber");
 
                 model.addRow(new Object[]{eartag, bnumber});
-
             }
 
             if (LIST_OF_SOW_BY_BATCH != null) {
@@ -462,7 +460,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 }
             }
 
-            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, rebreed, breeding_type, lactate, medicine, sow_status, parity) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, rebreed, breeding_type, lactate, sow_status, parity, weaning_status, farrowing_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
             String farrowingUpdate = "SELECT sow_status FROM breeding WHERE eartag = ?";
             String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
 
@@ -491,6 +489,8 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             pst.setString(8, BREEDING_LACTATE.getText());
             pst.setInt(9, 0);
             pst.setInt(10, 1);
+            pst.setBoolean(11, false);
+            pst.setBoolean(12, false);
 
             pst.execute();
 
