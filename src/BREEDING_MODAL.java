@@ -92,6 +92,8 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         LACTATE_YES = new javax.swing.JRadioButton();
         BREEDING_LACTATE = new javax.swing.JLabel();
         BREEDING_BATCH_NUMBER = new javax.swing.JLabel();
+        LACTATE_SCHEDULE = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,7 +130,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         LIST_OF_SOW_BY_BATCH.setFuenteHead(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jScrollPane3.setViewportView(LIST_OF_SOW_BY_BATCH);
 
-        BREEDING_CONTAINER.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 310, 220));
+        BREEDING_CONTAINER.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 310, 140));
 
         DROPDOWN_FOR_BATCH_NUMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT BATCH" }));
         BREEDING_CONTAINER.add(DROPDOWN_FOR_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 150, 30));
@@ -190,7 +192,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         BREEDING_CONTAINER.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 220, 20));
 
         BREEDING_BREEDING_TYPE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Al", "Kasta" }));
-        BREEDING_CONTAINER.add(BREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 200, 40));
+        BREEDING_CONTAINER.add(BREEDING_BREEDING_TYPE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 200, 40));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 217, 90));
@@ -202,12 +204,12 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(255, 217, 90));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("BREEDING TYPE");
-        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 230, 20));
+        BREEDING_CONTAINER.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 230, 20));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 217, 90));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("LACTATE");
+        jLabel20.setText("LACTATE SCHEDULE");
         BREEDING_CONTAINER.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, 270, 20));
 
         rSButtonHover12.setBackground(new java.awt.Color(204, 204, 204));
@@ -231,7 +233,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 LACTATE_NOActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(LACTATE_NO, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, -1, -1));
+        BREEDING_CONTAINER.add(LACTATE_NO, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 310, -1, -1));
 
         LACTATE_YES.setBackground(new java.awt.Color(26, 46, 53));
         LACTATE_YES.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -242,13 +244,22 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 LACTATE_YESActionPerformed(evt);
             }
         });
-        BREEDING_CONTAINER.add(LACTATE_YES, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 390, -1, -1));
+        BREEDING_CONTAINER.add(LACTATE_YES, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, -1, -1));
 
         BREEDING_LACTATE.setText("yes");
-        BREEDING_CONTAINER.add(BREEDING_LACTATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 60, 30));
+        BREEDING_CONTAINER.add(BREEDING_LACTATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 60, 30));
 
         BREEDING_BATCH_NUMBER.setText("batch_here");
         BREEDING_CONTAINER.add(BREEDING_BATCH_NUMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 60, 20));
+
+        LACTATE_SCHEDULE.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Once a week", "Twice a week", "Thrice a week" }));
+        BREEDING_CONTAINER.add(LACTATE_SCHEDULE, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, 210, 40));
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 217, 90));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("LACTATE");
+        BREEDING_CONTAINER.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 270, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -301,9 +312,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Invalid input. Please make sure all fields are not empty.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             BREEDING_START_BREEDING();
-//            BREEDING_RETRIEVE_BREEDING_DETAILS();
-//            UPLOAD_NOTIFICATION();
-//            FARROWING_LIST_OF_EARTAGS_CURRENTLY_NOT_FARROWED();
+            BREEDING_RETRIEVE_SOW_BY_BATCH_NUMBER();
         }
     }//GEN-LAST:event_rSButtonHover11ActionPerformed
 
@@ -366,6 +375,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> DROPDOWN_FOR_BATCH_NUMBER;
     private javax.swing.JPanel EXPECTED_FARROWING_LABEL;
     private javax.swing.JRadioButton LACTATE_NO;
+    private javax.swing.JComboBox<String> LACTATE_SCHEDULE;
     private javax.swing.JRadioButton LACTATE_YES;
     private rojeru_san.complementos.RSTableMetro LIST_OF_SOW_BY_BATCH;
     private javax.swing.JLabel jLabel13;
@@ -375,6 +385,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
     private rojeru_san.complementos.RSButtonHover rSButtonHover11;
@@ -460,7 +471,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 }
             }
 
-            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, rebreed, breeding_type, lactate, sow_status, parity, weaning_status, farrowing_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO breeding (eartag, batch_number, boar_used, breeding_date, expected_farrowing, rebreed, breeding_type, lactate, sow_status, parity, weaning_status, farrowing_status, lactate_sched ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
             String farrowingUpdate = "SELECT sow_status FROM breeding WHERE eartag = ?";
             String parity = "UPDATE breeding SET parity = 1 WHERE eartag = ?";
 
@@ -474,6 +485,12 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
                 BREEDING_BOAR_USED.setText("");
                 BREEDING_DATE.setDate(null);
                 BREEDING_EXPECTED_FARROWING.setText("");
+
+                ButtonGroup buttonGroup = new ButtonGroup();
+                buttonGroup.add(LACTATE_YES);
+                buttonGroup.add(LACTATE_NO);
+
+                buttonGroup.clearSelection();
 
                 return;
             }
@@ -491,6 +508,7 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             pst.setInt(10, 1);
             pst.setBoolean(11, false);
             pst.setBoolean(12, false);
+            pst.setString(13, (String) LACTATE_SCHEDULE.getSelectedItem());
 
             pst.execute();
 
@@ -508,6 +526,12 @@ public class BREEDING_MODAL extends javax.swing.JFrame {
             BREEDING_BOAR_USED.setText("");
             BREEDING_DATE.setDate(null);
             BREEDING_EXPECTED_FARROWING.setText("");
+
+            ButtonGroup buttonGroup = new ButtonGroup();
+            buttonGroup.add(LACTATE_YES);
+            buttonGroup.add(LACTATE_NO);
+
+            buttonGroup.clearSelection();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

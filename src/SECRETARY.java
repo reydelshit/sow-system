@@ -1841,6 +1841,8 @@ public class SECRETARY extends javax.swing.JFrame {
     private void rSButtonHover15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover15ActionPerformed
         WEANING_SUBMIT();
         RETRIEVE_NOT_WEANED_EARTAGS();
+        FARROWING_RETRIEVE_BY_BATCH();
+        FARROWING_RETRIEVE_ALL_FARROWED();
     }//GEN-LAST:event_rSButtonHover15ActionPerformed
 
     private void rSButtonHover16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover16ActionPerformed
@@ -1883,7 +1885,7 @@ public class SECRETARY extends javax.swing.JFrame {
             weaningUpdateStmt.setInt(2, culledIntEartag);
             weaningUpdateStmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Culling status for sow with eartag number " + culledValue + " has been updated to culled.");
+            JOptionPane.showMessageDialog(null, culledValue + " has been updated to culled.");
 
             WARNING_FETCH_EARTAG();
             CULLED_FETCH_EARTAG();
@@ -2436,11 +2438,11 @@ public class SECRETARY extends javax.swing.JFrame {
         try {
             DefaultTableModel model = new DefaultTableModel();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, b.lactate_sched, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
-                    + "WHERE (b.eartag, b.parity) IN ( "
-                    + "    SELECT eartag, MAX(parity) "
+                    + "WHERE (b.eartag, b.breeding_id) IN ( "
+                    + "    SELECT eartag, MAX(breeding_id) "
                     + "    FROM breeding "
                     + "    GROUP BY eartag "
                     + ")"
@@ -2456,6 +2458,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
             model.addColumn("Type");
             model.addColumn("Lactate");
+            model.addColumn("Lactate Sched");
 
             model.addColumn("Building");
             model.addColumn("Room");
@@ -2472,6 +2475,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 String breeding_type = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
+                String lactateSched = rs.getString("lactate_sched");
 
                 boolean rebreed = rs.getBoolean("rebreed");
                 String setStatusForRebreedStatus = rebreed ? "yes" : "no";
@@ -2498,7 +2502,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
                 model.addRow(new Object[]{
                     breedingEartag, boar_used, breeding_date, expected_farrowing, breeding_type,
-                    lactate, penbuilding, penroom, assignedEmployee, parity,
+                    lactate, lactateSched, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
             }
@@ -2681,6 +2685,7 @@ public class SECRETARY extends javax.swing.JFrame {
                     + "FROM farrowing_records fr "
                     + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag "
                     + "WHERE fr.eartag = ?";
+
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(FARROWING_SEARCH_FIELD.getText()));
             rs = pst.executeQuery();
@@ -2762,7 +2767,8 @@ public class SECRETARY extends javax.swing.JFrame {
 
             String query = "SELECT fr.eartag, fr.farrowing_actualdate, fr.farrowing_duedate, fr.female_piglets, fr.male_piglets, fr.total_piglets, fr.abw, fr.mortality, fr.remarks, fr.culled, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM farrowing_records fr "
-                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag WHERE fr.batch_number = ? and culled = false";
+                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag "
+                    + "WHERE fr.batch_number = ? AND fr.culled = false AND fr.farrowing_status = true";
 
             pst = conn.prepareStatement(query);
             pst.setString(1, selectedBatchNumber);
@@ -2817,7 +2823,9 @@ public class SECRETARY extends javax.swing.JFrame {
 
             String query = "SELECT fr.eartag, fr.farrowing_actualdate, fr.farrowing_duedate, fr.female_piglets, fr.male_piglets, fr.total_piglets, fr.abw, fr.mortality, fr.remarks, fr.culled, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM farrowing_records fr "
-                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag WHERE culled = false";
+                    + "LEFT JOIN register_sow rs ON fr.eartag = rs.eartag "
+                    + "WHERE fr.culled = false AND fr.farrowing_status = true";
+
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
 
@@ -3473,7 +3481,7 @@ public class SECRETARY extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel();
 //            String selected = (String) LIST_OF_SOW_DROPDOWN.getSelectedItem();
 
-            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, rs.penbuilding, rs.penroom, rs.assigned_employee "
+            String query = "SELECT b.eartag, b.boar_used, b.breeding_date, b.expected_farrowing, b.breeding_type, b.lactate, b.rebreed, b.sow_status, b.parity AS highest_parity, b.lactate_sched, rs.penbuilding, rs.penroom, rs.assigned_employee "
                     + "FROM breeding b "
                     + "LEFT JOIN register_sow rs ON b.eartag = rs.eartag "
                     + "WHERE (b.eartag, b.parity) IN ( "
@@ -3506,6 +3514,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
             model.addColumn("Type");
             model.addColumn("Lactate");
+            model.addColumn("Lactate Sched");
 
             model.addColumn("Building");
             model.addColumn("Room");
@@ -3523,6 +3532,7 @@ public class SECRETARY extends javax.swing.JFrame {
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 String breeding_type = rs.getString("breeding_type");
                 String lactate = rs.getString("lactate");
+                String lactateSched = rs.getString("lactate_sched");
 
                 boolean rebreed = rs.getBoolean("rebreed");
                 String setStatusForRebreedStatus = rebreed ? "yes" : "no";
@@ -3549,7 +3559,7 @@ public class SECRETARY extends javax.swing.JFrame {
 
                 model.addRow(new Object[]{
                     breedingEartag, boar_used, breeding_date, expected_farrowing, breeding_type,
-                    lactate, penbuilding, penroom, assignedEmployee, parity,
+                    lactate, lactateSched, penbuilding, penroom, assignedEmployee, parity,
                     setStatusForRebreedStatus, sowStatusString
                 });
             }
