@@ -2928,9 +2928,10 @@ public class SECRETARY extends javax.swing.JFrame {
                 cal.add(Calendar.DAY_OF_MONTH, 28);
                 Date expectedWeaning = cal.getTime();
 
-                long currentTime = System.currentTimeMillis();
+//                long currentTime = System.currentTimeMillis();
+                long farrowingTime = actualFarrowing.getTime();
                 long weaningTime = expectedWeaning.getTime();
-                long daysBeforeWeaning = TimeUnit.DAYS.convert(weaningTime - currentTime, TimeUnit.MILLISECONDS);
+                long daysBeforeWeaning = TimeUnit.DAYS.convert(weaningTime - farrowingTime, TimeUnit.MILLISECONDS);
 
                 model.addRow(new Object[]{eartag, batch_number, actualFarrowing, dateFormat.format(expectedWeaning), daysBeforeWeaning});
             }
@@ -2964,9 +2965,9 @@ public class SECRETARY extends javax.swing.JFrame {
 
             pst.execute();
 
-            String farrowingUpdate = "UPDATE breeding SET farrowing_status = false, weaning_status = true, sow_status = 2 WHERE eartag = ?";
+            String setStatus = "UPDATE breeding SET farrowing_status = false, weaning_status = true, sow_status = 2 WHERE eartag = ?";
 
-            pst = conn.prepareStatement(farrowingUpdate);
+            pst = conn.prepareStatement(setStatus);
             pst.setString(1, WEANING_EARTAG.getText());
             pst.executeUpdate();
 
@@ -2979,7 +2980,6 @@ public class SECRETARY extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, FARROWING_EARTAG.getText() + " EARTAG WEANING DETAILS ARE RECORDED");
 
             WEANING_RETRIEVE_DETAILS();
-//            BREEDING_RETRIEVE_BREEDING_DETAILS();
 
             WEANING_EARTAG.setText("");
             WEANING_CALENDAR.setDate(null);

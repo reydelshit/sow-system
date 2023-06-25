@@ -102,12 +102,12 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 }
             }
         });
-        
+
         LIST_OF_SOW_DROPDOWN.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION();
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                BREEDING_RETRIEVE_SOW_BY_CLASSIFICATION();
+            }
+        });
     }
 
     /**
@@ -937,21 +937,26 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private void WARNING_FETCH_EARTAG() {
         try {
             DefaultTableModel model = new DefaultTableModel();
-            String warningSowsQuery = "SELECT DISTINCT eartag, "
+            String warningSowsQuery = "SELECT DISTINCT fr.eartag, "
                     + "CASE "
-                    + "    WHEN total_piglets < 7 THEN 'Total piglets less than 7' "
-                    + "    WHEN mortality > 0 THEN 'Mortality greater than 0' "
-                    + "    WHEN remarks IS NOT NULL AND remarks <> '' THEN 'Remarks not empty' "
-                    + "    WHEN (farrowing_actualdate < farrowing_duedate - INTERVAL 3 DAY "
-                    + "          OR farrowing_actualdate > farrowing_duedate + INTERVAL 3 DAY) THEN 'Actual date outside the 3-day marking' "
+                    + "    WHEN fr.total_piglets < 7 THEN 'Total piglets less than 7' "
+                    + "    WHEN fr.mortality > 0 THEN 'Mortality greater than 0' "
+                    + "    WHEN fr.remarks IS NOT NULL AND fr.remarks <> '' THEN 'Remarks not empty' "
+                    + "    WHEN (fr.farrowing_actualdate < fr.farrowing_duedate - INTERVAL 3 DAY "
+                    + "          OR fr.farrowing_actualdate > fr.farrowing_duedate + INTERVAL 3 DAY) THEN 'Actual date outside the 3-day marking' "
                     + "END AS criteria "
-                    + "FROM farrowing_records "
-                    + "WHERE (total_piglets < 7 "
-                    + "    OR mortality > 0 "
-                    + "    OR (remarks IS NOT NULL AND remarks <> '') "
-                    + "    OR (farrowing_actualdate < farrowing_duedate - INTERVAL 3 DAY "
-                    + "        OR farrowing_actualdate > farrowing_duedate + INTERVAL 3 DAY)) "
-                    + "    AND culled = 0";
+                    + "FROM farrowing_records fr "
+                    + "WHERE (fr.total_piglets < 7 "
+                    + "    OR fr.mortality > 0 "
+                    + "    OR (fr.remarks IS NOT NULL AND fr.remarks <> '') "
+                    + "    OR (fr.farrowing_actualdate < fr.farrowing_duedate - INTERVAL 3 DAY "
+                    + "        OR fr.farrowing_actualdate > fr.farrowing_duedate + INTERVAL 3 DAY)) "
+                    + "    AND fr.culled = 0 "
+                    + "    AND NOT EXISTS ("
+                    + "        SELECT 1 "
+                    + "        FROM breeding b "
+                    + "        WHERE fr.eartag = b.eartag AND b.sow_status = 0"
+                    + "    )";
 
             pst = conn.prepareStatement(warningSowsQuery);
             rs = pst.executeQuery();
@@ -1034,7 +1039,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 yValues.add(count);
             }
 
-            chartForRegSow.addSeries("Alive Sow Count", xValues, yValues);
+            chartForRegSow.addSeries("Alive Sow Count", xValues, yValues).setFillColor(new Color(0, 100, 0));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1076,7 +1081,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 yValues.add(count);
             }
 
-            chartForCulledSow.addSeries("Culled Sow Count", xValues, yValues);
+            chartForCulledSow.addSeries("Culled Sow Count", xValues, yValues).setFillColor(new Color(0, 255, 255)); // Set cyan color
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1095,7 +1100,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
         Styler styler = chartForPie.getStyler();
         styler.setChartBackgroundColor(new Color(255, 217, 90));
 
-        chartForPie.setTitle("Farrowing Records");
+        chartForPie.setTitle("PIE CHART");
 
         try {
             String culledQuery = "SELECT COUNT(*) AS culledCount FROM farrowing_records WHERE culled = 1";
@@ -1106,27 +1111,63 @@ public class OPEMANAGER extends javax.swing.JFrame {
                 chartForPie.addSeries("Culled (" + culledCount + ")", culledCount);
             }
 
-            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM farrowing_records WHERE culled = 1";
+            String farrowedQuery = "SELECT COUNT(*) AS farrowedCount FROM breeding WHERE sow_status = 1";
+
             pst = conn.prepareStatement(farrowedQuery);
             rs = pst.executeQuery();
+
             if (rs.next()) {
                 int farrowedCount = rs.getInt("farrowedCount");
                 chartForPie.addSeries("Farrowed (" + farrowedCount + ")", farrowedCount);
             }
 
-            String warningQuery = "SELECT COUNT(DISTINCT eartag) AS warningCount "
-                    + "FROM farrowing_records "
-                    + "WHERE ((female_piglets + male_piglets) < 7 "
-                    + "OR mortality > 0 "
-                    + "OR remarks IS NOT NULL "
-                    + "OR (farrowing_actualdate BETWEEN farrowing_duedate - INTERVAL 3 DAY AND farrowing_duedate + INTERVAL 3 DAY)) "
-                    + "AND culled = 0";
+            String warningQuery = "SELECT COUNT(*) AS warningCount "
+                    + "FROM ("
+                    + "    SELECT fr.eartag "
+                    + "    FROM farrowing_records fr "
+                    + "    WHERE (fr.total_piglets < 7 "
+                    + "    OR fr.mortality > 0 "
+                    + "    OR (fr.remarks IS NOT NULL AND fr.remarks <> '') "
+                    + "    OR (fr.farrowing_actualdate < fr.farrowing_duedate - INTERVAL 3 DAY "
+                    + "        OR fr.farrowing_actualdate > fr.farrowing_duedate + INTERVAL 3 DAY)) "
+                    + "    AND fr.culled = 0 "
+                    + "    AND NOT EXISTS ("
+                    + "        SELECT 1 "
+                    + "        FROM breeding b "
+                    + "        WHERE fr.eartag = b.eartag AND b.sow_status = 0"
+                    + "    )"
+                    + ") AS warningResults";
+
             pst = conn.prepareStatement(warningQuery);
             rs = pst.executeQuery();
             if (rs.next()) {
                 int warningCount = rs.getInt("warningCount");
                 chartForPie.addSeries("Warning (" + warningCount + ")", warningCount);
+
+                System.out.println("Warning Query Result:");
+                System.out.println(warningCount);
             }
+
+            String weaningQuery = "SELECT COUNT(*) AS weaningCount FROM breeding b1 WHERE sow_status = 2 AND breeding_id = (SELECT MAX(breeding_id) FROM breeding b2 WHERE b1.eartag = b2.eartag)";
+
+            pst = conn.prepareStatement(weaningQuery);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int weaningCount = rs.getInt("weaningCount");
+                chartForPie.addSeries("Weaning (" + weaningCount + ")", weaningCount);
+            }
+
+            String breedingQuery = "SELECT COUNT(*) AS breedingCount FROM breeding b1 WHERE sow_status = 0 AND breeding_id = (SELECT MAX(breeding_id) FROM breeding b2 WHERE b1.eartag = b2.eartag)";
+
+            pst = conn.prepareStatement(breedingQuery);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int breedingCount = rs.getInt("breedingCount");
+                chartForPie.addSeries("Breeding (" + breedingCount + ")", breedingCount);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
