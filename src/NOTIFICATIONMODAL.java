@@ -40,6 +40,9 @@ public class NOTIFICATIONMODAL extends JFrame implements Runnable {
         
         
         FETCH_NOTIFICATION_TO_JLIST();
+        fetchWarningNotifications();
+        fetchFarrowingNotifications();
+        fetchWeaningNotifications();
     }
 
     /**

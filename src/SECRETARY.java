@@ -211,6 +211,7 @@ public class SECRETARY extends javax.swing.JFrame {
         rSButtonHover8 = new rojeru_san.complementos.RSButtonHover();
         jLabel41 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        NOTIFICATION_NO = new javax.swing.JLabel();
         PAGES = new javax.swing.JPanel();
         MAIN_PANEL = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -463,8 +464,11 @@ public class SECRETARY extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel41MouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel41MousePressed(evt);
+            }
         });
-        jPanel1.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 650, -1, 40));
+        jPanel1.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 630, -1, 40));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/logout.png"))); // NOI18N
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -472,7 +476,13 @@ public class SECRETARY extends javax.swing.JFrame {
                 jLabel8MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, 50, 40));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, 50, 40));
+
+        NOTIFICATION_NO.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        NOTIFICATION_NO.setForeground(new java.awt.Color(255, 255, 255));
+        NOTIFICATION_NO.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NOTIFICATION_NO.setText("1");
+        jPanel1.add(NOTIFICATION_NO, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 630, 30, 40));
 
         jSplitPane2.setLeftComponent(jPanel1);
 
@@ -1767,6 +1777,8 @@ public class SECRETARY extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover8ActionPerformed
 
     private void jLabel41MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel41MouseClicked
+        NOTIFICATION_NO.setText("0");
+        UPLOAD_NOTIFICATION();
         notificationModal.setVisible(!notificationModal.isVisible());
     }//GEN-LAST:event_jLabel41MouseClicked
 
@@ -1828,6 +1840,8 @@ public class SECRETARY extends javax.swing.JFrame {
             CULLED_FETCH_EARTAG();
 
             UPLOAD_NOTIFICATION();
+
+            initializeUploadedNotifications();
         }
     }//GEN-LAST:event_rSButtonHover12ActionPerformed
 
@@ -1843,6 +1857,7 @@ public class SECRETARY extends javax.swing.JFrame {
         RETRIEVE_NOT_WEANED_EARTAGS();
         FARROWING_RETRIEVE_BY_BATCH();
         FARROWING_RETRIEVE_ALL_FARROWED();
+        initializeUploadedNotifications();
     }//GEN-LAST:event_rSButtonHover15ActionPerformed
 
     private void rSButtonHover16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover16ActionPerformed
@@ -2007,6 +2022,11 @@ public class SECRETARY extends javax.swing.JFrame {
         WARNING_FETCH_EARTAG();
     }//GEN-LAST:event_rSButtonHover29ActionPerformed
 
+    private void jLabel41MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel41MousePressed
+        UPLOAD_NOTIFICATION();
+        initializeUploadedNotifications();
+    }//GEN-LAST:event_jLabel41MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -2071,6 +2091,7 @@ public class SECRETARY extends javax.swing.JFrame {
     private rojeru_san.complementos.RSTableMetro LIST_OF_NOT_FARROWED;
     private javax.swing.JComboBox<String> LIST_OF_SOW_DROPDOWN;
     private javax.swing.JPanel MAIN_PANEL;
+    private javax.swing.JLabel NOTIFICATION_NO;
     private javax.swing.JPanel PAGES;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_BREEDING_TABLE;
     private rojeru_san.complementos.RSTableMetro PERFORMANCE_FARROWING_TABLE;
@@ -3371,13 +3392,19 @@ public class SECRETARY extends javax.swing.JFrame {
 
     }
 
+    private int notificationCount = 0;
+
     private void checkAndStoreNotification(String eartag, String notificationMessage) throws SQLException {
         String notificationKey = eartag + notificationMessage;
 
         if (!uploadedNotifications.contains(notificationKey)) {
             storeNotification(eartag, notificationMessage);
             uploadedNotifications.add(notificationKey);
+            notificationCount++;
+            UPLOAD_NOTIFICATION();
+
         }
+        NOTIFICATION_NO.setText(String.valueOf(notificationCount));
     }
 
     private void storeNotification(String eartag, String notificationMessage) {
