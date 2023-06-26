@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jSplitPane2" alignment="1" pref="1365" max="32767" attributes="0"/>
+          <Component id="jSplitPane2" alignment="1" pref="1375" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -1088,7 +1088,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="870" y="80" width="90" height="30"/>
+                      <AbsoluteConstraints x="840" y="80" width="90" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1120,15 +1120,11 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="LIST_OF_SOW_DROPDOWN">
+                <Component class="javax.swing.JComboBox" name="DROPDOWN_FOR_BATCH_NUMBER">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="5">
-                        <StringItem index="0" value="All"/>
-                        <StringItem index="1" value="Breeding"/>
-                        <StringItem index="2" value="Farrowing"/>
-                        <StringItem index="3" value="Weaning"/>
-                        <StringItem index="4" value="Culled"/>
+                      <StringArray count="1">
+                        <StringItem index="0" value="All Batch"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -1137,7 +1133,7 @@
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="980" y="80" width="110" height="30"/>
+                      <AbsoluteConstraints x="940" y="80" width="150" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
