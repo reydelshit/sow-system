@@ -52,6 +52,10 @@ public class OPEMANAGER extends javax.swing.JFrame {
         notificationModal = new NOTIFICATIONMODAL();
         notificationModal.setVisible(false);
 
+        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_ALL();
+        PERFORMCE_FARROWING_RETRIEVE_ALL();
+        PERFORMANCE_WEANING_RETRIEVE_ALL();
+
         BREEDING_RETRIEVE_BREEDING_DETAILS();
         WARNING_FETCH_EARTAG();
         CULLED_FETCH_EARTAG();
@@ -413,6 +417,12 @@ public class OPEMANAGER extends javax.swing.JFrame {
         jScrollPane14.setViewportView(PERFORMANCE_BREEDING_TABLE);
 
         VIEW_RECORDS.add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 510, 300));
+
+        PERFORMANCE_SEARCHFIELD.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                PERFORMANCE_SEARCHFIELDKeyReleased(evt);
+            }
+        });
         VIEW_RECORDS.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
 
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -733,6 +743,20 @@ public class OPEMANAGER extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rSButtonHover17ActionPerformed
 
+    private void PERFORMANCE_SEARCHFIELDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PERFORMANCE_SEARCHFIELDKeyReleased
+        String searchText = PERFORMANCE_SEARCHFIELD.getText().trim();
+
+        if (searchText.isEmpty()) {
+            PERFORMANCE_BREEDING_RETRIEVE_BREEDING_ALL();
+            PERFORMCE_FARROWING_RETRIEVE_ALL();
+            PERFORMANCE_WEANING_RETRIEVE_ALL();
+        } else {
+            PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+            PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+            PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+        }
+    }//GEN-LAST:event_PERFORMANCE_SEARCHFIELDKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -828,6 +852,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
     private rojeru_san.complementos.RSButtonHover rSButtonHover5;
     // End of variables declaration//GEN-END:variables
 
+//    PERFORMANCE 
     private void PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS() {
 
         try {
@@ -838,19 +863,55 @@ public class OPEMANAGER extends javax.swing.JFrame {
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
             rs = pst.executeQuery();
 
-            model.addColumn("Boar");
-            model.addColumn("Date");
+//            model.addColumn("EARTAG");
+            model.addColumn("Boar Used");
+            model.addColumn("Breeding Date");
             model.addColumn("Expected");
             model.addColumn("Rebreed");
 
             while (rs.next()) {
+//                int eartag = rs.getInt("eartag");
                 Date breeding_date = rs.getDate("breeding_date");
                 String boar_used = rs.getString("boar_used");
                 Date expected_farrowing = rs.getDate("expected_farrowing");
                 int isFarrowed = rs.getInt("rebreed");
-                String status = isFarrowed == 1 ? "rebreed" : "not";
+                String status = isFarrowed == 1 ? "rebreed" : "no";
 
                 model.addRow(new Object[]{boar_used, breeding_date, expected_farrowing, status});
+            }
+
+            if (PERFORMANCE_BREEDING_TABLE != null) {
+                PERFORMANCE_BREEDING_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void PERFORMANCE_BREEDING_RETRIEVE_BREEDING_ALL() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+
+            String query = "SELECT * FROM breeding";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Boar Used");
+            model.addColumn("Breeding Date");
+            model.addColumn("Expected");
+            model.addColumn("Rebreed");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date breeding_date = rs.getDate("breeding_date");
+                String boar_used = rs.getString("boar_used");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+                int isFarrowed = rs.getInt("rebreed");
+                String status = isFarrowed == 1 ? "rebreed" : "no";
+
+                model.addRow(new Object[]{eartag, boar_used, breeding_date, expected_farrowing, status});
             }
 
             if (PERFORMANCE_BREEDING_TABLE != null) {
@@ -871,7 +932,8 @@ public class OPEMANAGER extends javax.swing.JFrame {
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
             rs = pst.executeQuery();
 
-            model.addColumn("Actual");
+//            model.addColumn("eartag");
+            model.addColumn("Acutal");
             model.addColumn("Due");
             model.addColumn("Female");
             model.addColumn("Male");
@@ -881,6 +943,7 @@ public class OPEMANAGER extends javax.swing.JFrame {
             model.addColumn("Remarks");
 
             while (rs.next()) {
+//                int eartag = rs.getInt("eartag");
                 Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
                 Date farrowing_duedate = rs.getDate("farrowing_duedate");
                 int female_piglets = rs.getInt("female_piglets");
@@ -901,6 +964,47 @@ public class OPEMANAGER extends javax.swing.JFrame {
         }
     }
 
+    private void PERFORMCE_FARROWING_RETRIEVE_ALL() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+
+            String query = "SELECT * FROM farrowing_records";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Due");
+            model.addColumn("Female");
+            model.addColumn("Male");
+            model.addColumn("Total");
+            model.addColumn("ABW");
+            model.addColumn("Mortality");
+            model.addColumn("Remarks");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
+                Date farrowing_duedate = rs.getDate("farrowing_duedate");
+                int female_piglets = rs.getInt("female_piglets");
+                int male_piglets = rs.getInt("male_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double abw = rs.getDouble("abw");
+                int mortality = rs.getInt("mortality");
+                String remarks = rs.getString("remarks");
+
+                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks});
+            }
+
+            if (PERFORMANCE_FARROWING_TABLE != null) {
+                PERFORMANCE_FARROWING_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void PERFORMANCE_WEANING_RETRIEVE_DETAILS() {
 
         try {
@@ -908,6 +1012,38 @@ public class OPEMANAGER extends javax.swing.JFrame {
             String query = "SELECT eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Male");
+            model.addColumn("Female");
+            model.addColumn("Total");
+            model.addColumn("AW");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date weaning_actualdate = rs.getDate("weaning_actualdate");
+                int male_piglets = rs.getInt("male_piglets");
+                int female_piglets = rs.getInt("female_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double aw = rs.getDouble("aw");
+
+                model.addRow(new Object[]{eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+            }
+
+            PERFORMANCE_WEANING_TABLE.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void PERFORMANCE_WEANING_RETRIEVE_ALL() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String query = "SELECT * FROM weaning_records";
+            pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");

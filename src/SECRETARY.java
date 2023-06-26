@@ -185,6 +185,11 @@ public class SECRETARY extends javax.swing.JFrame {
             }
         });
 
+//        PERFORMANCE 
+        PERFORMCE_FARROWING_RETRIEVE_ALL();
+        PERFORMANCE_BREEDING_RETRIEVE_BREEDING_ALL();
+        PERFORMANCE_WEANING_RETRIEVE_ALL();
+
 //        CULLED 
         CULLED_FETCH_EARTAG();
 
@@ -788,6 +793,9 @@ public class SECRETARY extends javax.swing.JFrame {
 
         FARROWING_SEARCH_FIELD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FARROWING_SEARCH_FIELD.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FARROWING_SEARCH_FIELDKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 FARROWING_SEARCH_FIELDKeyTyped(evt);
             }
@@ -1086,6 +1094,12 @@ public class SECRETARY extends javax.swing.JFrame {
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("LIST OF ALL CURRENTLY WEANED");
         WEANING.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 210, 30));
+
+        WEANING_SEARCH_FIELD.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                WEANING_SEARCH_FIELDKeyReleased(evt);
+            }
+        });
         WEANING.add(WEANING_SEARCH_FIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 250, 40));
 
         jPanel12.setBackground(new java.awt.Color(26, 46, 53));
@@ -1333,6 +1347,23 @@ public class SECRETARY extends javax.swing.JFrame {
 
         VIEW_RECORDS.setBackground(new java.awt.Color(255, 217, 90));
         VIEW_RECORDS.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        PERFORMANCE_SEARCHFIELD.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                PERFORMANCE_SEARCHFIELDPropertyChange(evt);
+            }
+        });
+        PERFORMANCE_SEARCHFIELD.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PERFORMANCE_SEARCHFIELDKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                PERFORMANCE_SEARCHFIELDKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                PERFORMANCE_SEARCHFIELDKeyTyped(evt);
+            }
+        });
         VIEW_RECORDS.add(PERFORMANCE_SEARCHFIELD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 60, 260, 40));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -2027,6 +2058,58 @@ public class SECRETARY extends javax.swing.JFrame {
         initializeUploadedNotifications();
     }//GEN-LAST:event_jLabel41MousePressed
 
+    private void PERFORMANCE_SEARCHFIELDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PERFORMANCE_SEARCHFIELDKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PERFORMANCE_SEARCHFIELDKeyTyped
+
+    private void PERFORMANCE_SEARCHFIELDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PERFORMANCE_SEARCHFIELDKeyPressed
+
+    }//GEN-LAST:event_PERFORMANCE_SEARCHFIELDKeyPressed
+
+    private void PERFORMANCE_SEARCHFIELDPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_PERFORMANCE_SEARCHFIELDPropertyChange
+
+    }//GEN-LAST:event_PERFORMANCE_SEARCHFIELDPropertyChange
+
+    private void PERFORMANCE_SEARCHFIELDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PERFORMANCE_SEARCHFIELDKeyReleased
+        String searchText = PERFORMANCE_SEARCHFIELD.getText().trim();
+
+        if (searchText.isEmpty()) {
+            PERFORMANCE_BREEDING_RETRIEVE_BREEDING_ALL();
+            PERFORMCE_FARROWING_RETRIEVE_ALL();
+            PERFORMANCE_WEANING_RETRIEVE_ALL();
+        } else {
+            PERFORMANCE_BREEDING_RETRIEVE_BREEDING_DETAILS();
+            PERFORMCE_FARROWING_RETRIEVE_DETAILS();
+            PERFORMANCE_WEANING_RETRIEVE_DETAILS();
+        }
+    }//GEN-LAST:event_PERFORMANCE_SEARCHFIELDKeyReleased
+
+    private void WEANING_SEARCH_FIELDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WEANING_SEARCH_FIELDKeyReleased
+
+        String searchText = WEANING_SEARCH_FIELD.getText().trim();
+
+        if (searchText.length() > 1) {
+            WEANING_SEARCH_EARTAG();
+
+        }
+
+        if (searchText.isEmpty()) {
+            WEANING_RETRIEVE_DETAILS_ALL_DETAILS();
+        }
+    }//GEN-LAST:event_WEANING_SEARCH_FIELDKeyReleased
+
+    private void FARROWING_SEARCH_FIELDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FARROWING_SEARCH_FIELDKeyReleased
+        String searchText = FARROWING_SEARCH_FIELD.getText().trim();
+
+        if (searchText.length() > 1) {
+            FARROWING_SEARCH_EARTAG();
+        }
+
+        if (searchText.isEmpty()) {
+            FARROWING_RETRIEVE_ALL_FARROWED();
+        }
+    }//GEN-LAST:event_FARROWING_SEARCH_FIELDKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -2558,12 +2641,8 @@ public class SECRETARY extends javax.swing.JFrame {
                     case 3:
                         JOptionPane.showMessageDialog(null, "This sow has been culled");
                         return;
-                    case 1:
-                        JOptionPane.showMessageDialog(null, "This sow has already farrowed on " + expected_farrowing);
-                        FARROWING_RETRIEVE_DETAILS();
-                        break;
                     default:
-                        JOptionPane.showMessageDialog(null, "The sow is not yer farrowed and its expected farrowing date for this sow is " + expected_farrowing);
+                        JOptionPane.showMessageDialog(null, "The sow is not yet farrowed and its expected farrowing date for this sow is " + expected_farrowing);
                         FARROWING_RETRIEVE_DETAILS();
                         break;
                 }
@@ -2913,7 +2992,12 @@ public class SECRETARY extends javax.swing.JFrame {
 
                 WEANING_RETRIEVE_DETAILS();
             } else {
-                JOptionPane.showMessageDialog(null, "No result found or the sow has been culled.");
+                String searchText = WEANING_SEARCH_FIELD.getText().trim();
+
+                if (searchText.length() == 4) {
+                    JOptionPane.showMessageDialog(null, "No result found or the sow has been culled.");
+                }
+
             }
 
         } catch (Exception e) {
@@ -3209,6 +3293,40 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
+    private void PERFORMANCE_BREEDING_RETRIEVE_BREEDING_ALL() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+
+            String query = "SELECT * FROM breeding";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Boar Used");
+            model.addColumn("Breeding Date");
+            model.addColumn("Expected");
+            model.addColumn("Rebreed");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date breeding_date = rs.getDate("breeding_date");
+                String boar_used = rs.getString("boar_used");
+                Date expected_farrowing = rs.getDate("expected_farrowing");
+                int isFarrowed = rs.getInt("rebreed");
+                String status = isFarrowed == 1 ? "rebreed" : "no";
+
+                model.addRow(new Object[]{eartag, boar_used, breeding_date, expected_farrowing, status});
+            }
+
+            if (PERFORMANCE_BREEDING_TABLE != null) {
+                PERFORMANCE_BREEDING_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void PERFORMCE_FARROWING_RETRIEVE_DETAILS() {
 
         try {
@@ -3251,6 +3369,47 @@ public class SECRETARY extends javax.swing.JFrame {
         }
     }
 
+    private void PERFORMCE_FARROWING_RETRIEVE_ALL() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+
+            String query = "SELECT * FROM farrowing_records";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Due");
+            model.addColumn("Female");
+            model.addColumn("Male");
+            model.addColumn("Total");
+            model.addColumn("ABW");
+            model.addColumn("Mortality");
+            model.addColumn("Remarks");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date farrowing_actualdate = rs.getDate("farrowing_actualdate");
+                Date farrowing_duedate = rs.getDate("farrowing_duedate");
+                int female_piglets = rs.getInt("female_piglets");
+                int male_piglets = rs.getInt("male_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double abw = rs.getDouble("abw");
+                int mortality = rs.getInt("mortality");
+                String remarks = rs.getString("remarks");
+
+                model.addRow(new Object[]{eartag, farrowing_actualdate, farrowing_duedate, female_piglets, male_piglets, total_piglets, abw, mortality, remarks});
+            }
+
+            if (PERFORMANCE_FARROWING_TABLE != null) {
+                PERFORMANCE_FARROWING_TABLE.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void PERFORMANCE_WEANING_RETRIEVE_DETAILS() {
 
         try {
@@ -3258,6 +3417,38 @@ public class SECRETARY extends javax.swing.JFrame {
             String query = "SELECT eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw FROM weaning_records WHERE eartag = ?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, Integer.parseInt(PERFORMANCE_SEARCHFIELD.getText()));
+            rs = pst.executeQuery();
+
+            model.addColumn("Eartag");
+            model.addColumn("Actual");
+            model.addColumn("Male");
+            model.addColumn("Female");
+            model.addColumn("Total");
+            model.addColumn("AW");
+
+            while (rs.next()) {
+                int eartag = rs.getInt("eartag");
+                Date weaning_actualdate = rs.getDate("weaning_actualdate");
+                int male_piglets = rs.getInt("male_piglets");
+                int female_piglets = rs.getInt("female_piglets");
+                int total_piglets = rs.getInt("total_piglets");
+                double aw = rs.getDouble("aw");
+
+                model.addRow(new Object[]{eartag, weaning_actualdate, male_piglets, female_piglets, total_piglets, aw});
+            }
+
+            PERFORMANCE_WEANING_TABLE.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void PERFORMANCE_WEANING_RETRIEVE_ALL() {
+
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String query = "SELECT * FROM weaning_records";
+            pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
 
             model.addColumn("Eartag");
